@@ -1,0 +1,13 @@
+{
+    "CLIENT_ID": "id of the application",
+    "GUILD_ID": "id of the guild the bot will be used (max 1 guild at the moment)",
+    "CLIENT_PUBLIC_KEY": "the public key of the application",
+    "CLIENT_TOKEN": "the bot token. dangerous!",
+    "commands": [
+        "ping",
+        "exit"
+    ],
+    "owners": [
+        "ids of owners (people who can use commands with protected=true"
+    ]
+}
