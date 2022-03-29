@@ -1,0 +1,13 @@
+{
+    "CLIENT_ID": "",
+    "GUILD_ID": "",
+    "CLIENT_PUBLIC_KEY": "",
+    "CLIENT_TOKEN": "",
+    "commands": [
+        "ping",
+        "exit"
+    ],
+    "owners": [
+        
+    ]
+}
