@@ -5,8 +5,6 @@ const commands_list = new Array;
  * Chaque commande doit posséder une description un nom et une fonction.
  */
 const initCommands = () => {
-    let config = require("./config.json");
-
     config.commands.forEach(e => {
         let module = require(`./commandes/${e}`);
 
@@ -27,7 +25,7 @@ const initCommands = () => {
         console.log(`Le module ${e} a été correctement chargé.`);
     });
 };
-exports.initCommands = initCommands;
+
 
 /**
  * Parcourt la liste des commandes chargées, et applique la correspondante.
@@ -50,4 +48,6 @@ const applyCommands = (interaction) => {
         }
     });
 };
+
+exports.initCommands = initCommands;
 exports.applyCommands = applyCommands;

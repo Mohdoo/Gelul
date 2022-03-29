@@ -11,7 +11,7 @@
 };
 
 
-const description = "Déconnecte le bot et l'éteint."
+const description = "(Admin seulement) Déconnecte le bot et l'éteint."
 const name = "exit";
 
 exports.procedure = procedure;
