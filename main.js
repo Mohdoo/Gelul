@@ -17,7 +17,7 @@ client.on('ready', () => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
-    await commands.applyCommands(interaction);
+    commands.applyCommands(interaction);
 });
 
 client.login(config.CLIENT_TOKEN);

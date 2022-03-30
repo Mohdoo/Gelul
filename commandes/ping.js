@@ -9,7 +9,7 @@ const procedure = (interaction) => {
 
 
 const name = "ping";
-const description = "Réponds par « pong »!";
+const description = "Réponds par « pong » !";
 const protected = false;
 const options = null;
 

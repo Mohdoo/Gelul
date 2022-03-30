@@ -1,3 +1,4 @@
+// produit une erreur MODULE_NOT_FOUND…
 //const { ApplicationCommandOptionTypes } = require('discord.js/typings/enums');
 
 /**
@@ -5,6 +6,9 @@
  * @param {*} interaction 
  */
 const procedure = (interaction) => {
+    /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
+     * comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit
+    */
     let attack = interaction.options.getString("move");
     interaction.reply(`Vous avez demandé le move ${attack}`); 
 };
