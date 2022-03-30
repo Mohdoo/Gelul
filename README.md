@@ -20,3 +20,6 @@ Chaque membre du serveur possède une jauge de mana, un pourcentage et un score.
 `/spell <attaque> <cible>` lance un sort.  
 `/stats [membre]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
 `/leaderboard` affiche les meilleurs scores.
+
+### Message de bienvenue
+Le bot envoie un message pour saluer les gens qui rejoignent le serveur. [Message d’accueil actuel](https://discord.com/channels/588074121980805120/588075108975771691/928032992402735124).

@@ -5,7 +5,7 @@
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const config = require("./config.json");
+const config = require('./config.json');
 
 var commands = new Array;
 
@@ -14,14 +14,16 @@ config.commands.forEach(e => {
     let module = require(`./commandes/${e}`);
 
     // si le module est invalide, on passe !
-    if (Object.keys(module).length != 4) {
+    if (Object.keys(module).length != 5) {
         console.error(`Le module ${e} ne semble pas conforme. Il ne sera pas chargé.`);
         return;
     }
 
     let new_command = {
         "name" : module.name,
-        "description" : module.description
+        "description" : module.description,
+        "options": module.options,
+        "type": 1
     };
     
     commands.push(new_command);

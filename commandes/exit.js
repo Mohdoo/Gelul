@@ -11,10 +11,13 @@
 };
 
 
-const description = "(Admin seulement) Déconnecte le bot et l'éteint."
 const name = "exit";
+const description = "(Admin seulement) Déconnecte le bot et l'éteint."
+const protected = true;
+const options = null;
 
 exports.procedure = procedure;
-exports.description = description;
 exports.name = name;
-exports.protected = true;
+exports.description = description;
+exports.protected = protected;
+exports.options = options;

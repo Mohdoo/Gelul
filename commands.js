@@ -9,7 +9,7 @@ const initCommands = () => {
         let module = require(`./commandes/${e}`);
 
         // si le module est invalide, on passe !
-        if (Object.keys(module).length != 4) {
+        if (Object.keys(module).length != 5) {
             console.error(`Le module ${e} ne semble pas conforme. Il ne sera pas chargé.`);
             return;
         }

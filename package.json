@@ -8,7 +8,6 @@
   "description": "Bot créé exclusivement pour le smashcord francophone [Le Havre des Aventuriers](https://discord.gg/sevQSfS).",
   "version": "0.1.0",
   "main": "main.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
