@@ -19,7 +19,8 @@ Commande pour afficher la frame data du personnage. Sous quelle forme afficher t
 Chaque membre du serveur possède une jauge de mana, un pourcentage et un score. La mana se recharge lentement avec le temps, et peut être utilisée pour lancer des sorts parmi une sélection des sorts du Héros dans Smash. Chaque sort coûte la même mana et inflige les mêmes dégâts que dans le jeu. Un calcul est fait pour voir si la cible est expulsée. Si c’est le cas, le lanceur gagne un point de score et la cible en perd un.  
 `/spell <attaque: choice> <cible: user>` lance un sort.  
 `/stats [membre: user]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
-`/leaderboard` affiche les meilleurs scores.
+`/leaderboard` affiche les meilleurs scores.  
+Utiliser des subcommands ? `/spell attack <attaque: choice> <cible: user>` `/spell stats [member: user]` `/spell leaderboard`
 
 ### Message de bienvenue
 Le bot envoie un message pour saluer les gens qui rejoignent le serveur. [Message d’accueil actuel](https://discord.com/channels/588074121980805120/588075108975771691/928032992402735124).

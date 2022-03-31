@@ -4,6 +4,8 @@
 
 ---
 
+Indentations : avec 4 espaces
+
 Le nom des variables est en `snake_case`, celui des fonctions en `lowerCamelCase`, celui des classes en `CamelCase`, et certaines constantes importantes qui ne sont pas des objets est en `UPPER_SNAKE_CASE`. Mais c’est plus l’habitude qu’une vraie convention.
 
 Faire attention au choix entre `const`, `let` et `var` quand on déclare une variable. Ne jamais déclarer sans mot-clé.
@@ -37,13 +39,14 @@ Pour les chaînes de caractères, je préfère utiliser `"` et \` quand il faut 
 ```js
 console.log("Hello\u202F!");
 let e = 1;
-console.log("e = ${e}");
+console.log(`e = ${e}`);
 ```
 
 Pour créer un objet vide, utiliser `new` si possible.  
 ```js
 let my_array = new Array; // yes
 let my_array = []; // no thanks
-let my_string = new String;
-let my_object = {};
+let my_string = new String; // techniquement différent de la ligne suivante
+let my_string = ""; // mais je préfère new String pour rester cohérent avec Array
+let my_object = new Object; // en théorie on a jamais besoin de faire ça
 ```
