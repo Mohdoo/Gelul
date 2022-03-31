@@ -1,5 +1,4 @@
-// produit une erreur MODULE_NOT_FOUND…
-//const { ApplicationCommandOptionTypes } = require("discord.js/typings/enums");
+const { ApplicationCommandOptionType } = require("discord-api-types/v10");
 
 /**
  * Renvoie la frame data demandée en option.
@@ -21,12 +20,12 @@ const options = [
     {
         "name": "ground-attacks",
         "description": "Affiche une des attaques au sol.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque au sol à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -80,12 +79,12 @@ const options = [
     {
         "name": "aerial-attacks",
         "description": "Affiche une des attaques aériennes.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque aérienne à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -115,12 +114,12 @@ const options = [
     {
         "name": "special-attacks",
         "description": "Affiche une attaque spéciale.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque spéciale à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -230,12 +229,12 @@ const options = [
     {
         "name": "grabs-throws",
         "description": "Affiche un grab ou un throw.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "Le grab ou throw à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -277,12 +276,12 @@ const options = [
     {
         "name": "dodges-rolls",
         "description": "Affiche un dodge ou un roll.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "Le grab ou throw à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -328,12 +327,12 @@ const options = [
     {
         "name": "misc-info",
         "description": "Affiche des statistiques générales, ou les getup attacks.",
-        "type": 1,
+        "type": ApplicationCommandOptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "La statistique à afficher.",
-                "type": 3,
+                "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
                     {

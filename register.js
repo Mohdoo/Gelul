@@ -4,7 +4,7 @@
  */
 
 const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
+const { Routes, ApplicationCommandType } = require("discord-api-types/v10");
 const { commands, CLIENT_TOKEN, CLIENT_ID, GUILD_ID } = require("./config.json");
 
 let commands_to_declare = new Array;
@@ -23,13 +23,13 @@ commands.forEach(e => {
         "name" : name,
         "description" : description,
         "options": options,
-        "type": 1
+        "type": ApplicationCommandType.String
     };
     
     commands_to_declare.push(new_command);
 });
 
-const rest = new REST({ version: "9" }).setToken(CLIENT_TOKEN);
+const rest = new REST({ version: "10" }).setToken(CLIENT_TOKEN);
 
 (async () => {
     try {
