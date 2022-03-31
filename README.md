@@ -12,14 +12,17 @@ Si les commandes sont correctement déclarées, vous pouvez maintenant lancer le
 ## Idées
 
 ### Frame data
-Commande pour afficher la frame data du personnage.  
-`/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée. Si le paramètre est omis, donne juste le lien vers la [page UFD du Héros](https://ultimateframedata.com/hero).
+Commande pour afficher la frame data du personnage. Sous quelle forme afficher tout ça ? Faudrait essayer de limiter au maximum l’envoi d’images, par exemple avec des embeds.  
+`/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.
 
 ### Mini-jeu
 Chaque membre du serveur possède une jauge de mana, un pourcentage et un score. La mana se recharge lentement avec le temps, et peut être utilisée pour lancer des sorts parmi une sélection des sorts du Héros dans Smash. Chaque sort coûte la même mana et inflige les mêmes dégâts que dans le jeu. Un calcul est fait pour voir si la cible est expulsée. Si c’est le cas, le lanceur gagne un point de score et la cible en perd un.  
-`/spell <attaque> <cible>` lance un sort.  
-`/stats [membre]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
+`/spell <attaque: choice> <cible: user>` lance un sort.  
+`/stats [membre: user]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
 `/leaderboard` affiche les meilleurs scores.
 
 ### Message de bienvenue
 Le bot envoie un message pour saluer les gens qui rejoignent le serveur. [Message d’accueil actuel](https://discord.com/channels/588074121980805120/588075108975771691/928032992402735124).
+
+### Nouvelles vidéos
+Le bot envoie des liens vers les vidéos de matchs où un Héros apparaît dès qu’elles sont postées sur Youtube, en suivant une liste de chaînes, par exemple [VGBootCamp](https://www.youtube.com/c/Vgbootcamp).

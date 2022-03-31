@@ -3,13 +3,13 @@
  * @param {*} interaction 
  */
 const procedure = (interaction) => {
-    let name = interaction.member.nickname != null ? interaction.member.nickname : interaction.member.user.username;
-    interaction.reply(`Pong ${name}!`); 
+    const name = interaction.member.nickname != null ? interaction.member.nickname : interaction.member.user.username;
+    interaction.reply(`Pong ${name}\u202F! [${client.ws.ping} ms]`); 
 };
 
 
 const name = "ping";
-const description = "Réponds par « pong » !";
+const description = "Réponds par «\u202Fpong\u202F»\u202F!";
 const protected = false;
 const options = null;
 

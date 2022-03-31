@@ -1,4 +1,4 @@
-const commands_list = new Array;
+let commands_list = new Array;
 
 /**
  * Charge toutes les commandes listées dans la config.
@@ -6,19 +6,20 @@ const commands_list = new Array;
  */
 const initCommands = () => {
     config.commands.forEach(e => {
-        let module = require(`./commandes/${e}`);
+        const { name, description, procedure, protected } = require(`./commandes/${e}`);
 
         // si le module est invalide, on passe !
-        if (Object.keys(module).length != 5) {
+        if (name === undefined || description === undefined
+                || procedure === undefined || protected === undefined) {
             console.error(`Le module ${e} ne semble pas conforme. Il ne sera pas chargé.`);
             return;
         }
 
-        let new_command = {
-            "name" : module.name,
-            "description" : module.description,
-            "procedure" : module.procedure,
-            "protected": module.protected
+        const new_command = {
+            "name" : name,
+            "description" : description,
+            "procedure" : procedure,
+            "protected": protected
         };
 
         commands_list.push(new_command);
@@ -42,7 +43,7 @@ const applyCommands = (interaction) => {
                     e.procedure(interaction);
                 } else {
                     interaction.reply({ephemeral: true, content: "Cette commande est réservée aux administrateurs du bot."});
-                    console.log(`L'utilisateur ${interaction.member.user.tag} (${interaction.member.user.id}) a tenté d'utiliser la commande ${e.name}`);
+                    console.log(`L’utilisateur ${interaction.member.user.tag} (${interaction.member.user.id}) a tenté d’utiliser la commande ${e.name}`);
                 }
             }
         }
