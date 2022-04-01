@@ -5,7 +5,7 @@ Bot créé exclusivement pour le smashcord francophone [Le Havre des Aventuriers
 ## Utilisation
 
 Installez les modules Node.js demandés par [package.json](./package.json).  
-Créez le fichier *config.json* en utilisant comme modèle [example.config.json](./example.config.json).  
+Créez le fichier *config.json* en utilisant comme modèle [example.config.json](./example.config.json). Vous noterez que la config est faite pour une seule guilde. Normal, le bot a été créé pour une seule guilde, et part du principe que les permissions sont bien gérées. Étendre ses capacités sur ce plan n’est clairement pas une priorité.  
 Déclarez les commandes du bot à l’API : `node register.js`.  
 Si les commandes sont correctement déclarées, vous pouvez maintenant lancer le bot : `node main.js`.
 

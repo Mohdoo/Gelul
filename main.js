@@ -7,7 +7,8 @@ const { initCommands, applyCommands } = require("./commands");
 
 // client et config sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !
 global.config = require("./config.json");
-global.client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+// intents : GUILDS est nécessaire pour que Discord.js fonctionne, GUILD_MEMBERS donne accès à l’événement GUILD_MEMBER_ADD
+global.client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
 
 // appelé une fois quand le bot se connecte
 client.on("ready", () => {
@@ -21,6 +22,16 @@ client.on("interactionCreate", async interaction => {
 
     applyCommands(interaction);
 });
+
+/* l’envoi de messages de bienvenue ne se fait logiquement que si on a défini un salon pour ça
+ * En plus faire comme ça permet de facilement désactiver la fonctionnalité, même si c’est pas ultra propre */
+if (config.WELCOME_CHANNEL_ID !== "") {
+    client.on("guildMemberAdd", async member => {
+        member.guild.channels.fetch(config.WELCOME_CHANNEL_ID)
+                .then(channel => channel.send(`Bienvenue ${member.user.username}`))
+                .catch(console.error);
+    });
+}
 
 // Let’s goooooooo!
 client.login(config.CLIENT_TOKEN);
