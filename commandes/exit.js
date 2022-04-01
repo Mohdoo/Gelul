@@ -1,3 +1,9 @@
+const name = "exit";
+const description = "(Admin seulement) Déconnecte le bot et l’éteint."
+const protected = true;
+const options = null;
+
+
 /**
  * Déconnecte le bot et termine le programme.
  * @param {*} interaction 
@@ -11,13 +17,8 @@
 };
 
 
-const name = "exit";
-const description = "(Admin seulement) Déconnecte le bot et l’éteint."
-const protected = true;
-const options = null;
-
-exports.procedure = procedure;
 exports.name = name;
 exports.description = description;
 exports.protected = protected;
 exports.options = options;
+exports.procedure = procedure;

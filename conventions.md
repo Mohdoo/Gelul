@@ -4,6 +4,16 @@
 
 ---
 
+Dans chaque fichier JS, essayer d’organiser ainsi :
+```
+imports
+attributs privés
+fonctions privées
+attributs à exporter
+fonctions à exporter
+exports
+```
+
 Indentations : avec 4 espaces
 
 Le nom des variables est en `snake_case`, celui des fonctions en `lowerCamelCase`, celui des classes en `CamelCase`, et certaines constantes importantes qui ne sont pas des objets est en `UPPER_SNAKE_CASE`. Mais c’est plus l’habitude qu’une vraie convention.

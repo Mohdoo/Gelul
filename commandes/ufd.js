@@ -1,17 +1,20 @@
 const { ApplicationCommandOptionType } = require("discord-api-types/v10");
+const { MessageEmbed } = require("discord.js");
 
 /**
- * Renvoie la frame data demandée en option.
- * @param {*} interaction 
+ * Crée l’embed qui va être envoyé comme réponse à la commande
+ * https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
+ * @param {*} move l’attaque ou la statistique à afficher
  */
-const procedure = (interaction) => {
-    /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
-     * comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit
-    */
-    const attack = interaction.options.getString("move");
-    interaction.reply(`Vous avez demandé le move ${attack}`); 
-};
+const creerEmbedFrameData = (move) => {
+    let moveEmbed = new MessageEmbed()
+            .setColor("#893d92")
+            .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202F!`);
+    
+    return moveEmbed;
+}
 
+/* Champs publics */
 
 const name = "ufd";
 const description = "Permet de consulter la frame data du Héros.";
@@ -358,8 +361,20 @@ const options = [
 ];
 
 
-exports.procedure = procedure;
+/**
+ * Renvoie la frame data demandée en option.
+ * @param {*} interaction 
+ */
+const procedure = (interaction) => {
+    /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
+       comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
+    const attack = interaction.options.getString("move");
+    interaction.reply({ embeds: [creerEmbedFrameData(attack)]}); 
+};
+
+
 exports.name = name;
 exports.description = description;
 exports.protected = protected;
 exports.options = options;
+exports.procedure = procedure;
