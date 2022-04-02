@@ -5,6 +5,7 @@ const { MessageEmbed } = require("discord.js");
  * Crée l’embed qui va être envoyé comme réponse à la commande
  * https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
  * @param {*} move l’attaque ou la statistique à afficher
+ * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
     let moveEmbed = new MessageEmbed()

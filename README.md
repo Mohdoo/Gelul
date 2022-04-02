@@ -12,6 +12,7 @@ Si les commandes sont correctement déclarées, vous pouvez maintenant lancer le
 ## Idées
 
 ### Frame data
+*Partie commande faite. Reste à faire la réponse…*  
 Commande pour afficher la frame data du personnage. Sous quelle forme afficher tout ça ? Faudrait essayer de limiter au maximum l’envoi d’images, par exemple avec des embeds.  
 `/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.
 
@@ -23,7 +24,14 @@ Chaque membre du serveur possède une jauge de mana, un pourcentage et un score.
 Utiliser des subcommands ? `/spell attack <attaque: choice> <cible: user>` `/spell stats [member: user]` `/spell leaderboard`
 
 ### Message de bienvenue
+*Implémenté. Reste à faire la réponse…*
 Le bot envoie un message pour saluer les gens qui rejoignent le serveur. [Message d’accueil actuel](https://discord.com/channels/588074121980805120/588075108975771691/928032992402735124).
 
 ### Nouvelles vidéos
 Le bot envoie des liens vers les vidéos de matchs où un Héros apparaît dès qu’elles sont postées sur Youtube, en suivant une liste de chaînes, par exemple [VGBootCamp](https://www.youtube.com/c/Vgbootcamp).
+
+### Optimisations non prioritaires
+Automatiser `register.js`  
+Faire en sorte que `ufd.js` et `spell.js` utilisent la même liste de sorts pour ne pas avoir à écrire les noms et stats deux fois  
+Localiser les slash commands  
+Regarder comment supprimer une commande déclarée à l’API (pour le moment on ne fait qu’en ajouter et modifier celles qui existent). Si le nombre de commandes devient grand, ne redéclarer que celles qui ont changé.
