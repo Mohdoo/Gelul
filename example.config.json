@@ -5,7 +5,8 @@
     "commands": [
         "ping",
         "exit",
-        "ufd"
+        "ufd",
+        "spell"
     ],
     "owners": [
         "id d’un owner = personne ayant le droit d’utiliser les commandes protected."

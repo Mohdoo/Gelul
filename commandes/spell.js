@@ -22,7 +22,9 @@ const kill = (hero) => {
  * @param {*} target 
  */
 const applyDamage = (spell, caster, target) => {
+    // on applique une variance aléatoire de +- 10 dégâts
     const plus_ou_moins = Math.random() * 20 - 10;
+    // spell.ko === null pour Heal, c’est un cas spécial à gérer
     spell.ko = (spell.ko !== null ? spell.ko + plus_ou_moins : null);
 
     if (spell.ko !== null && target.percentage >= spell.ko) {
@@ -30,9 +32,11 @@ const applyDamage = (spell, caster, target) => {
         caster.score++;
     } else {
         spell.damage += Math.random() * 5 - 2.5;
+        // éviter que Heal ne se mette à infliger des dégâts
         if (spell.name !== "Heal" && spell.damage < 1) {
             spell.damage = 1;
         }
+        // on calcule puis arrondi au dixième près
         target.percentage = Number((target.percentage + spell.damage).toFixed(1));
     }
 };
@@ -101,12 +105,12 @@ const options = [
 
 
 /**
- * Répond par un message tout bête.
+ * Mini-jeu de spell. Chaque joueur a des %, MP, score et peut lancer
+ * des sorts sur les autres joueurs.
  * @param {*} interaction 
  */
 const procedure = (interaction) => {
     // 0. Initialisation des variables nécessaires
-
     // le membre qui a lancé le sort
     const caster_id = interaction.member.id;
     // le sort lancé
@@ -118,6 +122,7 @@ const procedure = (interaction) => {
     let target = getStatsHero(target_id);
     let spell = spells_data.spells[spell_name];
 
+
     // 1. vérification de la validité de la cible (seul Heal peut avoir caster === target)
     if (spell_name !== "heal" && caster_id === target_id) {
         interaction.reply({ephemeral: true, content: "Seul Heal peut être lancé sur soi-même."});
@@ -126,6 +131,7 @@ const procedure = (interaction) => {
         interaction.reply({ephemeral: true, content: "Déso pas déso t’as cramé tous tes Heals pour cette stock"});
         return;
     }
+
 
     // 2. met à jour la mana du lanceur, puis vérifie s’il en a assez
     let now = Date.now();
@@ -157,11 +163,13 @@ const procedure = (interaction) => {
         caster.last_spell_ts = now - (spells_data.mana_refill_time - manque)
     }
 
+
     // 3. calcul de précision
     if (Math.random() > spell.precision) {
         interaction.reply(`Precision check échoué, t’es deg\u202F? ${caster.mana} MP`);
         return;
     }
+
 
     // 4. calcul de dégâts et des stocks perdus
     switch (spell_name) {
@@ -198,9 +206,9 @@ const procedure = (interaction) => {
             caster.mana = 0;
             break;
         case "hocuspocus":
-            // hocus pocus active un effet aléatoire
-            // todo
-            kill(caster); // pour le moment Hocus Pocus n’est pas implémenté, donc ptdr t’es mort
+            /* hocus pocus active un effet aléatoire
+               TODO
+               pour le moment Hocus Pocus n’est pas implémenté et ne fait rien */
             break;
         case "heal":
             // heal soigne et a un nombre d’utilisations limitées
@@ -214,9 +222,11 @@ const procedure = (interaction) => {
             break;
     }
 
+
     // 5. mise à jour de la db
     setStatsHero(caster_id, caster);
     setStatsHero(target_id, target);
+
 
     // 6. réponse finale
     interaction.reply(`

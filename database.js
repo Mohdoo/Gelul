@@ -49,7 +49,7 @@ const initDatabase = () => {
     createNewHeroQuery = db.prepare("INSERT INTO heros (id) VALUES (?)");
     getStatsHeroQuery = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
     /* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
-     ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? */
+     ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
     setStatsHeroQuery = db.prepare("UPDATE heros SET percentage = ?, score = ?, mana = ?, heal = ?, last_spell_ts = ? WHERE id = ?");
 
     console.log("Requêtes de la base de données prêtes.");

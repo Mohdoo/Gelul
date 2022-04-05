@@ -5,7 +5,7 @@
 const { Client, Intents } = require("discord.js");
 const { applyCommands } = require("./commands");
 
-// config, db et client sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !
+// config et client sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !
 global.config = require("./config.json");
 
 // intents : GUILDS est nécessaire pour que Discord.js fonctionne, GUILD_MEMBERS donne accès à l’événement GUILD_MEMBER_ADD
