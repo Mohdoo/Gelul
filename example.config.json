@@ -11,5 +11,6 @@
         "id d’un owner = personne ayant le droit d’utiliser les commandes protected."
     ],
     "GUILD_ID": "id de la guilde où sera utilisé le bot (une seule, voire README.md#Utilisation).",
-    "WELCOME_CHANNEL_ID": "id du salon où envoyer les messages de bienvenue. Laisser vide pour désactiver l’envoi de tels messages."
+    "WELCOME_CHANNEL_ID": "id du salon où envoyer les messages de bienvenue. Laisser vide pour désactiver l’envoi de tels messages.",
+    "DATABASE_FILENAME": "nom du fichier où écrire et lire la base de données. Il sera créé automatiquement s’il n’existe pas."
 }

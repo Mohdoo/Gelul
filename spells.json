@@ -1,0 +1,91 @@
+{
+    "mana_refill_time": 900000,
+    "new_hero": {
+        "percentage": 0.0,
+        "score": 0,
+        "mana": 100,
+        "heal": 5
+    },
+    "spells": {
+        "whack": {
+            "name": "Whack",
+            "damage": 1.0,
+            "precision": 0.7,
+            "ko": 535.0,
+            "cost": 10,
+            "projectile": true
+        },
+        "thwack": {
+            "name": "Thwack",
+            "damage": 3.0,
+            "precision": 0.9,
+            "ko": 319.0,
+            "cost": 30,
+            "projectile": true
+        },
+        "kaboom": {
+            "name": "Kaboom",
+            "damage": 28.0,
+            "precision": 0.8,
+            "ko": 86.0,
+            "cost": 37,
+            "projectile": false
+        },    
+        "hatchetman": {
+            "name": "Hatchet Man",
+            "damage": 35,
+            "precision": 0.3,
+            "ko": 44.0,
+            "cost": 15,
+            "projectile": false
+        },
+        "sizzle": {
+            "name": "Sizzle",
+            "damage": 22.0,
+            "precision": 0.8,
+            "ko": 137.0,
+            "cost": 20,
+            "projectile": true
+        },
+        "kamikazee": {
+            "name": "Kamikazee",
+            "damage": 50,
+            "precision": 0.9,
+            "ko": 52.0,
+            "cost": 1,
+            "projectile": false
+        },
+        "magicburst": {
+            "name": "Magic Burst",
+            "damage": null,
+            "precision": 0.8,
+            "ko": null,
+            "cost": 1,
+            "projectile": false
+        },
+        "heal": {
+            "name": "Heal",
+            "damage": -11.0,
+            "precision": 1.0,
+            "ko": null,
+            "cost": 7,
+            "projectile": false
+        },
+        "hocuspocus": {
+            "name": "Hocus Pocus",
+            "damage": null,
+            "precision": 1.0,
+            "ko": null,
+            "cost": 4,
+            "projectile": false
+        },
+        "flameslash": {
+            "name": "Flame Slash",
+            "damage": 22,
+            "precision": 0.7,
+            "ko": 89,
+            "cost": 12,
+            "projectile": false
+        }
+    }
+}
