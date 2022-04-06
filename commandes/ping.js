@@ -8,7 +8,7 @@ const options = null;
  * Répond par un message tout bête.
  * @param {*} interaction 
  */
-const procedure = (interaction) => {
+const procedure = async (interaction) => {
     const name = interaction.member.nickname != null ? interaction.member.nickname : interaction.member.user.username;
     interaction.reply(`Pong ${name}\u202F! [${client.ws.ping} ms]`); 
 };

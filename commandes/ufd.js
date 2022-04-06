@@ -366,7 +366,7 @@ const options = [
  * Renvoie la frame data demandée en option.
  * @param {*} interaction 
  */
-const procedure = (interaction) => {
+const procedure = async (interaction) => {
     /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
        comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
     const attack = interaction.options.getString("move");

@@ -9,6 +9,10 @@ Créez le fichier *config.json* en utilisant comme modèle [example.config.json]
 Déclarez les commandes du bot à l’API : `node register.js`.  
 Si les commandes sont correctement déclarées, vous pouvez maintenant lancer le bot : `node main.js`.
 
+## Organisation des fichiers
+
+Chaque fichier JavaScript dans le dossier `commandes` représente une et une seule commande du bot. La liste est `config.commands`. Voilà c’est tout allez salut abonne-toi.
+
 ## Idées
 
 ### Frame data
@@ -19,6 +23,7 @@ Commande pour afficher la frame data du personnage. Sous quelle forme afficher t
 ### Mini-jeu
 *`/spell` implémenté. Reste à faire la réponse et les deux autres commandes…*  
 *`/stats` implémenté.*  
+*`/leaderboard` implémenté.*  
 Chaque membre du serveur possède une jauge de mana, un pourcentage et un score. La mana se recharge lentement avec le temps, et peut être utilisée pour lancer des sorts parmi une sélection des sorts du Héros dans Smash. Chaque sort coûte la même mana et inflige les mêmes dégâts que dans le jeu. Un calcul est fait pour voir si la cible est expulsée. Si c’est le cas, le lanceur gagne un point de score et la cible en perd un.  
 `/spell <attaque: choice> <cible: user>` lance un sort.  
 `/stats [membre: user]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  

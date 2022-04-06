@@ -109,7 +109,7 @@ const options = [
  * des sorts sur les autres joueurs.
  * @param {*} interaction 
  */
-const procedure = (interaction) => {
+const procedure = async (interaction) => {
     // déjà check que la cible est pas un bot
     if (interaction.options.getMember("cible").user.bot) {
         interaction.reply({ ephemeral: true, content: "T’as passé l’âge d’affronter des ordis, cible plutôt un vrai joueur." });

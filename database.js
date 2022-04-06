@@ -13,6 +13,7 @@ const { new_hero } = require("./spells.json");
 let createNewHeroQuery;
 let getStatsHeroQuery;
 let setStatsHeroQuery;
+let getLeaderBoardQuery;
 let db;
 
 const createNewHero = (id) => {
@@ -51,6 +52,7 @@ const initDatabase = () => {
     /* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
      ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
     setStatsHeroQuery = db.prepare("UPDATE heros SET percentage = ?, score = ?, mana = ?, heal = ?, last_spell_ts = ? WHERE id = ?");
+    getLeaderBoardQuery = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
 
     console.log("Requêtes de la base de données prêtes.");
 };
@@ -81,6 +83,13 @@ const setStatsHero = (id, stats) => {
 };
 
 /**
+ * Renvoie un array contenant les 3 joueurs avec le plus grand score
+ */
+const getLeaderBoard = () => {
+    return getLeaderBoardQuery.all();
+}
+
+/**
  * Ferme la base de données.
  */
 const closeDatabase = () => {
@@ -90,4 +99,5 @@ const closeDatabase = () => {
 exports.initDatabase = initDatabase;
 exports.getStatsHero = getStatsHero;
 exports.setStatsHero = setStatsHero;
+exports.getLeaderBoard = getLeaderBoard;
 exports.closeDatabase = closeDatabase;

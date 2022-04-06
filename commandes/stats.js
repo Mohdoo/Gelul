@@ -19,7 +19,7 @@ const options = [
  * Affiche les stats d’un joueur du jeu /spell
  * @param {*} interaction 
  */
-const procedure = (interaction) => {
+const procedure = async (interaction) => {
     let joueur = interaction.options.getMember("joueur");
 
     // cas 1 : commande sans option
