@@ -18,6 +18,7 @@ Commande pour afficher la frame data du personnage. Sous quelle forme afficher t
 
 ### Mini-jeu
 *`/spell` implémenté. Reste à faire la réponse et les deux autres commandes…*  
+*`/stats` implémenté.*  
 Chaque membre du serveur possède une jauge de mana, un pourcentage et un score. La mana se recharge lentement avec le temps, et peut être utilisée pour lancer des sorts parmi une sélection des sorts du Héros dans Smash. Chaque sort coûte la même mana et inflige les mêmes dégâts que dans le jeu. Un calcul est fait pour voir si la cible est expulsée. Si c’est le cas, le lanceur gagne un point de score et la cible en perd un.  
 `/spell <attaque: choice> <cible: user>` lance un sort.  
 `/stats [membre: user]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
@@ -30,6 +31,9 @@ Le bot envoie un message pour saluer les gens qui rejoignent le serveur. [Messag
 
 ### Nouvelles vidéos
 Le bot envoie des liens vers les vidéos de matchs où un Héros apparaît dès qu’elles sont postées sur Youtube, en suivant une liste de chaînes, par exemple [VGBootCamp](https://www.youtube.com/c/Vgbootcamp).
+
+### Choix d’un skin
+Ça retourne un skin parmi les 8 du jeu, accompagné d'une petite phrase (rigolote et/ou avec une réf au jeu d'inspiration de préférence) selon le skin tiré, pour indiquer par exemple le prochain qu'on va jouer (si quelqu'un a du mal à se décider)
 
 ### Optimisations non prioritaires
 [À faire régulièrement svp] Review et clean du code.  

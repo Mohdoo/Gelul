@@ -110,6 +110,12 @@ const options = [
  * @param {*} interaction 
  */
 const procedure = (interaction) => {
+    // déjà check que la cible est pas un bot
+    if (interaction.options.getMember("cible").user.bot) {
+        interaction.reply({ ephemeral: true, content: "T’as passé l’âge d’affronter des ordis, cible plutôt un vrai joueur." });
+        return;
+    }
+
     // 0. Initialisation des variables nécessaires
     // le membre qui a lancé le sort
     const caster_id = interaction.member.id;
@@ -134,13 +140,13 @@ const procedure = (interaction) => {
 
 
     // 2. met à jour la mana du lanceur, puis vérifie s’il en a assez
-    let now = Date.now();
+    const now = Date.now();
 
     /* calcul de la mana gagnée depuis le dernier sort lancé 
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
     if (caster.mana < 100) {
         let temps_ecoule = (now - caster.last_spell_ts) / spells_data.mana_refill_time;
-        caster.mana += Number(temps_ecoule.toFixed(0));
+        caster.mana += Math.floor(temps_ecoule);
         // limite la mana à 100
         caster.mana = (caster.mana > spells_data.new_hero.mana ? spells_data.new_hero.mana : caster.mana);
     }
@@ -165,8 +171,17 @@ const procedure = (interaction) => {
 
 
     // 3. calcul de précision
+    // Kamikazee tue son lanceur même si le calcul de précision échoue, donc on doit le mettre ici
+    if (spell_name === "kamikazee") {
+        // Pour équilibrer le sort on dit qu’il ne reset pas la mana
+        const old_mana = caster.mana;
+        kill(caster);
+        caster.mana = old_mana;
+    }
+
     if (Math.random() > spell.precision) {
         interaction.reply(`Precision check échoué, t’es deg\u202F? ${caster.mana} MP`);
+        setStatsHero(caster_id, caster);
         return;
     }
 
@@ -192,11 +207,6 @@ const procedure = (interaction) => {
                 // vu le calcul plus haut, c’est impossible d’éjecter avec Whack ou Thwack
                 applyDamage(spell, caster, target);
             }
-            break;
-        case "kamikazee":
-            // kamikazee instant KO son lanceur
-            kill(caster);
-            applyDamage(spell, caster, target);
             break;
         case "magicburst":
             // magic burst draine toute la mana du lanceur et inflige des dégâts proportionnels
