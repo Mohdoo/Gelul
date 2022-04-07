@@ -26,17 +26,18 @@ const procedure = async (interaction) => {
         podium.unshift({ name: "Roto", id: 3, score: 3333, percentage: 100 });
     }
     if (podium.length < 2) {
-        // le jeune héros pris par la destinée
-        podium.unshift({ name: "Luminary", id: 11, score: 111, percentage: 50 });
+        // sans doute le héros le plus aimé
+        podium.unshift({ name: "Eight", id: 8, score: 888, percentage: 50 });
     }
     if (podium.length < 1) {
         // il vient juste de commencer à jouer mais ne vous inquiétez pas il va les rattraper
-        podium.unshift({ name: "Solo", id: 4, score: 44, percentage: 0 });
+        podium.unshift({ name: "Solo", id: 4, score: 444, percentage: 0 });
     }
 
     const embed = new MessageEmbed()
             .setColor(0xf8d55f)
             .setTitle("Podium des Héros")
+            .setImage("https://mohdoo.fr/ressources/gelul/podium.webp")
             .setDescription(
                     "Les trois Héros ayant le plus grand score sont ici\u202F!\n" +
                     "En cas d’égalité, c’est le pourcentage qui fait la différence."

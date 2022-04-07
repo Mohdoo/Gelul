@@ -9,8 +9,7 @@ const options = null;
  * @param {*} interaction 
  */
 const procedure = async (interaction) => {
-    const name = interaction.member.nickname != null ? interaction.member.nickname : interaction.member.user.username;
-    interaction.reply(`Pong ${name}\u202F! [${client.ws.ping} ms]`); 
+    interaction.reply(`Pong ${interaction.member.displayName}\u202F! [${client.ws.ping} ms]`); 
 };
 
 

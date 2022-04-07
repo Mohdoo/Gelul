@@ -8,11 +8,11 @@ const { MessageEmbed } = require("discord.js");
  * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
-    let moveEmbed = new MessageEmbed()
+    const move_embed = new MessageEmbed()
             .setColor("#893d92")
             .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202F!`);
     
-    return moveEmbed;
+    return move_embed;
 }
 
 /* Champs publics */

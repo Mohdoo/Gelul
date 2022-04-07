@@ -10,7 +10,7 @@ const { commands, CLIENT_TOKEN, CLIENT_ID, GUILD_ID } = require("./config.json")
 let commands_to_declare = new Array;
 
 // un peu similaire au chargement dans commands.js, mais sans la procedure
-commands.forEach(e => {
+for (e of commands) {
     const { name, description, options } = require(`./commandes/${e}`);
 
     // si le module est invalide, on passe !
@@ -27,7 +27,7 @@ commands.forEach(e => {
     };
     
     commands_to_declare.push(new_command);
-});
+}
 
 const rest = new REST({ version: "10" }).setToken(CLIENT_TOKEN);
 

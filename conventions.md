@@ -23,7 +23,7 @@ Le nom des variables est en `snake_case`, celui des fonctions en `lowerCamelCase
 Faire attention au choix entre `const`, `let` et `var` quand on déclare une variable. Ne jamais déclarer sans mot-clé.
 > `const` : variable qu’on ne modifie pas  
 > `let` : déclaration par défaut, portée sur le bloc  
-> `var` : portée sur la fonction
+> `var` : portée sur la fonction (à n’utiliser que si c’est justifié)
 
 Les accolades sont faites comme ça :  
 ```js

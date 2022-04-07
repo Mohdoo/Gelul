@@ -5,7 +5,7 @@ let commands_list = new Array;
  * Chaque commande doit posséder une description un nom et une fonction.
  */
 const initCommands = () => {
-    config.commands.forEach(e => {
+    for (e of config.commands) {
         const { name, description, procedure, protected } = require(`./commandes/${e}`);
 
         // si le module est invalide, on passe !
@@ -24,7 +24,7 @@ const initCommands = () => {
 
         commands_list.push(new_command);
         console.log(`Le module ${e} a été correctement chargé.`);
-    });
+    }
 };
 
 
@@ -33,7 +33,7 @@ const initCommands = () => {
  * @param {*} interaction 
  */
 const applyCommands = (interaction) => {
-    commands_list.forEach(e => {
+    for (e of commands_list) {
         if (interaction.commandName === e.name) {
             if (!e.protected) {
                 e.procedure(interaction);
@@ -47,7 +47,7 @@ const applyCommands = (interaction) => {
                 }
             }
         }
-    });
+    }
 };
 
 exports.initCommands = initCommands;

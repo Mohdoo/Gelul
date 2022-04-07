@@ -8,9 +8,8 @@ const { applyCommands } = require("./commands");
 // config et client sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !
 global.config = require("./config.json");
 
-// intents : GUILDS est nécessaire pour que Discord.js fonctionne, GUILD_MEMBERS donne accès à l’événement GUILD_MEMBER_ADD
-let intents = [Intents.FLAGS.GUILDS];
-if (config.WELCOME_CHANNEL_ID !== "") intents.push(Intents.FLAGS.GUILD_MEMBERS);
+// intents : GUILDS est nécessaire pour que Discord.js fonctionne, GUILD_MEMBERS donne accès à l’événement GUILD_MEMBER_ADD et est requis pour /leaderboard
+const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS];
 global.client = new Client({ intents: intents });
 
 

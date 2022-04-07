@@ -24,7 +24,7 @@ const procedure = async (interaction) => {
 
     // cas 1 : commande sans option
     if (joueur === null) {
-        joueur =  interaction.member;
+        joueur = interaction.member;
     // cas 2 : le paramètre est un bot
     } else if (joueur.user.bot) {
         interaction.reply({ ephemeral: true, content: "Les bots ne peuvent pas jouer à ce jeu. Trop triste." });
@@ -38,7 +38,7 @@ const procedure = async (interaction) => {
     /* calcul de la mana gagnée depuis le dernier sort lancé 
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
     if (hero.mana < 100) {
-        let temps_ecoule = (now - hero.last_spell_ts) / mana_refill_time;
+        const temps_ecoule = (now - hero.last_spell_ts) / mana_refill_time;
         hero.mana += Math.floor(temps_ecoule);
         // limite la mana à 100
         hero.mana = (hero.mana > new_hero.mana ? new_hero.mana : hero.mana);

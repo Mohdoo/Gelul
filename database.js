@@ -10,14 +10,14 @@
 
 // représente un joueur quand il est ajouté dans la base
 const { new_hero } = require("./spells.json");
-let createNewHeroQuery;
-let getStatsHeroQuery;
-let setStatsHeroQuery;
-let getLeaderBoardQuery;
+let create_new_hero_query;
+let get_stats_hero_query;
+let set_stats_hero_query;
+let get_leaderboard_query;
 let db;
 
 const createNewHero = (id) => {
-    createNewHeroQuery.run(id);
+    create_new_hero_query.run(id);
     console.log("Ajout du membre " + id + " dans la base de données.");
 };
 
@@ -47,12 +47,12 @@ const initDatabase = () => {
     console.log("Base de données des joueurs initialisée.");
 
     // on prépare les queries qui vont être utilisées par les autres fonctions ici
-    createNewHeroQuery = db.prepare("INSERT INTO heros (id) VALUES (?)");
-    getStatsHeroQuery = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
+    create_new_hero_query = db.prepare("INSERT INTO heros (id) VALUES (?)");
+    get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
     /* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
      ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
-    setStatsHeroQuery = db.prepare("UPDATE heros SET percentage = ?, score = ?, mana = ?, heal = ?, last_spell_ts = ? WHERE id = ?");
-    getLeaderBoardQuery = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
+    set_stats_hero_query = db.prepare("UPDATE heros SET percentage = ?, score = ?, mana = ?, heal = ?, last_spell_ts = ? WHERE id = ?");
+    get_leaderboard_query = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
 
     console.log("Requêtes de la base de données prêtes.");
 };
@@ -63,7 +63,7 @@ const initDatabase = () => {
  * @returns les stats du joueur, ou des stats par défaut si le joueur a été créé
  */
 const getStatsHero = (id) => {
-    let res = getStatsHeroQuery.get(id);
+    let res = get_stats_hero_query.get(id);
     
     if (res === undefined) {
         createNewHero(id);
@@ -79,14 +79,14 @@ const getStatsHero = (id) => {
  * @param {*} stats un objet contenant des valeurs correctes pour percentage, score, mana et last_spell_ts
  */
 const setStatsHero = (id, stats) => {
-    setStatsHeroQuery.run(stats.percentage, stats.score, stats.mana, stats.heal, stats.last_spell_ts, id);
+    set_stats_hero_query.run(stats.percentage, stats.score, stats.mana, stats.heal, stats.last_spell_ts, id);
 };
 
 /**
  * Renvoie un array contenant les 3 joueurs avec le plus grand score
  */
 const getLeaderBoard = () => {
-    return getLeaderBoardQuery.all();
+    return get_leaderboard_query.all();
 }
 
 /**

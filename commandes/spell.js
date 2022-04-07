@@ -145,7 +145,7 @@ const procedure = async (interaction) => {
     /* calcul de la mana gagnée depuis le dernier sort lancé 
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
     if (caster.mana < 100) {
-        let temps_ecoule = (now - caster.last_spell_ts) / spells_data.mana_refill_time;
+        const temps_ecoule = (now - caster.last_spell_ts) / spells_data.mana_refill_time;
         caster.mana += Math.floor(temps_ecoule);
         // limite la mana à 100
         caster.mana = (caster.mana > spells_data.new_hero.mana ? spells_data.new_hero.mana : caster.mana);
@@ -165,7 +165,7 @@ const procedure = async (interaction) => {
         caster.last_spell_ts = now;
     } else {
         // le joueur avait déjà lancé un sort avant
-        let manque = (now - caster.last_spell_ts) % spells_data.mana_refill_time;
+        const manque = (now - caster.last_spell_ts) % spells_data.mana_refill_time;
         caster.last_spell_ts = now - (spells_data.mana_refill_time - manque)
     }
 
