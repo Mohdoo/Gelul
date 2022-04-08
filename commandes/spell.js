@@ -19,9 +19,9 @@ const kill = (hero) => {
 /**
  * Applique les dégâts, calcule les KO
  * Modifie caster et target en conséquence
- * @param {*} spell 
- * @param {*} caster 
- * @param {*} target 
+ * @param {*} spell
+ * @param {*} caster
+ * @param {*} target
  */
 const applyDamage = (spell, caster, target) => {
     // on applique une variance aléatoire de +- 10 dégâts
@@ -45,11 +45,10 @@ const applyDamage = (spell, caster, target) => {
 
 /* Champs publics */
 
-const name = "spell";
-const description = "Lance un sort\u202F!";
-const protected = false;
-const options = [
-    {
+exports.name = "spell";
+exports.description = "Lance un sort\u202F!";
+exports.defaultPermission = true;
+exports.options = [{
         "type": ApplicationCommandOptionType.String,
         "name": "sort",
         "description": "Le sort à lancer.",
@@ -67,9 +66,9 @@ const options = [
 /**
  * Mini-jeu de spell. Chaque joueur a des %, MP, score et peut lancer
  * des sorts sur les autres joueurs.
- * @param {*} interaction 
+ * @param {*} interaction
  */
-const procedure = async (interaction) => {
+exports.procedure = async (interaction) => {
     // déjà check que la cible est pas un bot
     if (interaction.options.getMember("cible").user.bot) {
         interaction.reply({ ephemeral: true, content: "T’as passé l’âge d’affronter des ordis, cible plutôt un vrai joueur." });
@@ -206,10 +205,3 @@ const procedure = async (interaction) => {
             - ${interaction.options.getMember("cible").displayName} → ${target.percentage}\u202F%, score ${target.score}, ${target.mana} MP
     `);
 };
-
-
-exports.name = name;
-exports.description = description;
-exports.protected = protected;
-exports.options = options;
-exports.procedure = procedure;

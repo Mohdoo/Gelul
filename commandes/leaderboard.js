@@ -1,20 +1,21 @@
+"use strict";
+
 const { MessageEmbed } = require("discord.js");
 const { getLeaderBoard } = require("../database");
 
-const name = "leaderboard";
-const description = "Là où rêvent d’aller les plus grands héros\u202F!";
-const protected = false;
-const options = null;
-
+exports.name = "leaderboard";
+exports.description = "Là où rêvent d’aller les plus grands héros\u202F!";
+exports.defaultPermission = true;
+exports.options = null;
 
 /**
  * Affiche les trois joueurs ayant le plus de score dans le jeu.
- * @param {*} interaction 
+ * @param {*} interaction
  */
-const procedure = async (interaction) => {
+exports.procedure = async (interaction) => {
     const podium = getLeaderBoard();
 
-    
+
     for (const e of podium) {
         const u = await interaction.guild.members.fetch(e.id);
         e.name = (u.displayName === undefined ? "[Héros ayant quitté le Havre]" : u.displayName);
@@ -49,10 +50,3 @@ const procedure = async (interaction) => {
 
     interaction.reply({ embeds: [embed] });
 };
-
-
-exports.name = name;
-exports.description = description;
-exports.protected = protected;
-exports.options = options;
-exports.procedure = procedure;

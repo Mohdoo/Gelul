@@ -12,11 +12,9 @@ const { spells } = require("../spells.json");
  * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
-    const move_embed = new MessageEmbed()
+    return new MessageEmbed()
             .setColor("#893d92")
             .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202F!`);
-    
-    return move_embed;
 }
 
 
@@ -30,10 +28,10 @@ const nameToChoice = name => ({name, value: name.replaceAll(" ", "").replaceAll(
 
 /* Champs publics */
 
-const name = "ufd";
-const description = "Permet de consulter la frame data du Héros.";
-const protected = false;
-const options = [
+exports.name = "ufd";
+exports.description = "Permet de consulter la frame data du Héros.";
+exports.defaultPermission = true;
+exports.options = [
     {
         "name": "ground-attacks",
         "description": "Affiche une des attaques au sol.",
@@ -182,18 +180,11 @@ const options = [
 
 /**
  * Renvoie la frame data demandée en option.
- * @param {*} interaction 
+ * @param {*} interaction
  */
-const procedure = async (interaction) => {
+exports.procedure = async (interaction) => {
     /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
        comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
     const attack = interaction.options.getString("move");
-    interaction.reply({ embeds: [creerEmbedFrameData(attack)]}); 
+    interaction.reply({ embeds: [creerEmbedFrameData(attack)]});
 };
-
-
-exports.name = name;
-exports.description = description;
-exports.protected = protected;
-exports.options = options;
-exports.procedure = procedure;
