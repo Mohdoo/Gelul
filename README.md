@@ -44,5 +44,6 @@ Le bot envoie des liens vers les vidéos de matchs où un Héros apparaît dès 
 [À faire régulièrement svp] Review et clean du code.  
 Faire en sorte que `ufd.js` et `spell.js` utilisent la même liste de sorts pour ne pas avoir à écrire les noms et stats deux fois.  
 Localiser les slash commands (est-il seulement possible de localiser `/spell` côté serveur ?).  
-Automatiser `register.js`.  
-Regarder comment supprimer une commande déclarée à l’API (pour le moment on ne fait qu’en ajouter et modifier celles qui existent). Si le nombre de commandes devient grand, ne redéclarer que celles qui ont changé.
+**Automatiser `register.js`.**  
+**Regarder comment supprimer une commande déclarée à l’API (pour le moment on ne fait qu’en ajouter et modifier celles qui existent). Si le nombre de commandes devient grand, ne redéclarer que celles qui ont changé.**  
+Pour cacher les commandes admin aux utilisateurs normaux, on peut les restreindre à un rôle. Mais c’est peut être pas une bonne idée car ça indique qui sont les admins du bot et pourrait donner des pouvoirs à des gens qui ne les méritent pas. C’est peut-être mieux de garder les admins du bot en tant qu’utilisateurs fixes et non en tant que rôles.  

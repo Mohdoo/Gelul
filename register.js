@@ -15,7 +15,7 @@ for (e of commands) {
 
     // si le module est invalide, on passe !
     if (name === undefined || description === undefined || options === undefined) {
-        console.error(`Le module ${e} ne semble pas conforme. Il ne sera pas chargé.`);
+        console.error(`Le module ${e} ne semble pas conforme. Sa commande ne sera pas déclarée.`);
         return;
     }
 

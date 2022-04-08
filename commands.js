@@ -35,16 +35,12 @@ const initCommands = () => {
 const applyCommands = (interaction) => {
     for (e of commands_list) {
         if (interaction.commandName === e.name) {
-            if (!e.protected) {
+            if (!e.protected || config.owners.includes(interaction.member.user.id)) {
                 e.procedure(interaction);
             } else {
                 // les commandes protected ne peuvent être utilisées que par les owners !
-                if (config.owners.includes(interaction.member.user.id)) {
-                    e.procedure(interaction);
-                } else {
-                    interaction.reply({ephemeral: true, content: "Cette commande est réservée aux administrateurs du bot."});
-                    console.log(`L’utilisateur ${interaction.member.user.tag} (${interaction.member.user.id}) a tenté d’utiliser la commande ${e.name}`);
-                }
+                console.log(`L’utilisateur ${interaction.member.user.tag} (${interaction.member.user.id}) a tenté d’utiliser la commande ${e.name}`);
+                interaction.reply({ephemeral: true, content: "Cette commande est réservée aux administrateurs du bot."});
             }
         }
     }

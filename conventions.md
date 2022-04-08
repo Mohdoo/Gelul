@@ -2,6 +2,8 @@
 
 **Je mets ici ma manière d’écrire du JavaScript. Ne vous sentez pas obligés de suivre ces indications, mais je pourrais les appliquer en faisant un cleanup de code.**  
 
+Prévoir de réorganiser les dossiers/fichiers du bot.
+
 Mon code est un mélange bizarre d’anglais et de français… Dommage ! On pourra essayer d’harmoniser tout ça un jour.
 
 ---

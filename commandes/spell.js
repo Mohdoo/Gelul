@@ -37,7 +37,7 @@ const applyDamage = (spell, caster, target) => {
             spell.damage = 1;
         }
         // on calcule puis arrondi au dixième près
-        target.percentage = Number((target.percentage + spell.damage).toFixed(1));
+        target.percentage = Math.round(target.percentage + spell.damage);
     }
 };
 
@@ -180,8 +180,8 @@ const procedure = async (interaction) => {
     }
 
     if (Math.random() > spell.precision) {
-        interaction.reply(`Precision check échoué, t’es deg\u202F? ${caster.mana} MP`);
         setStatsHero(caster_id, caster);
+        interaction.reply(`Precision check échoué, t’es deg\u202F? ${caster.mana} MP`);
         return;
     }
 
