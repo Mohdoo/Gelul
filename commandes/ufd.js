@@ -1,5 +1,9 @@
+"use strict";
+
 const { ApplicationCommandOptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
+
+const { spells } = require("../spells.json");
 
 /**
  * Crée l’embed qui va être envoyé comme réponse à la commande
@@ -14,6 +18,15 @@ const creerEmbedFrameData = (move) => {
     
     return move_embed;
 }
+
+
+/**
+ * Crée un choix à partir d'un nom d'attaque.
+ * Par exemple, "Fowrard Tilt 1" devient {name: "Forward Tilt 1", value: "forwardtilt1"}
+ * @param {string} name l’attaque à transformer en choix
+ * @returns un choix de paramètre de commande
+ */
+const nameToChoice = name => ({name, value: name.replaceAll(" ", "").replaceAll("/", "").toLowerCase()});
 
 /* Champs publics */
 
@@ -32,51 +45,18 @@ const options = [
                 "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
-                    {
-                        "name": "Jab 1",
-                        "value": "jab1"
-                    },
-                    {
-                        "name": "Jab 2",
-                        "value": "jab2"
-                    },
-                    {
-                        "name": "Jab 3",
-                        "value": "jab3"
-                    },
-                    {
-                        "name": "Forward Tilt 1",
-                        "value": "forwardtilt1"
-                    },
-                    {
-                        "name": "Forward Tilt 2",
-                        "value": "forwardtilt2"
-                    },
-                    {
-                        "name": "Up Tilt",
-                        "value": "uptilt"
-                    },
-                    {
-                        "name": "Down Tilt",
-                        "value": "downtilt"
-                    },
-                    {
-                        "name": "Dash Attack",
-                        "value": "dashattack"
-                    },
-                    {
-                        "name": "Forward Smash",
-                        "value": "forwardsmash"
-                    },
-                    {
-                        "name": "Up Smash",
-                        "value": "upsmash"
-                    },
-                    {
-                        "name": "Down Smash",
-                        "value": "downsmash"
-                    }
-                ]
+					"Jab 1",
+					"Jab 2",
+					"Jab 3",
+					"Forward Tilt 1",
+					"Forward Tilt 2",
+					"Up Tilt",
+					"Down Tilt",
+					"Dash Attack",
+					"Forward Smash",
+					"Up Smash",
+					"Down Smash",
+                ].map(nameToChoice)
             }
         ]
     },
@@ -91,27 +71,12 @@ const options = [
                 "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
-                    {
-                        "name": "Neutral Air",
-                        "value": "neutralair"
-                    },
-                    {
-                        "name": "Forward Air",
-                        "value": "forwardair"
-                    },
-                    {
-                        "name": "Back Air",
-                        "value": "backair"
-                    },
-                    {
-                        "name": "Up Air",
-                        "value": "upair"
-                    },
-                    {
-                        "name": "Down Air",
-                        "value": "downair"
-                    }
-                ]
+					"Neutral Air",
+					"Forward Air",
+					"Back Air",
+					"Up Air",
+					"Down Air",
+                ].map(nameToChoice)
             }
         ]
     },
@@ -142,91 +107,7 @@ const options = [
                         "name": "Down B (Menu/Select)",
                         "value": "downb"
                     },
-                    {
-                        "name": "Bang",
-                        "value": "bang"
-                    },
-                    {
-                        "name": "Kaboom",
-                        "value": "kaboom"
-                    },
-                    {
-                        "name": "Sizz",
-                        "value": "sizz"
-                    },
-                    {
-                        "name": "Sizzle",
-                        "value": "sizzle"
-                    },
-                    {
-                        "name": "Whack",
-                        "value": "whack"
-                    },
-                    {
-                        "name": "Thwack",
-                        "value": "thwack"
-                    },
-                    {
-                        "name": "Kamikazee",
-                        "value": "kamikazee"
-                    },
-                    {
-                        "name": "Magic Burst",
-                        "value": "magicburst"
-                    },
-                    {
-                        "name": "Snooze",
-                        "value": "snooze"
-                    },
-                    {
-                        "name": "Heal",
-                        "value": "heal"
-                    },
-                    {
-                        "name": "Oomph",
-                        "value": "oomph"
-                    },
-                    {
-                        "name": "Acceleratle",
-                        "value": "acceleratle"
-                    },
-                    {
-                        "name": "Bounce",
-                        "value": "bounce"
-                    },
-                    {
-                        "name": "Kaclang",
-                        "value": "kaclang"
-                    },
-                    {
-                        "name": "Zoom",
-                        "value": "zoom"
-                    },
-                    {
-                        "name": "Hocus Pocus",
-                        "value": "hocuspocus"
-                    },
-                    {
-                        "name": "Flame Slash",
-                        "value": "flameslash"
-                    },
-                    {
-                        "name": "Kacrackle Slash",
-                        "value": "kacrackleslash"
-                    },
-                    {
-                        "name": "Hatchet Man",
-                        "value": "hatchetman"
-                    },
-                    {
-                        "name": "Metal Slash",
-                        "value": "metalslash"
-                    },
-                    {
-                        "name": "Psych Up",
-                        "value": "psychup"
-                    }
-                ]
+				].concat(Object.entries(spells).map(([value, {name}]) => ({name, value})))
             }
         ]
     },
@@ -241,39 +122,15 @@ const options = [
                 "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
-                    {
-                        "name": "Grab",
-                        "value": "grab"
-                    },
-                    {
-                        "name": "Dash Grab",
-                        "value": "dashgrab"
-                    },
-                    {
-                        "name": "Pivot Grab",
-                        "value": "pivotgrab"
-                    },
-                    {
-                        "name": "Pummel",
-                        "value": "pummel"
-                    },
-                    {
-                        "name": "Forward Throw",
-                        "value": "forwardthrow"
-                    },
-                    {
-                        "name": "Backward Throw",
-                        "value": "backwardthrow"
-                    },
-                    {
-                        "name": "Up Throw",
-                        "value": "upthrow"
-                    },
-                    {
-                        "name": "Down Throw",
-                        "value": "downthrow"
-                    }
-                ]
+					"Grab",
+					"Dash Grab",
+					"Pivot Grab",
+					"Pummel",
+					"Forward Throw",
+					"Backward Throw",
+					"Up Throw",
+					"Down Throw",
+                ].map(nameToChoice)
             }
         ]
     },
@@ -288,43 +145,16 @@ const options = [
                 "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
-                    {
-                        "name": "Spot Dodge",
-                        "value": "spotdodge"
-                    },
-                    {
-                        "name": "Forward Roll",
-                        "value": "forwardroll"
-                    },
-                    {
-                        "name": "Backward Roll",
-                        "value": "backwardroll"
-                    },
-                    {
-                        "name": "Neutral Air Dodge",
-                        "value": "neutralairdodge"
-                    },
-                    {
-                        "name": "Down Air Dodge",
-                        "value": "downairdodge"
-                    },
-                    {
-                        "name": "Diagonal Down Air Dodge",
-                        "value": "diagonaldownairdodge"
-                    },
-                    {
-                        "name": "Left/Right Air Dodge",
-                        "value": "leftrightairdodge"
-                    },
-                    {
-                        "name": "Diagonal Up Air Dodge",
-                        "value": "diagonalupairdodge"
-                    },
-                    {
-                        "name": "Up Air Dodge",
-                        "value": "upairdodge"
-                    }
-                ]
+					"Spot Dodge",
+					"Forward Roll",
+					"Backward Roll",
+					"Neutral Air Dodge",
+					"Down Air Dodge",
+					"Diagonal Down Air Dodge",
+					"Left/Right Air Dodge",
+					"Diagonal Up Air Dodge",
+					"Up Air Dodge",
+                ].map(nameToChoice)
             }
         ]
     },
@@ -339,23 +169,11 @@ const options = [
                 "type": ApplicationCommandOptionType.String,
                 "required": true,
                 "choices": [
-                    {
-                        "name": "Stats",
-                        "value": "stats"
-                    },
-                    {
-                        "name": "Ledge Grab",
-                        "value": "ledgegrab"
-                    },
-                    {
-                        "name": "Ledge Hang",
-                        "value": "ledgehang"
-                    },
-                    {
-                        "name": "Getup Attacks",
-                        "value": "getupattacks"
-                    }
-                ]
+					"Stats",
+					"Ledge Grab",
+					"Ledge Hang",
+					"Getup Attacks",
+                ].map(nameToChoice)
             }
         ]
     }

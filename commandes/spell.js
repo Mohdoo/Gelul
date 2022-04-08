@@ -1,3 +1,5 @@
+"use strict";
+
 const { ApplicationCommandOptionType } = require("discord-api-types/v10");
 const { getStatsHero, setStatsHero } = require("../database");
 const spells_data = require("../spells.json");
@@ -52,50 +54,8 @@ const options = [
         "name": "sort",
         "description": "Le sort à lancer.",
         "required": true,
-        "choices": [
-            {
-                "name": "Whack",
-                "value": "whack"
-            },
-            {
-                "name": "Thwack",
-                "value": "thwack"
-            },
-            {
-                "name": "Kaboom",
-                "value": "kaboom"
-            },
-            {
-                "name": "Hatchet Man",
-                "value": "hatchetman"
-            },
-            {
-                "name": "Sizzle",
-                "value": "sizzle"
-            },
-            {
-                "name": "Kamikazee",
-                "value": "kamikazee"
-            },
-            {
-                "name": "Magic Burst",
-                "value": "magicburst"
-            },
-            {
-                "name": "Heal",
-                "value": "heal"
-            },
-            {
-                "name": "Hocus Pocus",
-                "value": "hocuspocus"
-            },
-            {
-                "name": "Flame Slash",
-                "value": "flameslash"
-            }
-        ]
-    },
-    {
+        "choices": Object.entries(spells_data.spells).map(([value, {name}]) => ({name, value})),
+    }, {
         "type": ApplicationCommandOptionType.User,
         "name": "cible",
         "description": "La personne sur qui lancer le sort.",
