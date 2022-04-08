@@ -46,5 +46,5 @@ const applyCommands = (interaction) => {
     }
 };
 
-exports.initCommands = initCommands;
+exports.init = initCommands;
 exports.applyCommands = applyCommands;

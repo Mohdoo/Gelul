@@ -96,7 +96,7 @@ const closeDatabase = () => {
     db.close();
 }
 
-exports.initDatabase = initDatabase;
+exports.init = initDatabase;
 exports.getStatsHero = getStatsHero;
 exports.setStatsHero = setStatsHero;
 exports.getLeaderBoard = getLeaderBoard;
