@@ -31,3 +31,23 @@ exports.init = () => {
  */
 exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);
 
+
+
+client.once("ready", async () => {
+	console.log("Déclaration des slash commands à l’API…");
+	const guild = await client.guilds.fetch(config.GUILD_ID);
+	const permissions = config.owners.map(id => ({ id, type: 2, permission: true }));
+
+	try {
+		const guildCommands = await guild.commands.set([...commands.values()]);
+		await guild.commands.permissions.set({
+			fullPermissions: guildCommands
+				.filter(cmd => !cmd.default_permission)
+				.map(({id}) => ({ id, permissions }))
+		});
+
+		console.log("Les slash commands ont correctement été déclarées.");
+	} catch(err) {
+		console.error(err);
+	}
+});
