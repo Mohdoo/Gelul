@@ -18,4 +18,4 @@ exports.procedure = async (interaction) => {
 	   closeDatabase();
 	   client.destroy();
    });
-};;
+};
