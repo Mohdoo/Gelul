@@ -9,7 +9,7 @@ const commands = new Map;
  * Chaque commande doit posséder une description un nom et une fonction.
  */
 exports.init = () => {
-    for (const cmdName of require("fs").readdirSync("commandes")) {
+    for (const cmdName of config.commands) {
 		const requiredAttrs = ["name", "description", "procedure"];
 		const cmd = require(`./commandes/${cmdName}`);
 		if(requiredAttrs.some(attr => cmd[attr] === undefined)) {
