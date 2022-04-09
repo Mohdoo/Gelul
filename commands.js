@@ -8,7 +8,7 @@ const commands = new Map;
  * Charge toutes les commandes listées dans la config.
  * Chaque commande doit posséder une description un nom et une fonction.
  */
-exports.init = () => {
+exports.init = async () => {
     for (const cmdName of config.commands) {
 		const requiredAttrs = ["name", "description", "procedure"];
 		const cmd = require(`./commandes/${cmdName}`);
@@ -21,19 +21,7 @@ exports.init = () => {
 		commands.set(cmd.name, cmd);
         console.log(`Le module ${cmdName} a été correctement chargé.`);
     }
-};
 
-
-
-/**
- * Parcourt la liste des commandes chargées, et applique la correspondante.
- * @param {*} interaction
- */
-exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);
-
-
-
-client.once("ready", async () => {
 	console.log("Déclaration des slash commands à l’API…");
 	const guild = await client.guilds.fetch(config.GUILD_ID);
 	const permissions = config.owners.map(id => ({ id, type: 2, permission: true }));
@@ -50,4 +38,12 @@ client.once("ready", async () => {
 	} catch(err) {
 		console.error(err);
 	}
-});
+};
+
+
+
+/**
+ * Parcourt la liste des commandes chargées, et applique la correspondante.
+ * @param {*} interaction
+ */
+exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);
