@@ -3,8 +3,6 @@
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
 
-const { spells } = require("../spells.json");
-
 /**
  * Crée l’embed qui va être envoyé comme réponse à la commande
  * https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
@@ -105,7 +103,18 @@ exports.options = [
                         "name": "Down B (Menu/Select)",
                         "value": "downb"
                     },
-				].concat(Object.entries(spells).map(([value, {name}]) => ({name, value})))
+				].concat([
+					"Whack",
+					"Thwack",
+					"Kaboom",
+					"Hatchet Man",
+					"Sizzle",
+					"Kamikazee",
+					"Magic Burst",
+					"Heal",
+					"Hocus Pocus",
+					"Flame Slash"
+				].map(nameToChoice))
             }
         ]
     },
