@@ -1,6 +1,6 @@
 "use strict";
 
-const { ApplicationCommandOptionType } = require("discord-api-types/v10");
+const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
 
 const { spells } = require("../spells.json");
@@ -35,12 +35,12 @@ exports.options = [
     {
         "name": "ground-attacks",
         "description": "Affiche une des attaques au sol.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque au sol à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
 					"Jab 1",
@@ -61,12 +61,12 @@ exports.options = [
     {
         "name": "aerial-attacks",
         "description": "Affiche une des attaques aériennes.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque aérienne à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
 					"Neutral Air",
@@ -81,12 +81,12 @@ exports.options = [
     {
         "name": "special-attacks",
         "description": "Affiche une attaque spéciale.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "L’attaque spéciale à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
                     {
@@ -112,12 +112,12 @@ exports.options = [
     {
         "name": "grabs-throws",
         "description": "Affiche un grab ou un throw.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "Le grab ou throw à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
 					"Grab",
@@ -135,12 +135,12 @@ exports.options = [
     {
         "name": "dodges-rolls",
         "description": "Affiche un dodge ou un roll.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "Le grab ou throw à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
 					"Spot Dodge",
@@ -159,12 +159,12 @@ exports.options = [
     {
         "name": "misc-info",
         "description": "Affiche des statistiques générales, ou les getup attacks.",
-        "type": ApplicationCommandOptionType.Subcommand,
+        "type": OptionType.Subcommand,
         "options": [
             {
                 "name": "move",
                 "description": "La statistique à afficher.",
-                "type": ApplicationCommandOptionType.String,
+                "type": OptionType.String,
                 "required": true,
                 "choices": [
 					"Stats",

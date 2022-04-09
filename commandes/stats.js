@@ -1,6 +1,6 @@
 "use strict";
 
-const { ApplicationCommandOptionType } = require("discord-api-types/v10");
+const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
 const { getStatsHero } = require("../database");
 const { mana_refill_time, new_hero } = require("../spells.json");
@@ -10,7 +10,7 @@ exports.description = "Affiche les stats d’un membre du mini-jeu";
 exports.defaultPermission = true;
 exports.options = [
     {
-        "type": ApplicationCommandOptionType.User,
+        "type": OptionType.User,
         "name": "joueur",
         "description": "Le Héros à afficher."
     }

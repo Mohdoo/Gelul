@@ -1,6 +1,6 @@
 "use strict";
 
-const { ApplicationCommandOptionType } = require("discord-api-types/v10");
+const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { getStatsHero, setStatsHero } = require("../database");
 const spells_data = require("../spells.json");
 
@@ -49,13 +49,13 @@ exports.name = "spell";
 exports.description = "Lance un sort\u202F!";
 exports.defaultPermission = true;
 exports.options = [{
-        "type": ApplicationCommandOptionType.String,
+        "type": OptionType.String,
         "name": "sort",
         "description": "Le sort à lancer.",
         "required": true,
         "choices": Object.entries(spells_data.spells).map(([value, {name}]) => ({name, value})),
     }, {
-        "type": ApplicationCommandOptionType.User,
+        "type": OptionType.User,
         "name": "cible",
         "description": "La personne sur qui lancer le sort.",
         "required": true
@@ -101,7 +101,7 @@ exports.procedure = async (interaction) => {
     // 2. met à jour la mana du lanceur, puis vérifie s’il en a assez
     const now = Date.now();
 
-    /* calcul de la mana gagnée depuis le dernier sort lancé 
+    /* calcul de la mana gagnée depuis le dernier sort lancé
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
     if (caster.mana < 100) {
         const temps_ecoule = (now - caster.last_spell_ts) / spells_data.mana_refill_time;
@@ -185,7 +185,7 @@ exports.procedure = async (interaction) => {
             applyDamage(spell, caster, target);
             target.percentage = (target.percentage < 0.0 ? 0.0 : target.percentage);
             break;
-    
+
         default:
             applyDamage(spell, caster, target);
             break;
