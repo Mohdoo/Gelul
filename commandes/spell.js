@@ -115,20 +115,23 @@ exports.procedure = async (interaction) => {
 
     // si le lanceur a assez de mana, il paie le coût du sort
     if (caster.mana < spell.cost) {
-        interaction.reply(`Il ta faut ${spell.cost} MP mais t’en as ${caster.mana}`);
+        interaction.reply(`Il te faut ${spell.cost} MP mais t’en as ${caster.mana}`);
         return;
     } else {
         caster.mana -= spell.cost;
     }
 
-    if (caster.last_spell_ts === undefined || caster.mana + spell.cost === 100) {
-        /* premier sort lancé par ce joueur
-        OU sort lancé en ayant 100 mana (pour éviter que grâce au refill on ait virtuellement 11 mana)*/
-        caster.last_spell_ts = now;
-    } else {
-        // le joueur avait déjà lancé un sort avant
-        const manque = (now - caster.last_spell_ts) % spells_data.mana_refill_time;
-        caster.last_spell_ts = now - (spells_data.mana_refill_time - manque)
+    for (let h of [caster, target]) {
+        // la seconde condition doit s’appliquer seulement à caster (oui c’est moche)
+        if (h.last_spell_ts === undefined || (h.mana + spell.cost === 100 && h.id === caster.id)) {
+            /* premier sort lancé par ce joueur
+            OU sort lancé en ayant 100 mana (pour éviter que grâce au refill on ait virtuellement 101 mana)*/
+            h.last_spell_ts = now;
+        } else {
+            // le joueur avait déjà lancé un sort avant
+            const manque = (now - h.last_spell_ts) % spells_data.mana_refill_time;
+            h.last_spell_ts = now - (spells_data.mana_refill_time - manque)
+        }
     }
 
 
