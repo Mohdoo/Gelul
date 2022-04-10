@@ -1,14 +1,16 @@
-const { ApplicationCommandOptionType } = require("discord-api-types/v10");
+"use strict";
+
+const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
 const { getStatsHero } = require("../database");
 const { mana_refill_time, new_hero } = require("../spells.json");
 
-const name = "stats";
-const description = "Affiche les stats d’un membre du mini-jeu";
-const protected = false;
-const options = [
+exports.name = "stats";
+exports.description = "Affiche les stats d’un membre du mini-jeu";
+exports.defaultPermission = true;
+exports.options = [
     {
-        "type": ApplicationCommandOptionType.User,
+        "type": OptionType.User,
         "name": "joueur",
         "description": "Le Héros à afficher."
     }
@@ -17,9 +19,9 @@ const options = [
 
 /**
  * Affiche les stats d’un joueur du jeu /spell
- * @param {*} interaction 
+ * @param {*} interaction
  */
-const procedure = async (interaction) => {
+exports.procedure = async (interaction) => {
     let joueur = interaction.options.getMember("joueur");
 
     // cas 1 : commande sans option
@@ -35,7 +37,7 @@ const procedure = async (interaction) => {
     const image_type = (joueur.user.avatar.startsWith("a_") ? "gif" : "webp");
 
     const now = Date.now();
-    /* calcul de la mana gagnée depuis le dernier sort lancé 
+    /* calcul de la mana gagnée depuis le dernier sort lancé
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
     if (hero.mana < 100) {
         const temps_ecoule = (now - hero.last_spell_ts) / mana_refill_time;
@@ -56,13 +58,6 @@ const procedure = async (interaction) => {
                     { name: "Pourcentage", value: `${hero.percentage}\u202f%`, inline: true },
                     { name: "Heals restants", value: String(hero.heal), inline: true }
             );
-    
+
     interaction.reply({ embeds: [embed] })
 };
-
-
-exports.name = name;
-exports.description = description;
-exports.protected = protected;
-exports.options = options;
-exports.procedure = procedure;

@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Gère la base de données du bot,
  * qui pour le moment n’est utilisée que pour /spell.
@@ -18,7 +20,7 @@ let db;
 
 const createNewHero = (id) => {
     create_new_hero_query.run(id);
-    console.log("Ajout du membre " + id + " dans la base de données.");
+    console.log(`Ajout du membre ${id} dans la base de données.`);
 };
 
 /* Champs publics */
@@ -51,7 +53,7 @@ const initDatabase = () => {
     get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
     /* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
      ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
-    set_stats_hero_query = db.prepare("UPDATE heros SET percentage = ?, score = ?, mana = ?, heal = ?, last_spell_ts = ? WHERE id = ?");
+    set_stats_hero_query = db.prepare("UPDATE heros SET percentage = $percentage, score = $score, mana = $mana, heal = $heal, last_spell_ts = $last_spell_ts WHERE id = $id");
     get_leaderboard_query = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
 
     console.log("Requêtes de la base de données prêtes.");
@@ -64,7 +66,7 @@ const initDatabase = () => {
  */
 const getStatsHero = (id) => {
     let res = get_stats_hero_query.get(id);
-    
+
     if (res === undefined) {
         createNewHero(id);
         return new_hero;
@@ -78,25 +80,19 @@ const getStatsHero = (id) => {
  * @param {*} id joueur à modifier
  * @param {*} stats un objet contenant des valeurs correctes pour percentage, score, mana et last_spell_ts
  */
-const setStatsHero = (id, stats) => {
-    set_stats_hero_query.run(stats.percentage, stats.score, stats.mana, stats.heal, stats.last_spell_ts, id);
-};
+const setStatsHero = (id, stats) => set_stats_hero_query.run({id, ...stats});
 
 /**
  * Renvoie un array contenant les 3 joueurs avec le plus grand score
  */
-const getLeaderBoard = () => {
-    return get_leaderboard_query.all();
-}
+const getLeaderBoard = () => get_leaderboard_query.all();
 
 /**
  * Ferme la base de données.
  */
-const closeDatabase = () => {
-    db.close();
-}
+const closeDatabase = () => db.close();
 
-exports.initDatabase = initDatabase;
+exports.init = initDatabase;
 exports.getStatsHero = getStatsHero;
 exports.setStatsHero = setStatsHero;
 exports.getLeaderBoard = getLeaderBoard;

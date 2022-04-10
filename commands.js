@@ -1,50 +1,49 @@
-let commands_list = new Array;
+"use strict";
+
+const { ApplicationCommandType } = require("discord-api-types/v10");
+
+const commands = new Map;
 
 /**
  * Charge toutes les commandes listées dans la config.
  * Chaque commande doit posséder une description un nom et une fonction.
  */
-const initCommands = () => {
-    for (e of config.commands) {
-        const { name, description, procedure, protected } = require(`./commandes/${e}`);
+exports.init = async () => {
+    for (const cmdName of config.commands) {
+		const requiredAttrs = ["name", "description", "procedure"];
+		const cmd = require(`./commandes/${cmdName}`);
+		if(requiredAttrs.some(attr => cmd[attr] === undefined)) {
+			console.error(`Le module ${cmdName} ne semble pas conforme. Il ne sera pas chargé.`);
+			continue;
+		}
 
-        // si le module est invalide, on passe !
-        if (name === undefined || description === undefined
-                || procedure === undefined || protected === undefined) {
-            console.error(`Le module ${e} ne semble pas conforme. Il ne sera pas chargé.`);
-            return;
-        }
-
-        const new_command = {
-            "name" : name,
-            "description" : description,
-            "procedure" : procedure,
-            "protected": protected
-        };
-
-        commands_list.push(new_command);
-        console.log(`Le module ${e} a été correctement chargé.`);
+		cmd.type = ApplicationCommandType.String;
+		commands.set(cmd.name, cmd);
+        console.log(`Le module ${cmdName} a été correctement chargé.`);
     }
+
+	console.log("Déclaration des slash commands à l’API…");
+	const guild = await client.guilds.fetch(config.GUILD_ID);
+	const permissions = config.owners.map(id => ({ id, type: 2, permission: true }));
+
+	try {
+		const guildCommands = await guild.commands.set([...commands.values()]);
+		await guild.commands.permissions.set({
+			fullPermissions: guildCommands
+				.filter(cmd => !cmd.default_permission)
+				.map(({id}) => ({ id, permissions }))
+		});
+
+		console.log("Les slash commands ont correctement été déclarées.");
+	} catch(err) {
+		console.error(err);
+	}
 };
+
 
 
 /**
  * Parcourt la liste des commandes chargées, et applique la correspondante.
- * @param {*} interaction 
+ * @param {*} interaction
  */
-const applyCommands = (interaction) => {
-    for (e of commands_list) {
-        if (interaction.commandName === e.name) {
-            if (!e.protected || config.owners.includes(interaction.member.user.id)) {
-                e.procedure(interaction);
-            } else {
-                // les commandes protected ne peuvent être utilisées que par les owners !
-                console.log(`L’utilisateur ${interaction.member.user.tag} (${interaction.member.user.id}) a tenté d’utiliser la commande ${e.name}`);
-                interaction.reply({ephemeral: true, content: "Cette commande est réservée aux administrateurs du bot."});
-            }
-        }
-    }
-};
-
-exports.initCommands = initCommands;
-exports.applyCommands = applyCommands;
+exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);
