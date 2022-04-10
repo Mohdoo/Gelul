@@ -24,7 +24,7 @@ exports.init = async () => {
 
 	console.log("Déclaration des slash commands à l’API…");
 	const guild = await client.guilds.fetch(config.GUILD_ID);
-	const permissions = config.owners.map(id => ({ id, type: 2, permission: true }));
+	const permissions = config.owners.map(id => ({ id, type: "USER", permission: true }));
 
 	try {
 		const guildCommands = await guild.commands.set([...commands.values()]);
