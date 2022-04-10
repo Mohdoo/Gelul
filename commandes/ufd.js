@@ -104,16 +104,27 @@ exports.options = [
                         "value": "downb"
                     },
 				].concat([
+                    "Bang",
+					"Kaboom",
+                    "Sizz",
+					"Sizzle",
 					"Whack",
 					"Thwack",
-					"Kaboom",
-					"Hatchet Man",
-					"Sizzle",
 					"Kamikazee",
 					"Magic Burst",
+                    "Snooze",
 					"Heal",
+                    "Oomph",
+                    "Acceleratle",
+                    "Bounce",
+                    "Kaclang",
+                    "Zoom",
 					"Hocus Pocus",
-					"Flame Slash"
+					"Flame Slash",
+                    "Kacrackle Slash",
+					"Hatchet Man",
+                    "Metal Slash",
+                    "Psych Up"
 				].map(nameToChoice))
             }
         ]
