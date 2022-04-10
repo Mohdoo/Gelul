@@ -6,12 +6,15 @@ Bot créé exclusivement pour le smashcord francophone [Le Havre des Aventuriers
 
 Installez les modules Node.js demandés par [package.json](./package.json).  
 Créez le fichier *config.json* en utilisant comme modèle [example.config.json](./example.config.json). Vous noterez que la config est faite pour une seule guilde. Normal, le bot a été créé pour une seule guilde, et part du principe que les permissions sont bien gérées. Étendre ses capacités sur ce plan n’est clairement pas une priorité.  
-Déclarez les commandes du bot à l’API : `node register.js`.  
-Si les commandes sont correctement déclarées, vous pouvez maintenant lancer le bot : `node main.js`.
+Pour lancer le bot : `node main.js`.
 
 ## Organisation des fichiers
 
-Chaque fichier JavaScript dans le dossier `commandes` représente une et une seule commande du bot. La liste est `config.commands`. Voilà c’est tout allez salut abonne-toi.
+Chaque fichier JavaScript dans le dossier `commandes` représente une et une seule commande du bot. La liste est `config.commands`.  
+Si l’attribut `defaultPermission` d’une commande est à `false`, seuls les utilisateurs dont l’id est listé dans `config.owner` pourront l’utiliser.
+
+Le dossier `utilitaire` contient tous les fichiers JavaScript qui ne sont pas des commandes, hormis `main.js` qui est le seul à la racine.  
+Le dossier `data` contient les données statiques en JSON et je recommande d’y mettre aussi le fichier de base de données.
 
 ## Idées
 
@@ -28,7 +31,6 @@ Chaque membre du serveur possède une jauge de mana, un pourcentage et un score.
 `/spell <attaque: choice> <cible: user>` lance un sort.  
 `/stats [membre: user]` affiche les stats d’un membre. Si omis, affiche les stats du lanceur.  
 `/leaderboard` affiche les meilleurs scores.  
-Utiliser des subcommands ? `/spell attack <attaque: choice> <cible: user>` `/spell stats [member: user]` `/spell leaderboard`
 
 ### Message de bienvenue
 *Implémenté. Reste à faire la réponse…*  
@@ -43,7 +45,4 @@ Le bot envoie des liens vers les vidéos de matchs où un Héros apparaît dès 
 ### Optimisations non prioritaires
 [À faire régulièrement svp] Review et clean du code.  
 Faire en sorte que `ufd.js` et `spell.js` utilisent la même liste de sorts pour ne pas avoir à écrire les noms et stats deux fois.  
-Localiser les slash commands (est-il seulement possible de localiser `/spell` côté serveur ?).  
-**Automatiser `register.js`.**  
-**Regarder comment supprimer une commande déclarée à l’API (pour le moment on ne fait qu’en ajouter et modifier celles qui existent). Si le nombre de commandes devient grand, ne redéclarer que celles qui ont changé.**  
-Pour cacher les commandes admin aux utilisateurs normaux, on peut les restreindre à un rôle. Mais c’est peut être pas une bonne idée car ça indique qui sont les admins du bot et pourrait donner des pouvoirs à des gens qui ne les méritent pas. C’est peut-être mieux de garder les admins du bot en tant qu’utilisateurs fixes et non en tant que rôles.  
+Localiser les slash commands (est-il seulement possible de localiser `/spell` côté serveur ?). → peut-être pas au final car on par du principe que les utilisateurs parlent français et utilisent le vocabulaire anglophone du jeu.  

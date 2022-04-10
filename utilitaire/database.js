@@ -11,7 +11,7 @@
  */
 
 // représente un joueur quand il est ajouté dans la base
-const { new_hero } = require("./spells.json");
+const { new_hero } = require("../data/spells.json");
 let create_new_hero_query;
 let get_stats_hero_query;
 let set_stats_hero_query;

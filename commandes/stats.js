@@ -2,8 +2,8 @@
 
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { MessageEmbed } = require("discord.js");
-const { getStatsHero } = require("../database");
-const { mana_refill_time, new_hero } = require("../spells.json");
+const { getStatsHero } = require("../utilitaire/database");
+const { mana_refill_time, new_hero } = require("../data/spells.json");
 
 exports.name = "stats";
 exports.description = "Affiche les stats d’un membre du mini-jeu";

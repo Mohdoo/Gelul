@@ -2,7 +2,7 @@
 
 exports.name = "ping";
 exports.description = "Réponds par «\u202Fpong\u202F»\u202F!";
-exports.protected = false;
+exports.defaultPermission = true;
 exports.options = null;
 
 /**

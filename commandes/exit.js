@@ -1,6 +1,6 @@
 "use strict";
 
-const { closeDatabase } = require("../database");
+const { closeDatabase } = require("../utilitaire/database");
 
 exports.name = "exit";
 exports.description = "(Admin seulement) Déconnecte le bot et l’éteint.";

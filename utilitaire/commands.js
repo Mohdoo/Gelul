@@ -11,7 +11,7 @@ const commands = new Map;
 exports.init = async () => {
     for (const cmdName of config.commands) {
 		const requiredAttrs = ["name", "description", "procedure"];
-		const cmd = require(`./commandes/${cmdName}`);
+		const cmd = require(`../commandes/${cmdName}`);
 		if(requiredAttrs.some(attr => cmd[attr] === undefined)) {
 			console.error(`Le module ${cmdName} ne semble pas conforme. Il ne sera pas chargé.`);
 			continue;

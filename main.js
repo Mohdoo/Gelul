@@ -7,21 +7,21 @@
 const { Client, Intents: { FLAGS: INTENTS } } = require("discord.js");
 
 // config et client sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !
-global.config = require("./config.json");
+global.config = require("./data/config.json");
 
 // intents : GUILDS est nécessaire pour que Discord.js fonctionne, GUILD_MEMBERS donne accès à l’événement GUILD_MEMBER_ADD et est requis pour /leaderboard
 global.client = new Client({ intents: [INTENTS.GUILDS, INTENTS.GUILD_MEMBERS] });
 
 
-const { applyCommands } = require("./commands");
+const { applyCommands } = require("./utilitaire/commands");
 
 
 // appelé une fois quand le bot se connecte
 client.once("ready", () => {
     console.log(`Connecté sur le compte ${client.user.tag}!`);
 
-    require("./commands").init();
-    require("./database").init();
+    require("./utilitaire/commands").init();
+    require("./utilitaire/database").init();
 });
 
 // appelé à chaque interaction avec le bot (on ignore tout sauf les slash commandes)

@@ -1,8 +1,8 @@
 "use strict";
 
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
-const { getStatsHero, setStatsHero } = require("../database");
-const spells_data = require("../spells.json");
+const { getStatsHero, setStatsHero } = require("../utilitaire/database");
+const spells_data = require("../data/spells.json");
 
 /**
  * Modifie stats d’un joueur après avoir perdu une stock
