@@ -103,12 +103,15 @@ exports.procedure = async (interaction) => {
 
     /* calcul de la mana gagnée depuis le dernier sort lancé
        Si mana < 100 alors last_spell_ts est forcément !== undefined */
-    if (caster.mana < 100) {
-        const temps_ecoule = (now - caster.last_spell_ts) / spells_data.mana_refill_time;
-        caster.mana += Math.floor(temps_ecoule);
-        // limite la mana à 100
-        caster.mana = (caster.mana > spells_data.new_hero.mana ? spells_data.new_hero.mana : caster.mana);
+    for (let h of [caster, target]) {
+        if (h.mana < 100) {
+            const temps_ecoule = (now - h.last_spell_ts) / spells_data.mana_refill_time;
+            h.mana += Math.floor(temps_ecoule);
+            // limite la mana à 100
+            h.mana = (h.mana > spells_data.new_hero.mana ? spells_data.new_hero.mana : h.mana);
+        }
     }
+    
 
     // si le lanceur a assez de mana, il paie le coût du sort
     if (caster.mana < spell.cost) {
