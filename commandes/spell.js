@@ -14,44 +14,95 @@ const { MessageEmbed } = require("discord.js");
  * @param {*} cas le cas présent. Peut être "mana", "precision", "succ", "ko"
  */
 const creerEmbedSpell = (cas, caster, target, spell) => {
-    let color, phrase, foot, image;
+    let color, phrase, foot, image, phrases_possibles;
 
     switch (cas) {
         case "mana":
             color = 0x2ab3ff; // bleu jauge de MP
-            phrase = spells_data.reponses.mana.choice()
+            phrases_possibles = spells_data.reponses.mana.generic;
+            phrase = phrases_possibles.choice()
                     .replace("@T", target.name)
                     .replace("@C", caster.name)
                     .replace("@S", spell.name);
             foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais n’avait plus de MP…`;
             break;
 
+
         case "precision":
             color = 0xb94229; // rouge Héros DQX
-            phrase = spells_data.reponses.precision.choice()
+            phrases_possibles = spells_data.reponses.precision.generic;
+
+            if (spell.name === "Hatchet Man") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.precision.hatchet);
+            } else if (spell.name !== "Kamikazee") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.precision.shield);
+            }
+
+            if (!spell.projectile) {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.projectile);
+            }
+
+            phrase = phrases_possibles.choice()
                     .replace("@T", target.name)
                     .replace("@C", caster.name)
                     .replace("@S", spell.name);
             foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais s’est raté…`;
             break;
 
+
         case "success":
             color = 0x6ca327; // vert cheveux Héros DQIV
-            phrase = spells_data.reponses.success.choice()
+            phrases_possibles = spells_data.reponses.success.generic;
+
+            if (spell.name === "Heal") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal);
+                if (target.id === caster.id) {
+                    phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_self);
+                } else {
+                    phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_other);
+                }
+            } else if (spell.name === "Kamikazee") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.kamikazee);
+            } else if (spell.name === "Magic Burst") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
+            }
+
+            phrase = phrases_possibles.choice()
                     .replace("@T", target.name)
                     .replace("@C", caster.name)
                     .replace("@S", spell.name);
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
             break;
 
+
         case "ko":
-            color = 0x6ca327; // vert cheveux Héros DQIV
-            phrase = spells_data.reponses.ko.choice()
+            color = (spell.name === "Whack" || spell.name === "Thwack" ? 0x7d00a6 : 0x6ca327); // vert cheveux Héros DQIV
+            phrases_possibles = spells_data.reponses.ko.generic;
+
+            if (spell.name === "Whack" || spell.name === "Thwack") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.ko.whack);
+            } else if (spell.name === "Magic Burst") {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
+            }
+
+
+            phrase = phrases_possibles.choice()
                     .replace("@T", target.name)
                     .replace("@C", caster.name)
                     .replace("@S", spell.name);
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name} et l’a expulsé\u202f!`;
             break;
+
+
+        case "0":
+            color = 0x7d00a6; // violet whack
+            phrase = spells_data.reponses.ko.zero.choice()
+                    .replace("@T", target.name.toUpperCase())
+                    .replace("@C", caster.name.toUpperCase())
+                    .replace("@S", spell.name.toUpperCase());
+            foot = `${caster.name} réussi un ${spell.name} sur ${target.name} à 0\u202f%\u202f!`;
+            break;
+
 
         default:
             console.warn("Valeur invalide pour l’attribut cas de creerEmbedSpell.");
@@ -81,7 +132,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
  * @param {*} hero le héros qui perd une stock
  */
 const kill = (hero) => {
-    ko = "ko";
+    if (ko !== "0") ko = "ko";
     hero.score--;
     hero.heal = spells_data.new_hero.heal;
     hero.mana = spells_data.new_hero.mana;
@@ -154,19 +205,21 @@ exports.procedure = async (interaction) => {
     const caster_id = interaction.member.id;
     let caster = getStatsHero(caster_id);
     caster.name = interaction.member.displayName;
-
-    // le sort lancé
-    const spell_name = interaction.options.getString("sort");
-    let spell = spells_data.spells[spell_name];
-
+    caster.id = caster_id;
+    
     // la cible du sort
     const target_id = interaction.options.getMember("cible").id;
     let target = getStatsHero(target_id);
     target.name = interaction.options.getMember("cible").displayName;
+    target.id = target_id;
 
+    // le sort lancé
+    const spell_name = interaction.options.getString("sort");
+    let spell = spells_data.spells[spell_name];
+    
 
     // 1. vérification de la validité de la cible (seul Heal peut avoir caster === target)
-    if (spell_name !== "heal" && caster_id === target_id) {
+    if (spell_name !== "heal" && caster.id === target.id) {
         interaction.reply({ephemeral: true, content: "Seul Heal peut être lancé sur soi-même."});
         return;
     } else if (spell_name === "heal" && caster.heal === 0) {
@@ -222,7 +275,8 @@ exports.procedure = async (interaction) => {
     }
 
     if (Math.random() > spell.precision) {
-        setStatsHero(caster_id, caster);
+        if (spell_name === "magicburst") caster.mana = 0;
+        setStatsHero(caster.id, caster);
         interaction.reply({ embeds: [creerEmbedSpell("precision", caster, target, spell)]});
         return;
     }
@@ -242,7 +296,8 @@ exports.procedure = async (interaction) => {
             u = (u > 300 ? 300 : u);
             const kill_chance = 1 + (200 * (t - 20) / 280) + (20 * (u / 300));
 
-            if (Math.random() * 100 < kill_chance) {
+            if (Math.random() * 0 < kill_chance) {
+                if (target.percentage === 0.0) ko = "0"; // whack réussi à 0 %
                 kill(target);
                 caster.score++;
             } else {
@@ -276,8 +331,8 @@ exports.procedure = async (interaction) => {
 
 
     // 5. mise à jour de la db
-    setStatsHero(caster_id, caster);
-    setStatsHero(target_id, target);
+    setStatsHero(caster.id, caster);
+    setStatsHero(target.id, target);
 
 
     // 6. réponse finale

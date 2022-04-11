@@ -89,44 +89,108 @@
         }
     },
     "reponses": {
-        "mana": [
-            "Bah oui mais en fait t’as plus de mana",
-            "Désolé, mais le coût de @S n’est jamais en soldes",
-            "@C essaie de lancer @S… Mais a oublié sa mana chez lui",
-            "Pas assez de mana, reviens demain\u202f!",
-            "Vu la mana qu’il te reste, tu ferais mieux d’utiliser Magic Burst.",
-            "**mana** \\ma.na\\ féminin 1. *(Religion)* Pouvoir surnaturel dans certaines religions polynésiennes. 2. *(Jeux) (Principalement dans les jeux de rôles)* Pouvoir magique. 3. *(Smashcord Héros)* Un truc que t’as pas.",
-            "Ce sort semble au-dessus de tes moyens.",
-            "no mana, GG WP no re",
-            "Zut, où j’ai mis mon cheatcode pour avoir de la mana à l’infini déjà\u202f?",
-            "Tu as ceux qui ont de la mana et ceux qui perdent une stock, toi tu perds une stock."
-        ],
-        "precision": [
-            "Malheureusement, tu as lancé ton sort dans la mauvaise direction.",
-            "Pas mal, mais @T était à l’autre bout du terrain.",
-            "Et c’est une superbe esquive de la part de @T\u202f!",
-            "Désolé mais tu as mis trop de temps à lire ton menu et @T a eu tout le temps d’esquiver",
-            "Désolé @C, ton adversaire est sur un autre setup.",
-            "Le mot «\u202forge\u202f» en sumérien se prononce CHEH.",
-            "There are no plans for a worldwide release.",
-            "Naaan mais t’as raté le sort mais c’est sans doute la faute à la manette tu sais",
-            "Ahhh on assiste au premier pas de @C, le premier héros aveugle de la compétition"
-        ],
-        "ko": [
-            "@C indique que des ennemis ont disparu",
-            "Et une stock de prise\u202f! Tu seras bientôt le plus grand des héros… quand les autres seront morts",
-            "Très mauvais DI de la part de @T qui perd une vie\u202f!",
-            "Ça valait le coup de payer autant de mana, vu que @T vient de se faire expulser",
-            "Sheeeesh\u202f!",
-            "C’est un petit pas pour @C, et un gros coup de pied au cul de @T",
-            "Et bim, une stock de prise\u202f!",
-            "@C a décidé d'éliminer @T, et sa sentence est irrévocable."
-        ],
-        "success": [
-            "Joli coup\u202f!",
-            "Et bim\u202f! Dans les dents\u202f!",
-            "Ouch, j’aurais pas aimé être à la place de @T là…",
-            "Ça a dû faire mal"
+        "mana": {
+            "generic": [
+                "Bah oui mais en fait t’as plus de mana.",
+                "Désolé, mais le coût de @S n’est jamais en soldes.",
+                "@C essaie de lancer @S… Mais a oublié sa mana chez lui.",
+                "Pas assez de mana, reviens demain\u202f!",
+                "Vu la mana qu’il te reste, tu ferais mieux d’utiliser Magic Burst.",
+                "**mana** \\ma.na\\ féminin 1. *(Religion)* Pouvoir surnaturel dans certaines religions polynésiennes. 2. *(Jeux) (Principalement dans les jeux de rôles)* Pouvoir magique. 3. *(Smashcord Héros)* Un truc que t’as pas.",
+                "Ce sort semble au-dessus de tes moyens.",
+                "no mana, GG WP no re",
+                "Zut, où j’ai mis mon cheatcode pour avoir de la mana à l’infini déjà\u202f?",
+                "Tu as ceux qui ont de la mana et ceux qui perdent une stock, toi tu perds une stock."
+            ]
+        },
+        "precision": {
+            "generic": [
+                "Malheureusement, tu as lancé ton sort dans la mauvaise direction.",
+                "Pas mal, mais @T était à l’autre bout du terrain.",
+                "Et c’est une superbe esquive de la part de @T\u202f!",
+                "Désolé mais tu as mis trop de temps à lire ton menu et @T a eu tout le temps d’esquiver.",
+                "Désolé @C, ton adversaire est sur un autre setup.",
+                "Le mot «\u202forge\u202f» en sumérien se prononce CHEH.",
+                "There are no plans for a worldwide release.",
+                "Naaan mais t’as raté le sort mais c’est sans doute la faute à la manette tu sais…",
+                "Ahhh on assiste au premier pas de @C, le premier héros aveugle de la compétition."
+            ],
+            "shield": [
+                "Bien tenté, mais @T a réussi à shield !",
+                "Et on admire les capacités légendaires en termes de shielding de @T.",
+                "Heureusement que le shield est frame 1, @T l’a échappé belle.",
+                "Un slime de mercure s’interpose entre toi et ta cible ! Malheureusement, les slimes de mercure sont insensibles aux sorts…"
+            ],
+            "hatchet": [
+                "Un slime de mercure s’interpose entre toi et ta cible ! Coup critique ! Le slime est mort ! Tu gagnes 10 050 d’XP !",
+                "Désolé mais cette attaque est juste trop lente.",
+                "Bouuh moquez-vous de @C qui a lancé un Hatchet Man dans le vide !"
+            ],
+            "projectile": [
+                "Tout se passait selon le plan… mais @T était immobile et son bouclier a arrêté le projectile…",
+                "Alors oui je sais qu’on l’oublie un peu mais en fait le Héros a un bouclier passif comme Link et c’est précisément ce qui vient de ruiner tes plans."
+            ]
+        },
+        "ko": {
+            "generic": [
+                "@C indique que des ennemis ont disparu.",
+                "Et une stock de prise\u202f! Tu seras bientôt le plus grand des héros… quand les autres seront morts",
+                "Très mauvais DI de la part de @T qui perd une vie\u202f!",
+                "Ça valait le coup de payer autant de mana, vu que @T vient de se faire expulser.",
+                "Sheeeesh\u202f!",
+                "C’est un petit pas pour @C, et un gros coup de pied au cul de @T.",
+                "Et bim, une stock de prise\u202f!",
+                "@C a décidé d'éliminer @T, et sa sentence est irrévocable."
+            ],
+            "kamikazee": [
+                "@C explose et @T explose avec. Tout le monde explose en fait.",
+                "@C n’a peut-être pas gagné de point, mais @T en a perdu un et ça n’a coûté qu’un MP.",
+                "C’est pas très utile mais quelle classe héroïque de prendre une stock comme ça !"
+            ],
+            "whack": [
+                "@T meurt instantanément !",
+                "Wha, un whack",
+                "1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))",
+                "@C maîtrise maintenant l’Avada Kedavra. What have you done?!",
+                "Comme quoi même un Héros peut utiliser de la magie noire."
+            ],
+            "zero": [
+                "ET C’EST UN WHACK À 0 % ON APPLAUDIT BIEN FORT !!",
+                "@C GAGNE AU LOTO ET RÉUSSIT UN WHACK À 0 % !!",
+                "Franchement c’est trop un perso basé sur la chance… Ya plus aucun skill là…"
+            ]
+        },
+        "success": {
+            "generic": [
+                "Joli coup\u202f!",
+                "Et bim\u202f! Dans les dents\u202f!",
+                "Ouch, j’aurais pas aimé être à la place de @T là…",
+                "Ça a dû faire mal."
+            ],
+            "heal": [
+                "Bizarre de connaître Magic Burst et d’avoir juste Heal comme sort de soins… 🤨",
+                "C’est pas un Omnisoins mais ça fait du bien quand même."
+            ],
+            "heal_other": [
+                "Très gentil de ta part de soigner les autres !",
+                "Tu soignes un Héros ennemi…? Que cache tant de bonté ? 😳"
+            ],
+            "heal_self": [
+                "@C joue la prudence et se soigne.",
+                "@C espère que ce Heal lui sauvera une stock."
+            ],
+            "kamikazee": [
+                "Un sacrifice louable, mais qui ne te fait pas gagner de stock.",
+                "ptdr regardez un Kamikazee inutile",
+                "To Fall is Fair",
+                "Sacrifique héroïque… Je suppose ?"
+            ]
+        },
+        "burst": [
+            "**EXPLOSIOOOOOOON !**",
+            "@C envoie toute sa mana dans une seule attaque ! 3, 2, 1… **KAMEHAMEHA !**",
+            "Magic Burst let’s goooooo !",
+            "@C se prend pour Boo et fait tout sauter."
         ]
     }
 }
