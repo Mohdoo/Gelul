@@ -113,18 +113,18 @@
                 "Le mot «\u202forge\u202f» en sumérien se prononce CHEH.",
                 "There are no plans for a worldwide release.",
                 "Naaan mais t’as raté le sort mais c’est sans doute la faute à la manette tu sais…",
-                "Ahhh on assiste au premier pas de @C, le premier héros aveugle de la compétition."
+                "Ahhh on assiste aux premiers pas de @C, le premier héros aveugle de la compétition."
             ],
             "shield": [
-                "Bien tenté, mais @T a réussi à shield !",
+                "Bien tenté, mais @T a réussi à shield\u202f!",
                 "Et on admire les capacités légendaires en termes de shielding de @T.",
                 "Heureusement que le shield est frame 1, @T l’a échappé belle.",
-                "Un slime de mercure s’interpose entre toi et ta cible ! Malheureusement, les slimes de mercure sont insensibles aux sorts…"
+                "Un slime de mercure s’interpose entre toi et ta cible\u202f! Malheureusement, les slimes de mercure sont insensibles aux sorts…"
             ],
             "hatchet": [
-                "Un slime de mercure s’interpose entre toi et ta cible ! Coup critique ! Le slime est mort ! Tu gagnes 10 050 d’XP !",
+                "Un slime de mercure s’interpose entre toi et ta cible\u202f! Coup critique\u202f! Le slime est mort\u202f! Tu gagnes 10\u202f050 d’XP\u202f!",
                 "Désolé mais cette attaque est juste trop lente.",
-                "Bouuh moquez-vous de @C qui a lancé un Hatchet Man dans le vide !"
+                "Bouuh moquez-vous de @C qui a lancé un Hatchet Man dans le vide\u202f!"
             ],
             "projectile": [
                 "Tout se passait selon le plan… mais @T était immobile et son bouclier a arrêté le projectile…",
@@ -145,18 +145,18 @@
             "kamikazee": [
                 "@C explose et @T explose avec. Tout le monde explose en fait.",
                 "@C n’a peut-être pas gagné de point, mais @T en a perdu un et ça n’a coûté qu’un MP.",
-                "C’est pas très utile mais quelle classe héroïque de prendre une stock comme ça !"
+                "C’est pas très utile mais quelle classe héroïque de prendre une stock comme ça\u202f!"
             ],
             "whack": [
-                "@T meurt instantanément !",
+                "@T meurt instantanément\u202f!",
                 "Wha, un whack",
                 "1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))",
                 "@C maîtrise maintenant l’Avada Kedavra. What have you done?!",
                 "Comme quoi même un Héros peut utiliser de la magie noire."
             ],
             "zero": [
-                "ET C’EST UN WHACK À 0 % ON APPLAUDIT BIEN FORT !!",
-                "@C GAGNE AU LOTO ET RÉUSSIT UN WHACK À 0 % !!",
+                "ET C’EST UN WHACK À 0\u202f% ON APPLAUDIT BIEN FORT\u202f!!",
+                "@C GAGNE AU LOTO ET RÉUSSIT UN WHACK À 0\u202f%\u202f!!",
                 "Franchement c’est trop un perso basé sur la chance… Ya plus aucun skill là…"
             ]
         },
@@ -172,8 +172,8 @@
                 "C’est pas un Omnisoins mais ça fait du bien quand même."
             ],
             "heal_other": [
-                "Très gentil de ta part de soigner les autres !",
-                "Tu soignes un Héros ennemi…? Que cache tant de bonté ? 😳"
+                "Très gentil de ta part de soigner les autres\u202f!",
+                "Tu soignes un Héros ennemi…? Que cache tant de bonté\u202f? 😳"
             ],
             "heal_self": [
                 "@C joue la prudence et se soigne.",
@@ -183,13 +183,13 @@
                 "Un sacrifice louable, mais qui ne te fait pas gagner de stock.",
                 "ptdr regardez un Kamikazee inutile",
                 "To Fall is Fair",
-                "Sacrifique héroïque… Je suppose ?"
+                "Sacrifique héroïque… Je suppose\u202f?"
             ]
         },
         "burst": [
-            "**EXPLOSIOOOOOOON !**",
-            "@C envoie toute sa mana dans une seule attaque ! 3, 2, 1… **KAMEHAMEHA !**",
-            "Magic Burst let’s goooooo !",
+            "**EXPLOSIOOOOOOON\u202f!**",
+            "@C envoie toute sa mana dans une seule attaque\u202f! 3, 2, 1… **KAMEHAMEHA\u202f!**",
+            "Magic Burst let’s goooooo\u202f!",
             "@C se prend pour Boo et fait tout sauter."
         ]
     }

@@ -100,7 +100,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                     .replace("@T", target.name.toUpperCase())
                     .replace("@C", caster.name.toUpperCase())
                     .replace("@S", spell.name.toUpperCase());
-            foot = `${caster.name} réussi un ${spell.name} sur ${target.name} à 0\u202f%\u202f!`;
+            foot = `${caster.name} réussit un ${spell.name} sur ${target.name} à 0\u202f%\u202f!`;
             break;
 
 
