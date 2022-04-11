@@ -51,7 +51,7 @@ Pour l’import, j’utilise `require()` au lieu de `import`. Même syntaxe Comm
 
 Pour les chaînes de caractères, je préfère utiliser `"` et \` quand il faut faire un litéral de gabarit. De même, faire attention avec les caractères spéciaux, utiliser `\uXXXX` s’ils sont ambigus.  
 ```js
-console.log("Hello\u202F!");
+console.log("Hello\u202f!");
 let e = 1;
 console.log(`e = ${e}`);
 ```

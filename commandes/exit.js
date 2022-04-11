@@ -12,7 +12,7 @@ exports.options = null;
  * @param {*} interaction
  */
 exports.procedure = async (interaction) => {
-   interaction.reply({ephemeral: true, content: "Extinction… Buh-bye\u202F!"})
+   interaction.reply({ephemeral: true, content: "Extinction… Buh-bye\u202f!"})
    .then(() => {
 	   console.log(`Arrêt du bot demandé par ${interaction.member.user.tag}.`);
 	   closeDatabase();

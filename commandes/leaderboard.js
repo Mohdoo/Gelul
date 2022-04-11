@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js");
 const { getLeaderBoard } = require("../utilitaire/database");
 
 exports.name = "leaderboard";
-exports.description = "Là où rêvent d’aller les plus grands héros\u202F!";
+exports.description = "Là où rêvent d’aller les plus grands héros\u202f!";
 exports.defaultPermission = true;
 exports.options = null;
 
@@ -40,12 +40,12 @@ exports.procedure = async (interaction) => {
             .setTitle("Podium des Héros")
             .setImage("https://mohdoo.fr/ressources/gelul/podium.webp")
             .setDescription(
-                    "Les trois Héros ayant le plus grand score sont ici\u202F!\n" +
+                    "Les trois Héros ayant le plus grand score sont ici\u202f!\n" +
                     "En cas d’égalité, c’est le pourcentage qui fait la différence."
             );
 
     for (const e of podium) {
-        embed.addField(e.name, `${e.score} points, ${e.percentage}\u202F%`);
+        embed.addField(e.name, `${e.score} points, ${e.percentage}\u202f%`);
     }
 
     interaction.reply({ embeds: [embed] });

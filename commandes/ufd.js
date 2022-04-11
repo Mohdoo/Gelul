@@ -12,7 +12,7 @@ const { MessageEmbed } = require("discord.js");
 const creerEmbedFrameData = (move) => {
     return new MessageEmbed()
             .setColor("#893d92")
-            .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202F!`);
+            .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202f!`);
 }
 
 
