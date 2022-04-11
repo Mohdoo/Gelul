@@ -24,7 +24,7 @@ Commande pour afficher la frame data du personnage. Sous quelle forme afficher t
 `/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.
 
 ### Mini-jeu
-*`/spell` implémenté. Reste à faire la réponse…*  
+*`/spell` implémenté.*  
 *`/stats` implémenté.*  
 *`/leaderboard` implémenté.*  
 Chaque membre du serveur possède une jauge de mana, un pourcentage et un score. La mana se recharge lentement avec le temps, et peut être utilisée pour lancer des sorts parmi une sélection des sorts du Héros dans Smash. Chaque sort coûte la même mana et inflige les mêmes dégâts que dans le jeu. Un calcul est fait pour voir si la cible est expulsée. Si c’est le cas, le lanceur gagne un point de score et la cible en perd un.  

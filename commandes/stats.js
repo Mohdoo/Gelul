@@ -53,7 +53,7 @@ exports.procedure = async (interaction) => {
             .setThumbnail(`https://cdn.discordapp.com/avatars/${joueur.id}/${joueur.user.avatar}.${image_type}`)
             .setTitle(`Statistiques de ${joueur.displayName}`)
             .addFields(
-                    { name: "Mana", value: `${hero.mana}\n${barre_mana}` },
+                    { name: "MP", value: `${hero.mana}\n${barre_mana}` },
                     { name: "Score", value: String(hero.score), inline: true },
                     { name: "Pourcentage", value: `${hero.percentage}\u202f%`, inline: true },
                     { name: "Heals restants", value: String(hero.heal), inline: true }

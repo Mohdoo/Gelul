@@ -87,5 +87,46 @@
             "cost": 12,
             "projectile": false
         }
+    },
+    "reponses": {
+        "mana": [
+            "Bah oui mais en fait t’as plus de mana",
+            "Désolé, mais le coût de @S n’est jamais en soldes",
+            "@C essaie de lancer @S… Mais a oublié sa mana chez lui",
+            "Pas assez de mana, reviens demain\u202f!",
+            "Vu la mana qu’il te reste, tu ferais mieux d’utiliser Magic Burst.",
+            "**mana** \\ma.na\\ féminin 1. *(Religion)* Pouvoir surnaturel dans certaines religions polynésiennes. 2. *(Jeux) (Principalement dans les jeux de rôles)* Pouvoir magique. 3. *(Smashcord Héros)* Un truc que t’as pas.",
+            "Ce sort semble au-dessus de tes moyens.",
+            "no mana, GG WP no re",
+            "Zut, où j’ai mis mon cheatcode pour avoir de la mana à l’infini déjà\u202f?",
+            "Tu as ceux qui ont de la mana et ceux qui perdent une stock, toi tu perds une stock."
+        ],
+        "precision": [
+            "Malheureusement, tu as lancé ton sort dans la mauvaise direction.",
+            "Pas mal, mais @T était à l’autre bout du terrain.",
+            "Et c’est une superbe esquive de la part de @T\u202f!",
+            "Désolé mais tu as mis trop de temps à lire ton menu et @T a eu tout le temps d’esquiver",
+            "Désolé @C, ton adversaire est sur un autre setup.",
+            "Le mot «\u202forge\u202f» en sumérien se prononce CHEH.",
+            "There are no plans for a worldwide release.",
+            "Naaan mais t’as raté le sort mais c’est sans doute la faute à la manette tu sais",
+            "Ahhh on assiste au premier pas de @C, le premier héros aveugle de la compétition"
+        ],
+        "ko": [
+            "@C indique que des ennemis ont disparu",
+            "Et une stock de prise\u202f! Tu seras bientôt le plus grand des héros… quand les autres seront morts",
+            "Très mauvais DI de la part de @T qui perd une vie\u202f!",
+            "Ça valait le coup de payer autant de mana, vu que @T vient de se faire expulser",
+            "Sheeeesh\u202f!",
+            "C’est un petit pas pour @C, et un gros coup de pied au cul de @T",
+            "Et bim, une stock de prise\u202f!",
+            "@C a décidé d'éliminer @T, et sa sentence est irrévocable."
+        ],
+        "success": [
+            "Joli coup\u202f!",
+            "Et bim\u202f! Dans les dents\u202f!",
+            "Ouch, j’aurais pas aimé être à la place de @T là…",
+            "Ça a dû faire mal"
+        ]
     }
 }

@@ -4,6 +4,7 @@
  * Le point de départ du programme !
  */
 
+require("./utilitaire/utils");
 const { Client, Intents: { FLAGS: INTENTS } } = require("discord.js");
 
 // config et client sont des variables globales, pour être accessibles partout. Essayer de ne pas en faire trop !

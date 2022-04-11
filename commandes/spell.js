@@ -1,8 +1,79 @@
 "use strict";
 
+// variable interne utilisée si un KO a eu lieu, correspond en fait au paramètre cas de creerEmbedSpell
+let ko;
+
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { getStatsHero, setStatsHero } = require("../utilitaire/database");
 const spells_data = require("../data/spells.json");
+const { MessageEmbed } = require("discord.js");
+
+/**
+ * Crée l’embed à envoyer en réponse. Les cas spéciaux sont hardcodés T_T
+ * TODO: gérer les cas particuliers, ajouter des images pour les KO
+ * @param {*} cas le cas présent. Peut être "mana", "precision", "succ", "ko"
+ */
+const creerEmbedSpell = (cas, caster, target, spell) => {
+    let color, phrase, foot, image;
+
+    switch (cas) {
+        case "mana":
+            color = 0x2ab3ff; // bleu jauge de MP
+            phrase = spells_data.reponses.mana.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name)
+                    .replace("@S", spell.name);
+            foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais n’avait plus de MP…`;
+            break;
+
+        case "precision":
+            color = 0xb94229; // rouge Héros DQX
+            phrase = spells_data.reponses.precision.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name)
+                    .replace("@S", spell.name);
+            foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais s’est raté…`;
+            break;
+
+        case "success":
+            color = 0x6ca327; // vert cheveux Héros DQIV
+            phrase = spells_data.reponses.success.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name)
+                    .replace("@S", spell.name);
+            foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
+            break;
+
+        case "ko":
+            color = 0x6ca327; // vert cheveux Héros DQIV
+            phrase = spells_data.reponses.ko.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name)
+                    .replace("@S", spell.name);
+            foot = `${caster.name} a lancé ${spell.name} sur ${target.name} et l’a expulsé\u202f!`;
+            break;
+
+        default:
+            console.warn("Valeur invalide pour l’attribut cas de creerEmbedSpell.");
+            color = 0x000000;
+            phrase = "Erreur interne\u202f!";
+            foot = "ptdr le bot a bugué";
+            break;
+    }
+
+    let embed = new MessageEmbed()
+            .setDescription(phrase)
+            .setFooter({text: foot})
+            .setColor(color)
+            .addFields([
+                    {"name": caster.name, "value": `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`},
+                    {"name": target.name, "value": `${target.score} points, ${target.percentage}\u202f%, ${target.mana}\u202fMP`}
+            ]);
+    
+    if (image) embed.setImage(image);
+    
+    return embed;
+}
 
 /**
  * Modifie stats d’un joueur après avoir perdu une stock
@@ -10,6 +81,7 @@ const spells_data = require("../data/spells.json");
  * @param {*} hero le héros qui perd une stock
  */
 const kill = (hero) => {
+    ko = "ko";
     hero.score--;
     hero.heal = spells_data.new_hero.heal;
     hero.mana = spells_data.new_hero.mana;
@@ -46,7 +118,7 @@ const applyDamage = (spell, caster, target) => {
 /* Champs publics */
 
 exports.name = "spell";
-exports.description = "Lance un sort\u202F!";
+exports.description = "Lance un sort\u202f!";
 exports.defaultPermission = true;
 exports.options = [{
         "type": OptionType.String,
@@ -76,16 +148,21 @@ exports.procedure = async (interaction) => {
     }
 
     // 0. Initialisation des variables nécessaires
+    // on remet notre petite variable interne à zéro
+    ko = "success";
     // le membre qui a lancé le sort
     const caster_id = interaction.member.id;
+    let caster = getStatsHero(caster_id);
+    caster.name = interaction.member.displayName;
+
     // le sort lancé
     const spell_name = interaction.options.getString("sort");
+    let spell = spells_data.spells[spell_name];
+
     // la cible du sort
     const target_id = interaction.options.getMember("cible").id;
-
-    let caster = getStatsHero(caster_id);
     let target = getStatsHero(target_id);
-    let spell = spells_data.spells[spell_name];
+    target.name = interaction.options.getMember("cible").displayName;
 
 
     // 1. vérification de la validité de la cible (seul Heal peut avoir caster === target)
@@ -93,7 +170,7 @@ exports.procedure = async (interaction) => {
         interaction.reply({ephemeral: true, content: "Seul Heal peut être lancé sur soi-même."});
         return;
     } else if (spell_name === "heal" && caster.heal === 0) {
-        interaction.reply({ephemeral: true, content: "Déso pas déso t’as cramé tous tes Heals pour cette stock"});
+        interaction.reply({ephemeral: true, content: "Déso pas déso t’as cramé tous tes Heals pour cette stock."});
         return;
     }
 
@@ -115,7 +192,7 @@ exports.procedure = async (interaction) => {
 
     // si le lanceur a assez de mana, il paie le coût du sort
     if (caster.mana < spell.cost) {
-        interaction.reply(`Il te faut ${spell.cost} MP mais t’en as ${caster.mana}`);
+        interaction.reply({ embeds: [creerEmbedSpell("mana", caster, target, spell)]});
         return;
     } else {
         caster.mana -= spell.cost;
@@ -146,7 +223,7 @@ exports.procedure = async (interaction) => {
 
     if (Math.random() > spell.precision) {
         setStatsHero(caster_id, caster);
-        interaction.reply(`Precision check échoué, t’es deg\u202F? ${caster.mana} MP`);
+        interaction.reply({ embeds: [creerEmbedSpell("precision", caster, target, spell)]});
         return;
     }
 
@@ -204,10 +281,5 @@ exports.procedure = async (interaction) => {
 
 
     // 6. réponse finale
-    interaction.reply(`
-            Vous utilisez ${spell.name} sur ${interaction.options.getMember("cible").displayName}\u202F!
-            Nouvelles stats\u202F:
-            - ${interaction.member.displayName} → ${caster.percentage}\u202F%, score ${caster.score}, ${caster.mana} MP
-            - ${interaction.options.getMember("cible").displayName} → ${target.percentage}\u202F%, score ${target.score}, ${target.mana} MP
-    `);
+    interaction.reply({ embeds: [creerEmbedSpell(ko, caster, target, spell)]});
 };
