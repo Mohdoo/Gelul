@@ -296,7 +296,7 @@ exports.procedure = async (interaction) => {
             u = (u > 300 ? 300 : u);
             const kill_chance = 1 + (200 * (t - 20) / 280) + (20 * (u / 300));
 
-            if (Math.random() * 0 < kill_chance) {
+            if (Math.random() * 100 < kill_chance) {
                 if (target.percentage === 0.0) ko = "0"; // whack réussi à 0 %
                 kill(target);
                 caster.score++;
