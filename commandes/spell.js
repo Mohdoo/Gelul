@@ -10,7 +10,7 @@ const { MessageEmbed } = require("discord.js");
 
 /**
  * Crée l’embed à envoyer en réponse. Les cas spéciaux sont hardcodés T_T
- * TODO: gérer les cas particuliers, ajouter des images pour les KO
+ * Envoie une image seulement en cas de KO
  * @param {*} cas le cas présent. Peut être "mana", "precision", "succ", "ko"
  */
 const creerEmbedSpell = (cas, caster, target, spell) => {
@@ -76,7 +76,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
 
 
         case "ko":
-            color = (spell.name === "Whack" || spell.name === "Thwack" ? 0x7d00a6 : 0x6ca327); // vert cheveux Héros DQIV
+            color = (spell.name === "Whack" || spell.name === "Thwack" ? 0x7d00a6 : 0x6ca327); // vert cheveux Héros DQIV ou violet whack
             phrases_possibles = spells_data.reponses.ko.generic;
 
             if (spell.name === "Whack" || spell.name === "Thwack") {
@@ -85,12 +85,12 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
             }
 
-
             phrase = phrases_possibles.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name)
-                    .replace("@S", spell.name);
+            .replace("@T", target.name)
+            .replace("@C", caster.name)
+            .replace("@S", spell.name);
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name} et l’a expulsé\u202f!`;
+            // TODO image = ...
             break;
 
 
@@ -101,12 +101,13 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                     .replace("@C", caster.name.toUpperCase())
                     .replace("@S", spell.name.toUpperCase());
             foot = `${caster.name} réussit un ${spell.name} sur ${target.name} à 0\u202f%\u202f!`;
+            // TODO image = ...
             break;
 
 
         default:
             console.warn("Valeur invalide pour l’attribut cas de creerEmbedSpell.");
-            color = 0x000000;
+            color = 0x000001; // noir presque parfait
             phrase = "Erreur interne\u202f!";
             foot = "ptdr le bot a bugué";
             break;
@@ -219,10 +220,10 @@ exports.procedure = async (interaction) => {
     
 
     // 1. vérification de la validité de la cible (seul Heal peut avoir caster === target)
-    if (spell_name !== "heal" && caster.id === target.id) {
+    if (spell.name !== "Heal" && caster.id === target.id) {
         interaction.reply({ephemeral: true, content: "Seul Heal peut être lancé sur soi-même."});
         return;
-    } else if (spell_name === "heal" && caster.heal === 0) {
+    } else if (spell.name === "Heal" && caster.heal === 0) {
         interaction.reply({ephemeral: true, content: "Déso pas déso t’as cramé tous tes Heals pour cette stock."});
         return;
     }
@@ -267,7 +268,7 @@ exports.procedure = async (interaction) => {
 
     // 3. calcul de précision
     // Kamikazee tue son lanceur même si le calcul de précision échoue, donc on doit le mettre ici
-    if (spell_name === "kamikazee") {
+    if (spell.name === "Kamikazee") {
         // Pour équilibrer le sort on dit qu’il ne reset pas la mana
         const old_mana = caster.mana;
         kill(caster);
@@ -275,7 +276,7 @@ exports.procedure = async (interaction) => {
     }
 
     if (Math.random() > spell.precision) {
-        if (spell_name === "magicburst") caster.mana = 0;
+        if (spell.name === "Magic Burst") caster.mana = 0;
         setStatsHero(caster.id, caster);
         interaction.reply({ embeds: [creerEmbedSpell("precision", caster, target, spell)]});
         return;
@@ -283,9 +284,9 @@ exports.procedure = async (interaction) => {
 
 
     // 4. calcul de dégâts et des stocks perdus
-    switch (spell_name) {
-        case "whack":
-        case "thwack":
+    switch (spell.name) {
+        case "Whack":
+        case "Thwack":
             /* whack et thwack ont une probabilité d’instant KO
                1 + (200 * (t - 20) / 280) + (20 * (u / 300))
                t = % de la cible avant le coup, clamp entre 20 et 300
@@ -305,19 +306,18 @@ exports.procedure = async (interaction) => {
                 applyDamage(spell, caster, target);
             }
             break;
-        case "magicburst":
+        case "Magic Burst":
             // magic burst draine toute la mana du lanceur et inflige des dégâts proportionnels
             spell.damage = 0.3909 * caster.mana + 9.7091;
             spell.ko = 67 - caster.mana * 0.365;
             applyDamage(spell, caster, target);
             caster.mana = 0;
             break;
-        case "hocuspocus":
+        case "Hocus Pocus":
             /* hocus pocus active un effet aléatoire
-               TODO
-               pour le moment Hocus Pocus n’est pas implémenté et ne fait rien */
+               TODO pour le moment Hocus Pocus n’est pas implémenté et ne fait rien */
             break;
-        case "heal":
+        case "Heal":
             // heal soigne et a un nombre d’utilisations limitées
             caster.heal--;
             applyDamage(spell, caster, target);
