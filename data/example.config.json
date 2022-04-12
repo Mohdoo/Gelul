@@ -15,5 +15,6 @@
     ],
     "GUILD_ID": "id de la guilde où sera utilisé le bot (une seule, voire README.md#Utilisation).",
     "WELCOME_CHANNEL_ID": "id du salon où envoyer les messages de bienvenue. Laisser vide ou supprimer la valeur pour désactiver l’envoi de tels messages.",
-    "DATABASE_FILENAME": "nom du fichier où écrire et lire la base de données. Il sera créé automatiquement s’il n’existe pas. /data/<nom> pour le mettre dans le dossier data"
+    "DATABASE_FILENAME": "nom du fichier où écrire et lire la base de données. Il sera créé automatiquement s’il n’existe pas. /data/<nom> pour le mettre dans le dossier data",
+    "BASE_URL": "url de là où vous voulez uploader les images utilisées par le bot. Merci de ne pas faire de hotlinking."
 }

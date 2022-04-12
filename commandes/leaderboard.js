@@ -38,7 +38,7 @@ exports.procedure = async (interaction) => {
     const embed = new MessageEmbed()
             .setColor(0xf8d55f)
             .setTitle("Podium des Héros")
-            .setImage("https://mohdoo.fr/ressources/gelul/podium.webp")
+            .setImage(config.BASE_URL + "podium.webp")
             .setDescription(
                     "Les trois Héros ayant le plus grand score sont ici\u202f!\n" +
                     "En cas d’égalité, c’est le pourcentage qui fait la différence."
