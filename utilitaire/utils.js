@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Fichier où on met toutes les fonctions qui peuvent servir
  * de manière globale

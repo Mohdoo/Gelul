@@ -1,7 +1,42 @@
 "use strict";
 
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+
+/**
+ * Crée un choix à partir d'un nom d'attaque.
+ * Par exemple, "Fowrard Tilt 1" devient {name: "Forward Tilt 1", value: "forwardtilt1"}
+ * @param {string} name l’attaque à transformer en choix
+ * @returns un choix de paramètre de commande
+ */
+ const nameToChoice = name => ({name, value: name.replaceAll(" ", "").replaceAll("/", "").toLowerCase()});
+
+const no_animation = [
+    "neutralb",
+    "upb",
+    "downb",
+    "bang",
+    "sizz",
+    "whack",
+    "snooze",
+    "heal",
+    "oomph",
+    "acceleratle",
+    "bounce",
+    "zoom",
+    "hocuspocus",
+    "psychup",
+    "spotdodge",
+    "forwardroll",
+    "backwardroll",
+    "neutralairdodge",
+    "downairdodge",
+    "diagonaldownairdodge",
+    "leftrightairdodge",
+    "diagonalupairdodge",
+    "upairdodge",
+    "stats"
+];
 
 /**
  * Crée l’embed qui va être envoyé comme réponse à la commande
@@ -10,19 +45,38 @@ const { MessageEmbed } = require("discord.js");
  * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
-    return new MessageEmbed()
+    let m = new MessageEmbed()
             .setColor("#893d92")
-            .setDescription(`Description du move ${move}. Vivement qu’on ajoute des vraies données\u202f!`);
+            .setAuthor({ name: "Ultimate Frame Data", url: "https://ultimateframedata.com/" })
+            .setTitle("Frame Data du Héros")
+            .setURL("https://ultimateframedata.com/hero")
+            .setFooter({ text: "UFD a été créé par MetalMusicMan" })
+            .setImage(config.BASE_URL + "ufd/" + move + ".png");
+
+    if (["upb", "upsmash"].includes(move)) {
+        m.setDescription("Le Up B et le Up Smash ignorent les 11 frames de Shield Drop.");
+
+    } else if (move === "stats") {
+        m.setDescription("Le saut ignore les 11 frames de Shield Drop.");
+
+    } else if (["grab", "dashgrab", "pivotgrab"].includes(move)) {
+        m.setDescription("Faire un Grab après qu’une attaque a frappé le bouclier prend 4 frames supplémentaires, mais ignore les 11 frames de Shield Drop.");
+
+    } else if (move === "downb") {
+        m.setDescription(
+                "Le Héros regagne 1\u202fMP par seconde, et lorsqu’une attaque non-spéciale touche un adversaire ou un bouclier," +
+                "il regagne 80\u202f% des dégâts infligés en MP. Il ne gagne pas de MP tant que le menu de sorts est ouvert.\n" +
+                "Plus de détails sur la (page SSB Wiki dédiée)[https://www.ssbwiki.com/MP_Gauge]."
+        );
+    } else {
+        m.setDescription(
+                "Les statistiques de On Shield Advantage/Disadvantage supposent que le Shield a été touché par la première frame active de l’attaque.\n" +
+                "La Staleness affecte aussi l’advantage/disadvantage, que l’on frappe un personnage ou un Shield."
+        );
+    }
+    return m;
 }
 
-
-/**
- * Crée un choix à partir d'un nom d'attaque.
- * Par exemple, "Fowrard Tilt 1" devient {name: "Forward Tilt 1", value: "forwardtilt1"}
- * @param {string} name l’attaque à transformer en choix
- * @returns un choix de paramètre de commande
- */
-const nameToChoice = name => ({name, value: name.replaceAll(" ", "").replaceAll("/", "").toLowerCase()});
 
 /* Champs publics */
 
@@ -206,5 +260,17 @@ exports.procedure = async (interaction) => {
     /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
        comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
     const attack = interaction.options.getString("move");
-    interaction.reply({ embeds: [creerEmbedFrameData(attack)]});
+    
+    let b = new MessageButton()
+            .setCustomId("display")
+            .setLabel("Afficher")
+            .setStyle("PRIMARY")
+            .setDisabled(true);
+    // temporaire vu que j’ai encore aucun gif !
+    if (true) b.setLabel("Aucune hitbox à afficher").setStyle("SECONDARY").setDisabled(true);
+    
+    const row = new MessageActionRow()
+            .addComponents(b);
+
+    interaction.reply({ embeds: [creerEmbedFrameData(attack)], components: [row] });
 };

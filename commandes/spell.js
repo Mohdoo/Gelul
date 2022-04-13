@@ -272,6 +272,7 @@ exports.procedure = async (interaction) => {
         // Pour équilibrer le sort on dit qu’il ne reset pas la mana
         const old_mana = caster.mana;
         kill(caster);
+        target.score++;
         caster.mana = old_mana;
     }
 
