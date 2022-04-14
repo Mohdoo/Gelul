@@ -21,7 +21,8 @@ Le dossier `data` contient les données statiques en JSON et je recommande d’y
 ### Frame data
 *Partie commande faite. Reste à faire la réponse…*  
 Commande pour afficher la frame data du personnage. Sous quelle forme afficher tout ça ? Faudrait essayer de limiter au maximum l’envoi d’images, par exemple avec des embeds.  
-`/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.
+`/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.  
+Comme on ne fait que répéter les données d’UFD, certaines sont manquantes ou incomplètes.
 
 ### Mini-jeu
 *`/spell` implémenté.*  

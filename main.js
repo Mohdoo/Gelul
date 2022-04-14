@@ -15,6 +15,9 @@ global.client = new Client({ intents: [INTENTS.GUILDS, INTENTS.GUILD_MEMBERS] })
 
 
 const { applyCommands } = require("./utilitaire/commands");
+// Pour le moment on a une seule interaction qui utilise des boutons, on verra comment gérer si on en ajoute d’autres un jour
+// Pareil pour le menu déroulant…
+const { buttonProcedure } = require("./commandes/ufd");
 
 
 // appelé une fois quand le bot se connecte
@@ -27,6 +30,11 @@ client.once("ready", () => {
 
 // appelé à chaque interaction avec le bot (on ignore tout sauf les slash commandes)
 client.on("interactionCreate", async interaction => {
+    if (interaction.isButton()) {
+        buttonProcedure(interaction);
+        return;
+    }
+
     if (!interaction.isCommand()) return;
 
     applyCommands(interaction);
