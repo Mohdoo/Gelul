@@ -33,7 +33,7 @@ const initDatabase = () => {
 
     db.prepare(`
             CREATE TABLE IF NOT EXISTS heros (
-                id TEXT PRIMARY KEY,
+                id TEXT PRIMARY KEY NOT NULL,
                 percentage REAL DEFAULT ${new_hero.percentage},
                 score INTEGER DEFAULT ${new_hero.score},
                 mana INTEGER DEFAULT ${new_hero.mana} CHECK (

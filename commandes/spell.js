@@ -106,7 +106,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
 
 
         default:
-            console.warn("Valeur invalide pour l’attribut cas de creerEmbedSpell.");
+            console.warn("Valeur invalide ou d'erreur pour l’attribut cas de creerEmbedSpell.");
             color = 0x000001; // noir presque parfait
             phrase = "Erreur interne\u202f!";
             foot = "ptdr le bot a bugué";
@@ -162,8 +162,8 @@ const applyDamage = (spell, caster, target) => {
         if (spell.name !== "Heal" && spell.damage < 1) {
             spell.damage = 1;
         }
-        // on calcule puis arrondi au dixième près
-        target.percentage = Math.round(target.percentage + spell.damage);
+        // on calcule puis arrondit au dixième près
+        target.percentage = Number((target.percentage + spell.damage).toFixed(1));
     }
 };
 
@@ -332,8 +332,15 @@ exports.procedure = async (interaction) => {
 
 
     // 5. mise à jour de la db
-    setStatsHero(caster.id, caster);
-    setStatsHero(target.id, target);
+    // ce try/catch devrait être temporaire le temps de régler tous les bugs
+    try {
+        setStatsHero(caster.id, caster);
+        setStatsHero(target.id, target);
+    } catch (error) {
+        console.warn("Erreur SQL:" + error);
+        interaction.reply({ embeds: [creerEmbedSpell("erreur", caster, target, spell)]});
+        return;
+    }
 
 
     // 6. réponse finale
