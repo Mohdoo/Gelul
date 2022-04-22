@@ -91,7 +91,6 @@ const getLeaderBoard = () => get_leaderboard_query.all();
  */
 const closeDatabase = () => db.close();
 
-exports.init = initDatabase;
 exports.getStatsHero = getStatsHero;
 exports.setStatsHero = setStatsHero;
 exports.getLeaderBoard = getLeaderBoard;
