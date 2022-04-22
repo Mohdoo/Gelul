@@ -261,7 +261,7 @@ exports.procedure = async (interaction) => {
         } else {
             // le joueur avait déjà lancé un sort avant
             const manque = (now - h.last_spell_ts) % spells_data.mana_refill_time;
-            h.last_spell_ts = now - (spells_data.mana_refill_time - manque)
+            h.last_spell_ts = now - (spells_data.mana_refill_time - manque);
         }
     }
 

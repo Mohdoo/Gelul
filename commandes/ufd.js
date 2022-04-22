@@ -311,5 +311,5 @@ exports.buttonProcedure = async (interaction) => {
     
     // envoie le lien vers l’animation (pas giga nice mais simple)
     let attack = interaction.customId;
-    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") })
+    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") });
 };

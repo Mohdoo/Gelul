@@ -25,7 +25,6 @@ client.once("ready", () => {
     console.log(`Connecté sur le compte ${client.user.tag}!`);
 
     require("./utilitaire/commands").init();
-    require("./utilitaire/database").init();
 });
 
 // appelé à chaque interaction avec le bot (on ignore tout sauf les slash commandes)
