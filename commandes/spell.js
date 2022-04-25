@@ -54,14 +54,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
             color = 0x6ca327; // vert cheveux Héros DQIV
             phrases_possibles = spells_data.reponses.success.generic;
 
-            if (spell.name === "Heal") {
-                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal);
-                if (target.id === caster.id) {
-                    phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_self);
-                } else {
-                    phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_other);
-                }
-            } else if (spell.name === "Kamikazee") {
+            if (spell.name === "Kamikazee") {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.kamikazee);
             } else if (spell.name === "Magic Burst") {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
@@ -104,7 +97,22 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
             // TODO image = ...
             break;
 
+        case "heal":
+            color = 0xa5f8dc; // vert clair au pif
 
+            phrases_possibles = spells_data.reponses.success.heal;
+            if (target.id === caster.id) {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_self);
+            } else {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_other);
+            }
+
+            phrase = phrases_possibles.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name)
+                    .replace("@S", spell.name);
+            foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
+            break;
         default:
             console.warn("Valeur invalide ou d'erreur pour l’attribut cas de creerEmbedSpell.");
             color = 0x000001; // noir presque parfait
@@ -117,10 +125,9 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
             .setDescription(phrase)
             .setFooter({text: foot})
             .setColor(color)
-            .addFields([
-                    {"name": caster.name, "value": `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`},
-                    {"name": target.name, "value": `${target.score} points, ${target.percentage}\u202f%, ${target.mana}\u202fMP`}
-            ]);
+            .addField(caster.name, `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`);
+    
+    if (caster.id !== target.id) embed.addField(target.name, `${target.score} points, ${target.percentage}\u202f%, ${target.mana}\u202fMP`);
     
     if (image) embed.setImage(image);
     
@@ -150,21 +157,32 @@ const kill = (hero) => {
 const applyDamage = (spell, caster, target) => {
     // on applique une variance aléatoire de +- 10 dégâts
     const plus_ou_moins = Math.random() * 20 - 10;
-    // spell.ko === null pour Heal, c’est un cas spécial à gérer
-    spell.ko = (spell.ko !== null ? spell.ko + plus_ou_moins : null);
+    spell.ko = spell.ko + plus_ou_moins;
 
-    if (spell.ko !== null && target.percentage >= spell.ko) {
+    if (target.percentage >= spell.ko) {
         kill(target);
         caster.score++;
     } else {
         spell.damage += Math.random() * 5 - 2.5;
         // éviter que Heal ne se mette à infliger des dégâts
-        if (spell.name !== "Heal" && spell.damage < 1) {
+        if (spell.damage < 1) {
             spell.damage = 1;
         }
         // on calcule puis arrondit au dixième près
         target.percentage = Number((target.percentage + spell.damage).toFixed(1));
     }
+};
+
+/**
+ * Variante de applyDamage pour Heal
+ * @param {*} target 
+ */
+const heal = (target) => {
+    const heal_power = spells_data.spells.heal.damage + Math.random() * 5 - 2.5;
+
+    // on calcule puis arrondit au dixième près
+    target.percentage = Number((target.percentage + heal_power).toFixed(1));
+    target.percentage = (target.percentage < 0.0 ? 0.0 : target.percentage);
 };
 
 /* Champs publics */
@@ -272,6 +290,7 @@ exports.procedure = async (interaction) => {
         // Pour équilibrer le sort on dit qu’il ne reset pas la mana
         const old_mana = caster.mana;
         kill(caster);
+        ko = "success";
         target.score++;
         caster.mana = old_mana;
     }
@@ -321,8 +340,8 @@ exports.procedure = async (interaction) => {
         case "Heal":
             // heal soigne et a un nombre d’utilisations limitées
             caster.heal--;
-            applyDamage(spell, caster, target);
-            target.percentage = (target.percentage < 0.0 ? 0.0 : target.percentage);
+            caster.id === target.id ? heal(caster) : heal(target);
+            ko = "heal";
             break;
 
         default:
@@ -334,8 +353,12 @@ exports.procedure = async (interaction) => {
     // 5. mise à jour de la db
     // ce try/catch devrait être temporaire le temps de régler tous les bugs
     try {
-        setStatsHero(caster.id, caster);
-        setStatsHero(target.id, target);
+        if (caster.id === target.id) {
+            setStatsHero(caster.id, caster);
+        } else {
+            setStatsHero(caster.id, caster);
+            setStatsHero(target.id, target);
+        }
     } catch (error) {
         console.warn("Erreur SQL:" + error);
         interaction.reply({ embeds: [creerEmbedSpell("erreur", caster, target, spell)]});

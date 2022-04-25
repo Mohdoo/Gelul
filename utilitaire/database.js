@@ -68,7 +68,14 @@ const getStatsHero = (id) => {
 
     if (res === undefined) {
         createNewHero(id);
-        return new_hero;
+        // Il faut créer une copie du nouveau héros pour pas écrire dessus
+        const solo = {
+            percentage: new_hero.percentage,
+            score: new_hero.score,
+            mana: new_hero.mana,
+            heal: new_hero.heal
+        };
+        return solo;
     } else {
         return res;
     }
