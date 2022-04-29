@@ -49,11 +49,12 @@ console.log(my_object);
 ```
 Pour l’import, j’utilise `require()` au lieu de `import`. Même syntaxe CommonJS pour les exports.
 
-Pour les chaînes de caractères, je préfère utiliser `"` et \` quand il faut faire un litéral de gabarit. De même, faire attention avec les caractères spéciaux, utiliser `\uXXXX` s’ils sont ambigus.  
+Pour les chaînes de caractères, je préfère utiliser `"` et \` quand il faut faire un litéral de gabarit. De même, faire attention avec les caractères spéciaux, utiliser `\uXXXX` s’ils sont ambigus. Utilisez `+` ou les litéraux de gabarit comme vous voulez.  
 ```js
 console.log("Hello\u202f!");
 let e = 1;
 console.log(`e = ${e}`);
+console.log("e = " + e); // identique, prenez celui que vous préférez
 ```
 
 Pour créer un objet vide, utiliser `new` si possible.  
