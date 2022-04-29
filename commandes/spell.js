@@ -7,16 +7,19 @@ const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/
 const { getStatsHero, setStatsHero } = require("../utilitaire/database");
 const spells_data = require("../data/spells.json");
 const { MessageEmbed } = require("discord.js");
+const { coinFlip } = require("../utilitaire/utils");
 
 /**
  * Crée l’embed à envoyer en réponse. Les cas spéciaux sont hardcodés T_T
  * Envoie une image seulement en cas de KO
- * @param {*} cas le cas présent. Peut être "mana", "precision", "succ", "ko"
  */
-const creerEmbedSpell = (cas, caster, target, spell) => {
+const creerEmbedSpell = (caster, target, spell) => {
+
+    if (spell.name === "Hocus Pocus") return creerEmbedHocusPocus(caster, target);
+
     let color, phrase, foot, image, phrases_possibles;
 
-    switch (cas) {
+    switch (ko) {
         case "mana":
             color = 0x2ab3ff; // bleu jauge de MP
             phrases_possibles = spells_data.reponses.mana.generic;
@@ -83,7 +86,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
             .replace("@C", caster.name)
             .replace("@S", spell.name);
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name} et l’a expulsé\u202f!`;
-            // TODO image = ...
+            // TODO image = `${config.BASE_URL}/ko/${spell.name}.gif`;
             break;
 
 
@@ -94,7 +97,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                     .replace("@C", caster.name.toUpperCase())
                     .replace("@S", spell.name.toUpperCase());
             foot = `${caster.name} réussit un ${spell.name} sur ${target.name} à 0\u202f%\u202f!`;
-            // TODO image = ...
+            // TODO image = `${config.BASE_URL}/ko/${spell.name}.gif`;
             break;
 
         case "heal":
@@ -113,6 +116,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                     .replace("@S", spell.name);
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
             break;
+
         default:
             console.warn("Valeur invalide ou d'erreur pour l’attribut cas de creerEmbedSpell.");
             color = 0x000001; // noir presque parfait
@@ -183,6 +187,103 @@ const heal = (target) => {
     // on calcule puis arrondit au dixième près
     target.percentage = Number((target.percentage + heal_power).toFixed(1));
     target.percentage = (target.percentage < 0.0 ? 0.0 : target.percentage);
+};
+
+/**
+ * Applique un effet aléatoire de Hocus Pocus
+ * @param {*} caster 
+ * @param {*} target 
+ */
+const hocusPocus = (caster, target) => {
+    /**
+     * Bienvenue dans le bordel sans nom, le chaos, le vide primordial, le tout et le rien !
+     * Cette fonction est l’apogée du bordel qu’est /spell, le zénith, que dis-je, l’empyrée !
+     * Bon courage…
+     */
+
+    // cette variable contient les cas possibles, on peut facilement en retirer un pour le désactiver. En ajouter est une autre affaire…
+    // on écrit directement dans ko, ça évite une variable intermédiaire
+    ko = [
+        "trempette",    // nothing happens/lance Trempette/met un message ou une image débile sans effet
+        "randomspell",  // lancer un sort au hasard pour 4 PM (même cible)
+        "invisibility", // mettre une invisibilité qui donne 50 % de chances d’esquive sur les 3 prochains sorts qu’il reçoit
+        "fullmana",     // redonner toute la mana au lanceur
+        "nomana",       // faire perdre toute la mana au lanceur
+        "omnisoin",     // Soigner tous les PV du lanceur
+        "mortsubite",   // Ajouter 300% de dégâts au lanceur
+        "foe",          // invoquer un FOE (even in Gelul, F.O.E!) qui élimine au hasard le lanceur ou la cible (le point revient à celui qui n’a pas été éliminé)
+        "summon"        // fait une invocation de Final Fantasy ou Golden Sun, inflige des dégâts à la cible qui dépendent de qui est invoqué
+    ].choice();
+
+    // sera utilisé pour les cas où un effet peut s’appliquer soit au lanceur soit à la cible
+    const flip = coinFlip();
+
+    switch (ko) {
+        case "trempette":
+            // ne fait RIEN, mais ce case doit exister sinon on tombe dans default
+            break;
+
+        case "randomspell":
+            // TODO ça va être le plus dur je pense
+            break;
+
+        case "invisibility":
+            caster.invisibility = 3;
+            // TODO implémenter le reste
+            break;
+
+        case "fullmana":
+            caster.mana = spells_data.new_hero.mana;
+            break;
+
+        case "nomana":
+            caster.mana = 0;
+            break;
+        
+        case "omnisoin":
+            caster.percentage = 0;
+            break;
+
+        case "mortsubite":
+            caster.percentage += 300;
+            break;
+
+        case "foe":
+            if (flip) {
+                kill(caster);
+                target.score++;
+                ko.victime = caster.name; // cette ligne en fera hurler certain, en fera jouir d’autres
+            } else {
+                kill(target);
+                caster.score++;
+                ko.victime = target.name;
+            }
+            break;
+
+        case "summon":
+            ko = [
+                // TODO
+                "Iris",
+                "Bahamut ZERO",
+                "Catastrophe"
+            ].choice();
+            break;
+    
+        default:
+            console.error("Hocus Pocus : cas non géré.");
+            ko = "erreur";
+            break;
+    }
+};
+
+/**
+ * Similaire à creerEmbedSpell, mais gère les multiples cas aléatoires d’Hocus Pocus
+ * Utilise aussi la variable ko
+ * @param {*} caster 
+ * @param {*} target 
+ */
+const creerEmbedHocusPocus = (caster, target) => {
+    // Vous pensiez que c’était pas assez le bazar ? Eh bah c’est reparti !
 };
 
 /* Champs publics */
@@ -334,8 +435,8 @@ exports.procedure = async (interaction) => {
             caster.mana = 0;
             break;
         case "Hocus Pocus":
-            /* hocus pocus active un effet aléatoire
-               TODO pour le moment Hocus Pocus n’est pas implémenté et ne fait rien */
+            // hocus pocus active un effet aléatoire
+            hocusPocus(caster, target);
             break;
         case "Heal":
             // heal soigne et a un nombre d’utilisations limitées
