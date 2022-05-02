@@ -149,7 +149,7 @@
             ],
             "whack": [
                 "@T meurt instantanément\u202f!",
-                "Wha, un whack",
+                "Wha, un @S",
                 "1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))",
                 "@C maîtrise maintenant l’Avada Kedavra. What have you done?!",
                 "Comme quoi même un Héros peut utiliser de la magie noire."

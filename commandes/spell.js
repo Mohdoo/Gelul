@@ -161,19 +161,18 @@ const kill = (hero) => {
 const applyDamage = (spell, caster, target) => {
     // on applique une variance aléatoire de +- 10 dégâts
     const plus_ou_moins = Math.random() * 20 - 10;
-    spell.ko = spell.ko + plus_ou_moins;
+    let ko_value = spell.ko + plus_ou_moins;
 
-    if (target.percentage >= spell.ko) {
+    if (target.percentage >= ko_value) {
         kill(target);
         caster.score++;
     } else {
-        spell.damage += Math.random() * 5 - 2.5;
-        // éviter que Heal ne se mette à infliger des dégâts
-        if (spell.damage < 1) {
-            spell.damage = 1;
+        let damage = spell.damage + Math.random() * 5 - 2.5;
+        if (damage < 1) {
+            damage = 1;
         }
         // on calcule puis arrondit au dixième près
-        target.percentage = Number((target.percentage + spell.damage).toFixed(1));
+        target.percentage = Number((target.percentage + damage).toFixed(1));
     }
 };
 
@@ -229,7 +228,6 @@ const hocusPocus = (caster, target) => {
 
         case "invisibility":
             caster.invisibility = 3;
-            // TODO implémenter le reste
             break;
 
         case "fullmana":
@@ -262,11 +260,15 @@ const hocusPocus = (caster, target) => {
 
         case "summon":
             ko = [
-                // TODO
-                "Iris",
-                "Bahamut ZERO",
-                "Catastrophe"
+                "Odin",                         // Final Fantasy 7
+                "Bahamut ZERO",                 // Final Fantasy 7
+                "Iris",                         // Golden Sun 2
+                "Catastrophe",                  // Golden Sun 2
+                "Dragon Blanc aux Yeux Bleus",  // Yu-Gi-Oh!
+                "Magicien Sombre",              // Yu-Gi-Oh!
+                "Kaio"                          // Spectrobes 3
             ].choice();
+            target.percentage = Number((target.percentage + (100 + Math.random() * 100 - 50)).toFixed(1));
             break;
     
         default:
@@ -396,7 +398,14 @@ exports.procedure = async (interaction) => {
         caster.mana = old_mana;
     }
 
-    if (Math.random() > spell.precision) {
+    let precision_check = Math.random();
+
+    if (target.invisibility > 0) {
+        target.invisibility--;
+        precision_check *= 2;
+    }
+
+    if (precision_check > spell.precision) {
         if (spell.name === "Magic Burst") caster.mana = 0;
         setStatsHero(caster.id, caster);
         interaction.reply({ embeds: [creerEmbedSpell("precision", caster, target, spell)]});
