@@ -204,7 +204,7 @@ const hocusPocus = (caster, target) => {
     // on écrit directement dans ko, ça évite une variable intermédiaire
     ko = [
         "trempette",    // nothing happens/lance Trempette/met un message ou une image débile sans effet
-        "randomspell",  // lancer un sort au hasard pour 4 PM (même cible)
+        //"randomspell",  // lancer un sort au hasard pour 4 PM (même cible)
         "invisibility", // mettre une invisibilité qui donne 50 % de chances d’esquive sur les 3 prochains sorts qu’il reçoit
         "fullmana",     // redonner toute la mana au lanceur
         "nomana",       // faire perdre toute la mana au lanceur
@@ -223,7 +223,7 @@ const hocusPocus = (caster, target) => {
             break;
 
         case "randomspell":
-            // TODO ça va être le plus dur je pense
+            // TODO randomspell
             break;
 
         case "invisibility":
@@ -285,7 +285,92 @@ const hocusPocus = (caster, target) => {
  * @param {*} target 
  */
 const creerEmbedHocusPocus = (caster, target) => {
-    // Vous pensiez que c’était pas assez le bazar ? Eh bah c’est reparti !
+    let color, phrase, foot, image;
+
+    color = 0xff87e5;
+
+    switch (ko) {
+        case "trempette":
+            phrase = spells_data.reponses.hocuspocus.trempette.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus, mais il ne s’est rien produit…`;
+            break;
+
+        case "randomspell":
+            // TODO randomspell embed
+            break;
+
+        case "invisibility":
+            phrase = `${caster.name} devient invisible\u202f! Les trois prochains sorts qui le ciblent seront 50\u202f% moins précis\u202f!`;
+            foot = `${caster.name} a lancé Hocus Pocus et est devenu invisible\u202f!`;
+            break;
+
+        case "fullmana":
+            phrase = spells_data.reponses.hocuspocus.fullmana.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus et a récupéré tous ses MP\u202f!`;
+            break;
+
+        case "nomana":
+            phrase = spells_data.reponses.hocuspocus.nomana.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus et a perdu tous ses MP\u202f!`;
+            break;
+        
+        case "omnisoin":
+            phrase = spells_data.reponses.hocuspocus.omnisoin.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus et s’est intégralement soigné\u202f!`;
+            break;
+
+        case "mortsubite":
+            phrase = spells_data.reponses.hocuspocus.mortsubite.choice()
+                    .replace("@T", target.name)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus et ses % ont augmenté de 300\u202f!`;
+            break;
+
+        case "foe":
+            phrase = spells_data.reponses.hocuspocus.foe.choice()
+                    .replace("@T", ko.victime)
+                    .replace("@C", caster.name);
+            foot = `${caster.name} a lancé Hocus Pocus\u202f! Un FOE apparaît et extermine ${ko.victime}\u202f!`;
+            break;
+
+        // summon
+        case "Iris":
+        case "Odin":
+        case "Kaio":
+        case "Catastrophe":
+        case "Bahamut ZERO":
+        case "Magicien Sombre":
+        case "Dragon Blanc aux Yeux Bleus":
+            phrase = `${caster.name} invoque ${ko}\u202f! ${target.name} subit une tonne de dégâts\u202f!`;
+            foot = `${caster.name} a lancé Hocus Pocus et a réalisé une invocation qui attaque ${target.name}\u202f!`;
+            // TODO image = `${config.BASE_URL}/summon/${ko}.gif`;
+            break;
+    
+        default:
+            console.error("Créer Embed Hocus Pocus : cas non géré.");
+            color = 0x000001;
+            phrase = "Erreur interne\u202f!";
+            foot = "ptdr le bot a bugué";
+            break;
+    }
+
+    let embed = new MessageEmbed()
+            .setDescription(phrase)
+            .setFooter({text: foot})
+            .setColor(color)
+            .addField(caster.name, `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`);
+    
+    if (image) embed.setImage(image);
+    
+    return embed;
 };
 
 /* Champs publics */
