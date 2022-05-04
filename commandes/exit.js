@@ -4,7 +4,6 @@ const { closeDatabase } = require("../utilitaire/database");
 
 exports.name = "exit";
 exports.description = "(Admin seulement) Déconnecte le bot et l’éteint.";
-exports.defaultPermission = false;
 exports.options = null;
 
 /**

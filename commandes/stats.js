@@ -7,7 +7,6 @@ const { mana_refill_time, new_hero } = require("../data/spells.json");
 
 exports.name = "stats";
 exports.description = "Affiche les stats d’un membre du mini-jeu";
-exports.defaultPermission = true;
 exports.options = [
     {
         "type": OptionType.User,

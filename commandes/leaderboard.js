@@ -5,7 +5,6 @@ const { getLeaderBoard } = require("../utilitaire/database");
 
 exports.name = "leaderboard";
 exports.description = "Là où rêvent d’aller les plus grands héros\u202f!";
-exports.defaultPermission = true;
 exports.options = null;
 
 /**

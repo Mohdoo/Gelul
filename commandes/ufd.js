@@ -107,7 +107,6 @@ const creerEmbedFrameData = (move) => {
 
 exports.name = "ufd";
 exports.description = "Permet de consulter la frame data du Héros.";
-exports.defaultPermission = true;
 exports.options = [
     {
         "name": "ground-attacks",
