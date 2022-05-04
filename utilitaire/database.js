@@ -48,7 +48,7 @@ console.log("Base de données des joueurs initialisée.");
 
 // on prépare les queries qui vont être utilisées par les autres fonctions ici
 create_new_hero_query = db.prepare("INSERT INTO heros (id) VALUES (?)");
-get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
+get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts, invisibility FROM heros WHERE id = ?");
 /* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
     ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
 set_stats_hero_query = db.prepare(`UPDATE heros SET

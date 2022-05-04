@@ -2,6 +2,7 @@
 
 // variable interne utilisée si un KO a eu lieu, correspond en fait au paramètre cas de creerEmbedSpell
 let ko;
+let victime;
 
 const { ApplicationCommandOptionType: OptionType } = require("discord-api-types/v10");
 const { getStatsHero, setStatsHero } = require("../utilitaire/database");
@@ -13,13 +14,13 @@ const { coinFlip } = require("../utilitaire/utils");
  * Crée l’embed à envoyer en réponse. Les cas spéciaux sont hardcodés T_T
  * Envoie une image seulement en cas de KO
  */
-const creerEmbedSpell = (caster, target, spell) => {
+const creerEmbedSpell = (cas, caster, target, spell) => {
 
-    if (spell.name === "Hocus Pocus") return creerEmbedHocusPocus(caster, target);
+    if (spell.name === "Hocus Pocus" && !["mana", "precision","erreur"].includes(cas)) return creerEmbedHocusPocus(caster, target);
 
     let color, phrase, foot, image, phrases_possibles;
 
-    switch (ko) {
+    switch (cas) {
         case "mana":
             color = 0x2ab3ff; // bleu jauge de MP
             phrases_possibles = spells_data.reponses.mana.generic;
@@ -118,7 +119,7 @@ const creerEmbedSpell = (caster, target, spell) => {
             break;
 
         default:
-            console.warn("Valeur invalide ou d'erreur pour l’attribut cas de creerEmbedSpell.");
+            console.warn(`Valeur invalide ou d'erreur pour l’attribut cas de creerEmbedSpell (${cas})`);
             color = 0x000001; // noir presque parfait
             phrase = "Erreur interne\u202f!";
             foot = "ptdr le bot a bugué";
@@ -144,7 +145,7 @@ const creerEmbedSpell = (caster, target, spell) => {
  * @param {*} hero le héros qui perd une stock
  */
 const kill = (hero) => {
-    if (ko !== "0") ko = "ko";
+    if (ko !== "0" && ko !== "foe") ko = "ko";
     hero.score--;
     hero.heal = spells_data.new_hero.heal;
     hero.mana = spells_data.new_hero.mana;
@@ -250,11 +251,11 @@ const hocusPocus = (caster, target) => {
             if (flip) {
                 kill(caster);
                 target.score++;
-                ko.victime = caster.name; // cette ligne en fera hurler certain, en fera jouir d’autres
+                victime = caster.name; // cette ligne en fera hurler certain, en fera jouir d’autres
             } else {
                 kill(target);
                 caster.score++;
-                ko.victime = target.name;
+                victime = target.name;
             }
             break;
 
@@ -272,7 +273,7 @@ const hocusPocus = (caster, target) => {
             break;
     
         default:
-            console.error("Hocus Pocus : cas non géré.");
+            console.error(`Hocus Pocus : cas non géré (${ko})`);
             ko = "erreur";
             break;
     }
@@ -336,9 +337,9 @@ const creerEmbedHocusPocus = (caster, target) => {
 
         case "foe":
             phrase = spells_data.reponses.hocuspocus.foe.choice()
-                    .replace("@T", ko.victime)
+                    .replace("@T", victime)
                     .replace("@C", caster.name);
-            foot = `${caster.name} a lancé Hocus Pocus\u202f! Un FOE apparaît et extermine ${ko.victime}\u202f!`;
+            foot = `${caster.name} a lancé Hocus Pocus\u202f! Un FOE apparaît et extermine ${victime}\u202f!`;
             break;
 
         // summon
@@ -355,7 +356,7 @@ const creerEmbedHocusPocus = (caster, target) => {
             break;
     
         default:
-            console.error("Créer Embed Hocus Pocus : cas non géré.");
+            console.error(`Créer Embed Hocus Pocus : cas non géré (${ko})`);
             color = 0x000001;
             phrase = "Erreur interne\u202f!";
             foot = "ptdr le bot a bugué";
@@ -366,7 +367,8 @@ const creerEmbedHocusPocus = (caster, target) => {
             .setDescription(phrase)
             .setFooter({text: foot})
             .setColor(color)
-            .addField(caster.name, `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`);
+            .addField(caster.name, `${caster.score} points, ${caster.percentage}\u202f%, ${caster.mana}\u202fMP`)
+            .addField(target.name, `${target.score} points, ${target.percentage}\u202f%, ${target.mana}\u202fMP`);
     
     if (image) embed.setImage(image);
     
@@ -377,7 +379,6 @@ const creerEmbedHocusPocus = (caster, target) => {
 
 exports.name = "spell";
 exports.description = "Lance un sort\u202f!";
-exports.defaultPermission = true;
 exports.options = [{
         "type": OptionType.String,
         "name": "sort",

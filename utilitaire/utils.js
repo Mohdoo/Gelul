@@ -16,6 +16,6 @@ Array.prototype.choice = function() {
  * Simple lancer de pièce
  * @returns true ou false, 50% de chance
  */
-const coinFLip = () => {
-    return (Math.random() > 0.5 ? true : false);
-}
+ exports.coinFlip = () => {
+    return (Math.random() > 0.5);
+};
