@@ -225,6 +225,17 @@
                 "Ah, dommage pour @T mais ce FOE était dix niveaux au-dessus.",
                 "Un cerf apparaît et expulse @T. U mad?"
             ]
+        },
+        "images": {
+            "foe": [
+                "hocuspocus/stomp.gif",
+                "hocuspocus/slime_foe.webp",
+                "hocuspocus/mochi_miki.webp",
+                "hocuspocus/mochi_miki2.webp",
+                "hocuspocus/huge_foe.webp",
+                "hocuspocus/game_over.webp",
+                "hocuspocus/foe.gif"
+            ]
         }
     }
 }

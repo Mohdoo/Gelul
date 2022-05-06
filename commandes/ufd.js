@@ -55,9 +55,6 @@ const png = [
 
 /**
  * Crée l’embed qui va être envoyé comme réponse à la commande
- * https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
- * @param {*} move l’attaque ou la statistique à afficher
- * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
     let m = new MessageEmbed()
@@ -104,6 +101,38 @@ const creerEmbedFrameData = (move) => {
 
 
 /* Champs publics */
+
+
+/**
+ * Renvoie la frame data demandée
+ */
+exports.procedure = async (interaction) => {
+    const attack = interaction.options.getString("move");
+    
+    let b = new MessageButton()
+            .setCustomId(attack)
+            .setLabel("Afficher")
+            .setStyle("PRIMARY");
+
+    if (no_animation.includes(attack)) b.setLabel("Aucune hitbox à afficher").setStyle("SECONDARY").setDisabled(true);
+    const row = new MessageActionRow()
+            .addComponents(b);
+    
+    interaction.reply({ embeds: [creerEmbedFrameData(attack)], components: [row] });
+};
+
+/**
+ * Affiche la hitbox du move demandé
+ */
+exports.buttonProcedure = async (interaction) => {
+    let m = interaction.message
+    m.components[0].setComponents(new MessageButton().setLabel("Image envoyée\u202f!").setStyle("SECONDARY").setDisabled(true).setCustomId("0"));
+    interaction.message.edit({ embeds: m.embeds, components: m.components });
+    
+    let attack = interaction.customId;
+    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") });
+};
+
 
 exports.name = "ufd";
 exports.description = "Permet de consulter la frame data du Héros.";
@@ -274,41 +303,3 @@ exports.options = [
         ]
     }
 ];
-
-
-/**
- * Renvoie la frame data demandée en option.
- * @param {*} interaction
- */
-exports.procedure = async (interaction) => {
-    /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
-       comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
-    const attack = interaction.options.getString("move");
-    
-    let b = new MessageButton()
-            .setCustomId(attack)
-            .setLabel("Afficher")
-            .setStyle("PRIMARY");
-
-    // désactive le bouton si on a aucune image à afficher
-    if (no_animation.includes(attack)) b.setLabel("Aucune hitbox à afficher").setStyle("SECONDARY").setDisabled(true);
-    const row = new MessageActionRow()
-            .addComponents(b);
-    
-    interaction.reply({ embeds: [creerEmbedFrameData(attack)], components: [row] });
-};
-
-/**
- * Affiche la hitbox du move demandé, ou supprime le message.
- * @param {*} interaction 
- */
-exports.buttonProcedure = async (interaction) => {
-    // modifie le bouton cliqué pour le rendre inutilisable
-    let m = interaction.message
-    m.components[0].setComponents(new MessageButton().setLabel("Image envoyée\u202f!").setStyle("SECONDARY").setDisabled(true).setCustomId("0"));
-    interaction.message.edit({ embeds: m.embeds, components: m.components });
-    
-    // envoie le lien vers l’animation (pas giga nice mais simple)
-    let attack = interaction.customId;
-    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") });
-};

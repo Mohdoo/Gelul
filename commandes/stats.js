@@ -5,28 +5,15 @@ const { MessageEmbed } = require("discord.js");
 const { getStatsHero } = require("../utilitaire/database");
 const { mana_refill_time, new_hero } = require("../data/spells.json");
 
-exports.name = "stats";
-exports.description = "Affiche les stats d’un membre du mini-jeu";
-exports.options = [
-    {
-        "type": OptionType.User,
-        "name": "joueur",
-        "description": "Le Héros à afficher."
-    }
-];
-
 
 /**
- * Affiche les stats d’un joueur du jeu /spell
- * @param {*} interaction
+ * Affiche les stats d’un joueur du jeu
  */
 exports.procedure = async (interaction) => {
     let joueur = interaction.options.getMember("joueur");
 
-    // cas 1 : commande sans option
     if (joueur === null) {
         joueur = interaction.member;
-    // cas 2 : le paramètre est un bot
     } else if (joueur.user.bot) {
         interaction.reply({ ephemeral: true, content: "Les bots ne peuvent pas jouer à ce jeu. Trop triste." });
         return;
@@ -60,3 +47,14 @@ exports.procedure = async (interaction) => {
 
     interaction.reply({ embeds: [embed] })
 };
+
+
+exports.name = "stats";
+exports.description = "Affiche les stats d’un membre du mini-jeu";
+exports.options = [
+    {
+        "type": OptionType.User,
+        "name": "joueur",
+        "description": "Le Héros à afficher."
+    }
+];

@@ -37,7 +37,7 @@ exports.init = async () => {
 
 
 /**
- * Parcourt la liste des commandes chargées, et applique la correspondante.
- * @param {*} interaction
+ * Parcourt la liste des commandes chargées, et applique la correspondante,
+ * en lui transmettant l’interaction
  */
 exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);

@@ -2,9 +2,6 @@
 
 const { closeDatabase } = require("../utilitaire/database");
 
-exports.name = "exit";
-exports.description = "(Admin seulement) Déconnecte le bot et l’éteint.";
-exports.options = null;
 
 /**
  * Déconnecte le bot et termine le programme.
@@ -18,3 +15,8 @@ exports.procedure = async (interaction) => {
 	   client.destroy();
    });
 };
+
+
+exports.name = "exit";
+exports.description = "(Admin seulement) Déconnecte le bot et l’éteint.";
+exports.options = null;
