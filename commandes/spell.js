@@ -24,10 +24,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
         case "mana":
             color = 0x2ab3ff; // bleu jauge de MP
             phrases_possibles = spells_data.reponses.mana.generic;
-            phrase = phrases_possibles.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name)
-                    .replace("@S", spell.name);
+            phrase = phrases_possibles.choice();
             foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais n’avait plus de MP…`;
             break;
 
@@ -46,10 +43,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.projectile);
             }
 
-            phrase = phrases_possibles.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name)
-                    .replace("@S", spell.name);
+            phrase = phrases_possibles.choice();
             foot = `${caster.name} a essayé de lancer ${spell.name} sur ${target.name} mais s’est raté…`;
             break;
 
@@ -64,10 +58,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
             }
 
-            phrase = phrases_possibles.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name)
-                    .replace("@S", spell.name);
+            phrase = phrases_possibles.choice();
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
             break;
 
@@ -82,10 +73,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.burst);
             }
 
-            phrase = phrases_possibles.choice()
-            .replace("@T", target.name)
-            .replace("@C", caster.name)
-            .replace("@S", spell.name);
+            phrase = phrases_possibles.choice();
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name} et l’a expulsé\u202f!`;
             // TODO image = `${config.BASE_URL}/ko/${spell.name}.gif`.replace("", "%20");
             break;
@@ -111,10 +99,7 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.heal_other);
             }
 
-            phrase = phrases_possibles.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name)
-                    .replace("@S", spell.name);
+            phrase = phrases_possibles.choice();
             foot = `${caster.name} a lancé ${spell.name} sur ${target.name}\u202f!`;
             break;
 
@@ -125,6 +110,10 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
             foot = "ptdr le bot a bugué";
             break;
     }
+
+    phrase = phrase.replace("@T", target.name)
+            .replace("@C", caster.name)
+            .replace("@S", spell.name);
 
     let embed = new MessageEmbed()
             .setDescription(phrase)
@@ -275,13 +264,11 @@ const hocusPocus = (caster, target) => {
 const creerEmbedHocusPocus = (caster, target) => {
     let color, phrase, foot, image;
 
-    color = 0xff87e5;
+    color = 0xff9900; // orange FOE
 
     switch (ko) {
         case "trempette":
-            phrase = spells_data.reponses.hocuspocus.trempette.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name);
+            phrase = spells_data.reponses.hocuspocus.trempette.choice();
             foot = `${caster.name} a lancé Hocus Pocus, mais il ne s’est rien produit…`;
             break;
 
@@ -295,37 +282,29 @@ const creerEmbedHocusPocus = (caster, target) => {
             break;
 
         case "fullmana":
-            phrase = spells_data.reponses.hocuspocus.fullmana.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name);
+            phrase = spells_data.reponses.hocuspocus.fullmana.choice();
             foot = `${caster.name} a lancé Hocus Pocus et a récupéré tous ses MP\u202f!`;
             break;
 
         case "nomana":
-            phrase = spells_data.reponses.hocuspocus.nomana.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name);
+            phrase = spells_data.reponses.hocuspocus.nomana.choice();
             foot = `${caster.name} a lancé Hocus Pocus et a perdu tous ses MP\u202f!`;
             break;
         
         case "omnisoin":
-            phrase = spells_data.reponses.hocuspocus.omnisoin.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name);
+            phrase = spells_data.reponses.hocuspocus.omnisoin.choice();
             foot = `${caster.name} a lancé Hocus Pocus et s’est intégralement soigné\u202f!`;
             break;
 
         case "mortsubite":
             phrase = spells_data.reponses.hocuspocus.mortsubite.choice()
-                    .replace("@T", target.name)
-                    .replace("@C", caster.name);
+                    
             foot = `${caster.name} a lancé Hocus Pocus et ses % ont augmenté de 300\u202f!`;
             break;
 
         case "foe":
             phrase = spells_data.reponses.hocuspocus.foe.choice()
-                    .replace("@T", victime)
-                    .replace("@C", caster.name);
+                    .replace("@T", victime);
             foot = `${caster.name} a lancé Hocus Pocus\u202f! Un FOE apparaît et extermine ${victime}\u202f!`;
             image = config.BASE_URL + spells_data.reponses.images.foe.choice();
             break;
@@ -350,6 +329,9 @@ const creerEmbedHocusPocus = (caster, target) => {
             foot = "ptdr le bot a bugué";
             break;
     }
+
+    phrase = phrase.replace("@T", target.name)
+            .replace("@C", caster.name);
 
     let embed = new MessageEmbed()
             .setDescription(phrase)

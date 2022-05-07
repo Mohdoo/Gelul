@@ -44,6 +44,8 @@ exports.procedure = async (interaction) => {
                     { name: "Pourcentage", value: `${hero.percentage}\u202f%`, inline: true },
                     { name: "Heals restants", value: String(hero.heal), inline: true }
             );
+    
+    if (hero.invisibility) embed.addField("Invisibilités restantes", String(hero.invisibility), true);
 
     interaction.reply({ embeds: [embed] })
 };

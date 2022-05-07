@@ -39,13 +39,6 @@ const no_animation = [
     "stats"
 ];
 
-// liste des attaques pour lesquelles aucune donnée numérique n’est disponible
-const no_data = [
-    "ledgegrab",
-    "ledgehang",
-    "getupattacks"
-];
-
 // hitboxes qui sont en png et pas en gif
 const png = [
     "thwack",
@@ -65,36 +58,48 @@ const creerEmbedFrameData = (move) => {
             .setFooter({ text: "UFD a été créé par MetalMusicMan" })
             .setImage(config.BASE_URL + "ufd/" + move + ".png");
 
-    if (["upb", "upsmash"].includes(move)) {
-        m.setDescription("Le Up B et le Up Smash ignorent les 11 frames de Shield Drop.");
+    switch (move) {
+        case "upb":
+        case "upsmash":
+            m.setDescription("Le Up B et le Up Smash ignorent les 11 frames de Shield Drop.");
+            break;
 
-    } else if (move === "stats") {
-        m.setDescription("Le saut ignore les 11 frames de Shield Drop.");
+        case "stats":
+            m.setDescription("Le saut ignore les 11 frames de Shield Drop.");
+            break;
 
-    } else if (["grab", "dashgrab", "pivotgrab"].includes(move)) {
-        m.setDescription(
-                "Faire un Grab après qu’une attaque a frappé le bouclier prend 4 frames supplémentaires, mais ignore les 11 frames de Shield Drop.\n" +
-                "Héros a la deuxième pire portée de Grab du jeu (10,3 unités). Voir la [liste des portées de Grab](https://www.ssbwiki.com/Grab#In_Super_Smash_Bros._Ultimate)."
-        );
+        case "grab":
+        case "dashgrab":
+        case "pivotgrab":
+            m.setDescription(
+                    "Faire un Grab après qu’une attaque a frappé le bouclier prend 4 frames supplémentaires, mais ignore les 11 frames de Shield Drop.\n" +
+                    "Héros a la deuxième pire portée de Grab du jeu (10,3 unités). Voir la [liste des portées de Grab](https://www.ssbwiki.com/Grab#In_Super_Smash_Bros._Ultimate)."
+            );
+            break;
 
-    } else if (move === "downb") {
-        m.setDescription(
-                "Le Héros regagne 1\u202fMP par seconde, et lorsqu’une attaque non-spéciale touche un adversaire ou un bouclier," +
-                "il regagne 80\u202f% des dégâts infligés en MP. Il ne gagne pas de MP tant que le menu de sorts est ouvert.\n" +
-                "Plus de détails sur la [page SSB Wiki dédiée](https://www.ssbwiki.com/MP_Gauge)."
-        );
+        case "downb":
+            m.setDescription(
+                    "Le Héros regagne 1\u202fMP par seconde, et lorsqu’une attaque non-spéciale touche un adversaire ou un bouclier," +
+                    "il regagne 80\u202f% des dégâts infligés en MP. Il ne gagne pas de MP tant que le menu de sorts est ouvert.\n" +
+                    "Plus de détails sur la [page SSB Wiki dédiée](https://www.ssbwiki.com/MP_Gauge)."
+            );
+            break;
 
-    } else if (move === "getupattacks") {
-        m.setDescription("La Floor Attack inflige 6\u202f% si le Héros est allongé, et 5\u202f% s’il est assis.");
+        case "getupattacks":
+            m.setDescription("La Floor Attack inflige 6\u202f% si le Héros est allongé, et 5\u202f% s’il est assis.");
+            break;
 
-    } else if (no_data.includes(move)) {
-        m.setDescription("Aucune donnée intéressante à afficher…");
+        case "ledgegrab":
+        case "ledgehang":
+            m.setDescription("Aucune donnée intéressante à afficher…");
+            break;
 
-    } else {
-        m.setDescription(
-                "Les statistiques de On Shield Advantage/Disadvantage supposent que le Shield a été touché par la première frame active de l’attaque.\n" +
-                "La Staleness affecte aussi l’advantage/disadvantage, que l’on frappe un personnage ou un Shield."
-        );
+        default:
+            m.setDescription(
+                    "Les statistiques de On Shield Advantage/Disadvantage supposent que le Shield a été touché par la première frame active de l’attaque.\n" +
+                    "La Staleness affecte aussi l’advantage/disadvantage, que l’on frappe un personnage ou un Shield."
+            );
+            break;
     }
     return m;
 }
