@@ -195,7 +195,7 @@ exports.options = [
                 "required": true,
                 "choices": [
                     {
-                        "name": "Neutral B (Frizz/Frizzle/Kafriz)",
+                        "name": "Neutral B (Frizz/Frizzle/Kafrizz)",
                         "value": "neutralb"
                     },
                     {
@@ -266,7 +266,7 @@ exports.options = [
         "options": [
             {
                 "name": "move",
-                "description": "Le grab ou throw à afficher.",
+                "description": "Le dodge ou roll à afficher.",
                 "type": OptionType.String,
                 "required": true,
                 "choices": [

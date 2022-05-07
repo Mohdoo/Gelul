@@ -16,7 +16,7 @@ const { MessageEmbed } = require("discord.js");
  */
 const creerEmbedSpell = (cas, caster, target, spell) => {
 
-    if (spell.name === "Hocus Pocus" && !["mana", "precision","erreur"].includes(cas)) return creerEmbedHocusPocus(caster, target);
+    if (spell.name === "Hocus Pocus" && !["mana", "precision", "erreur"].includes(cas)) return creerEmbedHocusPocus(caster, target);
 
     let color, phrase, foot, image, phrases_possibles;
 
@@ -340,7 +340,7 @@ const creerEmbedHocusPocus = (caster, target) => {
         case "Dragon Blanc aux Yeux Bleus":
             phrase = `${caster.name} invoque ${ko}\u202f! ${target.name} subit une tonne de dégâts\u202f!`;
             foot = `${caster.name} a lancé Hocus Pocus et a réalisé une invocation qui attaque ${target.name}\u202f!`;
-            // TODO image = `${config.BASE_URL}/summon/${ko}.gif`.replace("", "%20");
+            // TODO image = `${config.BASE_URL}/summon/${ko}.gif`.replace(" ", "%20");
             break;
     
         default:
@@ -413,7 +413,6 @@ exports.procedure = async (interaction) => {
         if (h.mana < 100) {
             const temps_ecoule = (now - h.last_spell_ts) / spells_data.mana_refill_time;
             h.mana += Math.floor(temps_ecoule);
-            
             h.mana = (h.mana > spells_data.new_hero.mana ? spells_data.new_hero.mana : h.mana);
         }
     }
