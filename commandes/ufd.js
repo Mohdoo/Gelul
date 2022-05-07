@@ -39,13 +39,6 @@ const no_animation = [
     "stats"
 ];
 
-// liste des attaques pour lesquelles aucune donnée numérique n’est disponible
-const no_data = [
-    "ledgegrab",
-    "ledgehang",
-    "getupattacks"
-];
-
 // hitboxes qui sont en png et pas en gif
 const png = [
     "thwack",
@@ -55,9 +48,6 @@ const png = [
 
 /**
  * Crée l’embed qui va être envoyé comme réponse à la commande
- * https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
- * @param {*} move l’attaque ou la statistique à afficher
- * @returns un MessageEmbed prêt à être envoyé, contenant les données du move
  */
 const creerEmbedFrameData = (move) => {
     let m = new MessageEmbed()
@@ -68,36 +58,48 @@ const creerEmbedFrameData = (move) => {
             .setFooter({ text: "UFD a été créé par MetalMusicMan" })
             .setImage(config.BASE_URL + "ufd/" + move + ".png");
 
-    if (["upb", "upsmash"].includes(move)) {
-        m.setDescription("Le Up B et le Up Smash ignorent les 11 frames de Shield Drop.");
+    switch (move) {
+        case "upb":
+        case "upsmash":
+            m.setDescription("Le Up B et le Up Smash ignorent les 11 frames de Shield Drop.");
+            break;
 
-    } else if (move === "stats") {
-        m.setDescription("Le saut ignore les 11 frames de Shield Drop.");
+        case "stats":
+            m.setDescription("Le saut ignore les 11 frames de Shield Drop.");
+            break;
 
-    } else if (["grab", "dashgrab", "pivotgrab"].includes(move)) {
-        m.setDescription(
-                "Faire un Grab après qu’une attaque a frappé le bouclier prend 4 frames supplémentaires, mais ignore les 11 frames de Shield Drop.\n" +
-                "Héros a la deuxième pire portée de Grab du jeu (10,3 unités). Voir la [liste des portées de Grab](https://www.ssbwiki.com/Grab#In_Super_Smash_Bros._Ultimate)."
-        );
+        case "grab":
+        case "dashgrab":
+        case "pivotgrab":
+            m.setDescription(
+                    "Faire un Grab après qu’une attaque a frappé le bouclier prend 4 frames supplémentaires, mais ignore les 11 frames de Shield Drop.\n" +
+                    "Héros a la deuxième pire portée de Grab du jeu (10,3 unités). Voir la [liste des portées de Grab](https://www.ssbwiki.com/Grab#In_Super_Smash_Bros._Ultimate)."
+            );
+            break;
 
-    } else if (move === "downb") {
-        m.setDescription(
-                "Le Héros regagne 1\u202fMP par seconde, et lorsqu’une attaque non-spéciale touche un adversaire ou un bouclier," +
-                "il regagne 80\u202f% des dégâts infligés en MP. Il ne gagne pas de MP tant que le menu de sorts est ouvert.\n" +
-                "Plus de détails sur la [page SSB Wiki dédiée](https://www.ssbwiki.com/MP_Gauge)."
-        );
+        case "downb":
+            m.setDescription(
+                    "Le Héros regagne 1\u202fMP par seconde, et lorsqu’une attaque non-spéciale touche un adversaire ou un bouclier," +
+                    "il regagne 80\u202f% des dégâts infligés en MP. Il ne gagne pas de MP tant que le menu de sorts est ouvert.\n" +
+                    "Plus de détails sur la [page SSB Wiki dédiée](https://www.ssbwiki.com/MP_Gauge)."
+            );
+            break;
 
-    } else if (move === "getupattacks") {
-        m.setDescription("La Floor Attack inflige 6\u202f% si le Héros est allongé, et 5\u202f% s’il est assis.");
+        case "getupattacks":
+            m.setDescription("La Floor Attack inflige 6\u202f% si le Héros est allongé, et 5\u202f% s’il est assis.");
+            break;
 
-    } else if (no_data.includes(move)) {
-        m.setDescription("Aucune donnée intéressante à afficher…");
+        case "ledgegrab":
+        case "ledgehang":
+            m.setDescription("Aucune donnée intéressante à afficher…");
+            break;
 
-    } else {
-        m.setDescription(
-                "Les statistiques de On Shield Advantage/Disadvantage supposent que le Shield a été touché par la première frame active de l’attaque.\n" +
-                "La Staleness affecte aussi l’advantage/disadvantage, que l’on frappe un personnage ou un Shield."
-        );
+        default:
+            m.setDescription(
+                    "Les statistiques de On Shield Advantage/Disadvantage supposent que le Shield a été touché par la première frame active de l’attaque.\n" +
+                    "La Staleness affecte aussi l’advantage/disadvantage, que l’on frappe un personnage ou un Shield."
+            );
+            break;
     }
     return m;
 }
@@ -105,9 +107,40 @@ const creerEmbedFrameData = (move) => {
 
 /* Champs publics */
 
+
+/**
+ * Renvoie la frame data demandée
+ */
+exports.procedure = async (interaction) => {
+    const attack = interaction.options.getString("move");
+    
+    let b = new MessageButton()
+            .setCustomId(attack)
+            .setLabel("Afficher")
+            .setStyle("PRIMARY");
+
+    if (no_animation.includes(attack)) b.setLabel("Aucune hitbox à afficher").setStyle("SECONDARY").setDisabled(true);
+    const row = new MessageActionRow()
+            .addComponents(b);
+    
+    interaction.reply({ embeds: [creerEmbedFrameData(attack)], components: [row] });
+};
+
+/**
+ * Affiche la hitbox du move demandé
+ */
+exports.buttonProcedure = async (interaction) => {
+    let m = interaction.message
+    m.components[0].setComponents(new MessageButton().setLabel("Image envoyée\u202f!").setStyle("SECONDARY").setDisabled(true).setCustomId("0"));
+    interaction.message.edit({ embeds: m.embeds, components: m.components });
+    
+    let attack = interaction.customId;
+    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") });
+};
+
+
 exports.name = "ufd";
 exports.description = "Permet de consulter la frame data du Héros.";
-exports.defaultPermission = true;
 exports.options = [
     {
         "name": "ground-attacks",
@@ -167,7 +200,7 @@ exports.options = [
                 "required": true,
                 "choices": [
                     {
-                        "name": "Neutral B (Frizz/Frizzle/Kafriz)",
+                        "name": "Neutral B (Frizz/Frizzle/Kafrizz)",
                         "value": "neutralb"
                     },
                     {
@@ -238,7 +271,7 @@ exports.options = [
         "options": [
             {
                 "name": "move",
-                "description": "Le grab ou throw à afficher.",
+                "description": "Le dodge ou roll à afficher.",
                 "type": OptionType.String,
                 "required": true,
                 "choices": [
@@ -275,41 +308,3 @@ exports.options = [
         ]
     }
 ];
-
-
-/**
- * Renvoie la frame data demandée en option.
- * @param {*} interaction
- */
-exports.procedure = async (interaction) => {
-    /* nom de l’attaque choisie, donc options[X].options[0].choices[Y].value
-       comme ces valeurs sont uniques, on s’en fiche de savoir de quelle sous-commande X il s’agit */
-    const attack = interaction.options.getString("move");
-    
-    let b = new MessageButton()
-            .setCustomId(attack)
-            .setLabel("Afficher")
-            .setStyle("PRIMARY");
-
-    // désactive le bouton si on a aucune image à afficher
-    if (no_animation.includes(attack)) b.setLabel("Aucune hitbox à afficher").setStyle("SECONDARY").setDisabled(true);
-    const row = new MessageActionRow()
-            .addComponents(b);
-    
-    interaction.reply({ embeds: [creerEmbedFrameData(attack)], components: [row] });
-};
-
-/**
- * Affiche la hitbox du move demandé, ou supprime le message.
- * @param {*} interaction 
- */
-exports.buttonProcedure = async (interaction) => {
-    // modifie le bouton cliqué pour le rendre inutilisable
-    let m = interaction.message
-    m.components[0].setComponents(new MessageButton().setLabel("Image envoyée\u202f!").setStyle("SECONDARY").setDisabled(true).setCustomId("0"));
-    interaction.message.edit({ embeds: m.embeds, components: m.components });
-    
-    // envoie le lien vers l’animation (pas giga nice mais simple)
-    let attack = interaction.customId;
-    interaction.reply({ content: config.BASE_URL + "animations/" + attack + (png.includes(attack) ? ".png" : ".webm") });
-};

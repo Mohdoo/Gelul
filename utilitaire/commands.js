@@ -24,15 +24,9 @@ exports.init = async () => {
 
 	console.log("Déclaration des slash commands à l’API…");
 	const guild = await client.guilds.fetch(config.GUILD_ID);
-	const permissions = config.owners.map(id => ({ id, type: "USER", permission: true }));
 
 	try {
-		const guildCommands = await guild.commands.set([...commands.values()]);
-		await guild.commands.permissions.set({
-			fullPermissions: guildCommands
-				.filter(cmd => !cmd.default_permission)
-				.map(({id}) => ({ id, permissions }))
-		});
+		await guild.commands.set([...commands.values()]);
 
 		console.log("Les slash commands ont correctement été déclarées.");
 	} catch(err) {
@@ -43,7 +37,7 @@ exports.init = async () => {
 
 
 /**
- * Parcourt la liste des commandes chargées, et applique la correspondante.
- * @param {*} interaction
+ * Parcourt la liste des commandes chargées, et applique la correspondante,
+ * en lui transmettant l’interaction
  */
 exports.applyCommands = interaction => commands.get(interaction.commandName).procedure(interaction);

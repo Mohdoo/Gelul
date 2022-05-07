@@ -4,7 +4,8 @@
         "percentage": 0.0,
         "score": 0,
         "mana": 100,
-        "heal": 5
+        "heal": 5,
+        "invisibility": 0
     },
     "spells": {
         "whack": {
@@ -149,7 +150,7 @@
             ],
             "whack": [
                 "@T meurt instantanément\u202f!",
-                "Wha, un whack",
+                "Wha, un @S",
                 "1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))",
                 "@C maîtrise maintenant l’Avada Kedavra. What have you done?!",
                 "Comme quoi même un Héros peut utiliser de la magie noire."
@@ -191,6 +192,50 @@
             "@C envoie toute sa mana dans une seule attaque\u202f! 3, 2, 1… **KAMEHAMEHA\u202f!**",
             "Magic Burst let’s goooooo\u202f!",
             "@C se prend pour Boo et fait tout sauter."
-        ]
+        ],
+        "hocuspocus": {
+            "trempette": [
+                "Rien ne se passe…",
+                "@C utilise Trempette\u202f!",
+                "Absolument rien ne se produit."
+            ],
+            "fullmana": [
+                "Toute la mana de @C est instantanément restaurée\u202f!",
+                "Poof\u202f! Tu récupères toute ta mana.",
+                "Skidaddle skidooddle, you now are full on mana."
+            ],
+            "nomana": [
+                "Skidaddle skidooddle, your MP gauge is now empty.",
+                "Une démone apparaît et aspire toute la mana de @C\u202f!",
+                "Pentagon\nHexagon\nOctagon\nYourmanagon",
+                "Alerte Enlèvement : La mana de @C est portée disparue."
+            ],
+            "omnisoin": [
+                "Un ange apparaît et soigne toutes tes blessures. Dis merci au moins\u202f!",
+                "@C invoque Coatlicue\u202f! Toutes ses blessures guérissent\u202f!",
+                "@C lance Omnisoins\u202f!"
+            ],
+            "mortsubite": [
+                "MORT SUBITE\u202f!",
+                "@C se retrouve au bord de la mort…",
+                "@C subit 300 dégâts\u202f! Un grain de poussière suffirait à l’expulser maintenant."
+            ],
+            "foe": [
+                "♪ Even in Gélul, FOE! ♪",
+                "Ah, dommage pour @T mais ce FOE était dix niveaux au-dessus.",
+                "Un cerf apparaît et expulse @T. U mad?"
+            ]
+        },
+        "images": {
+            "foe": [
+                "hocuspocus/stomp.gif",
+                "hocuspocus/slime_foe.webp",
+                "hocuspocus/mochi_miki.webp",
+                "hocuspocus/mochi_miki2.webp",
+                "hocuspocus/huge_foe.webp",
+                "hocuspocus/game_over.webp",
+                "hocuspocus/foe.gif"
+            ]
+        }
     }
 }

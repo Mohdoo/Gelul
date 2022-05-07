@@ -3,10 +3,6 @@
 const { MessageEmbed } = require("discord.js");
 const { getLeaderBoard } = require("../utilitaire/database");
 
-exports.name = "leaderboard";
-exports.description = "Là où rêvent d’aller les plus grands héros\u202f!";
-exports.defaultPermission = true;
-exports.options = null;
 
 /**
  * Affiche les trois joueurs ayant le plus de score dans le jeu.
@@ -16,12 +12,11 @@ exports.procedure = async (interaction) => {
     const podium = getLeaderBoard();
 
 
-    for (const e of podium) {
-        const u = await interaction.guild.members.fetch(e.id);
-        e.name = (u.displayName === undefined ? "[Héros ayant quitté le Havre]" : u.displayName);
+    for (const heros of podium) {
+        const member = await interaction.guild.members.fetch(heros.id);
+        heros.name = (member.displayName === undefined ? "[Héros ayant quitté le Havre]" : member.displayName);
     }
 
-    // ajoute des scores par défaut s’il y a moins de trois joueurs enregistrés
     if (podium.length < 1) {
         // il vient juste de commencer à jouer mais ne vous inquiétez pas il va les rattraper
         podium.unshift({ name: "Solo", id: 4, score: 444, percentage: 0 });
@@ -50,3 +45,8 @@ exports.procedure = async (interaction) => {
 
     interaction.reply({ embeds: [embed] });
 };
+
+
+exports.name = "leaderboard";
+exports.description = "Là où rêvent d’aller les plus grands héros\u202f!";
+exports.options = null;

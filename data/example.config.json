@@ -1,6 +1,4 @@
 {
-    "CLIENT_ID": "id de l’application",
-    "CLIENT_PUBLIC_KEY": "clé publique de l’application",
     "CLIENT_TOKEN": "token de bot de l’application. Toute personne mettant la main dessus peut se connecter au compte bot !",
     "commands": [
         "ping",
@@ -9,9 +7,6 @@
         "spell",
         "leaderboard",
         "stats"
-    ],
-    "owners": [
-        "id d’un owner = personne ayant le droit d’utiliser les commandes où defaultPermission = false."
     ],
     "GUILD_ID": "id de la guilde où sera utilisé le bot (une seule, voire README.md#Utilisation).",
     "WELCOME_CHANNEL_ID": "id du salon où envoyer les messages de bienvenue. Laisser vide ou supprimer la valeur pour désactiver l’envoi de tels messages.",

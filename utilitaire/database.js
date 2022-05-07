@@ -33,6 +33,7 @@ db.prepare(`
             id TEXT PRIMARY KEY NOT NULL,
             percentage REAL DEFAULT ${new_hero.percentage},
             score INTEGER DEFAULT ${new_hero.score},
+            invisibility INTEGER DEFAULT ${new_hero.invisibility},
             mana INTEGER DEFAULT ${new_hero.mana} CHECK (
                 mana >= 0 AND mana <= ${new_hero.mana}
             ),
@@ -47,16 +48,17 @@ console.log("Base de données des joueurs initialisée.");
 
 // on prépare les queries qui vont être utilisées par les autres fonctions ici
 create_new_hero_query = db.prepare("INSERT INTO heros (id) VALUES (?)");
-get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts FROM heros WHERE id = ?");
-/* est-ce qu’il vaut mieux préparer une update générale ici, quitte à réécrire une donnée inchangée,
-    ou en préparer plusieurs pour tous les cas, ou en générer une lors de l’écriture ? Je fais le choix numéro 1 */
-set_stats_hero_query = db.prepare("UPDATE heros SET percentage = $percentage, score = $score, mana = $mana, heal = $heal, last_spell_ts = $last_spell_ts WHERE id = $id");
+get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts, invisibility FROM heros WHERE id = ?");
+set_stats_hero_query = db.prepare(`UPDATE heros SET
+        percentage = $percentage, score = $score, mana = $mana, heal = $heal, last_spell_ts = $last_spell_ts, invisibility = $invisibility
+        WHERE id = $id`);
 get_leaderboard_query = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
 
 console.log("Requêtes de la base de données prêtes.");
 
 
 /* Champs publics */
+
 
 /**
  * Renvoie les stats d’un joueur, et le crée s’il n’existe pas encore.
@@ -69,13 +71,7 @@ const getStatsHero = (id) => {
     if (res === undefined) {
         createNewHero(id);
         // Il faut créer une copie du nouveau héros pour pas écrire dessus
-        const solo = {
-            percentage: new_hero.percentage,
-            score: new_hero.score,
-            mana: new_hero.mana,
-            heal: new_hero.heal
-        };
-        return solo;
+        return {...new_hero};
     } else {
         return res;
     }
@@ -93,9 +89,6 @@ const setStatsHero = (id, stats) => set_stats_hero_query.run({id, ...stats});
  */
 const getLeaderBoard = () => get_leaderboard_query.all();
 
-/**
- * Ferme la base de données.
- */
 const closeDatabase = () => db.close();
 
 exports.getStatsHero = getStatsHero;
