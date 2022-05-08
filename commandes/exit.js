@@ -18,5 +18,5 @@ exports.procedure = async (interaction) => {
 
 
 exports.name = "exit";
-exports.description = "(Admin seulement) Déconnecte le bot et l’éteint.";
+exports.description = "Déconnecte le bot et l’éteint.";
 exports.options = null;

@@ -11,7 +11,6 @@ Pour lancer le bot : `node main.js`.
 ## Organisation des fichiers
 
 Chaque fichier JavaScript dans le dossier `commandes` représente une et une seule commande du bot. La liste est `config.commands`.  
-Si l’attribut `defaultPermission` d’une commande est à `false`, seuls les utilisateurs dont l’id est listé dans `config.owner` pourront l’utiliser.
 
 Le dossier `utilitaire` contient tous les fichiers JavaScript qui ne sont pas des commandes, hormis `main.js` qui est le seul à la racine.  
 Le dossier `data` contient les données statiques en JSON et je recommande d’y mettre aussi le fichier de base de données.
@@ -19,9 +18,10 @@ Le dossier `data` contient les données statiques en JSON et je recommande d’y
 ## Idées
 
 ### Frame data
-*`/ufd`implémenté.*  
-Commande pour afficher la frame data du personnage. Sous quelle forme afficher tout ça ? Faudrait essayer de limiter au maximum l’envoi d’images, par exemple avec des embeds.  
-`/ufd [attaque]` affiche les données et (si possible) la hitbox de l’attaque donnée.  
+*`/ufd` implémenté.*  
+Commande pour afficher la frame data du personnage.  
+`/ufd <catégorie d’attaques : choice> <attaque : choice>` affiche les données et (si possible) la hitbox de l’attaque donnée.
+On utilise des subcommands (la « catégorie » de frame data à afficher) car on a une limite de 25 choix   
 Comme on ne fait que répéter les données d’UFD, certaines sont manquantes ou incomplètes.
 
 ### Mini-jeu

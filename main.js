@@ -17,6 +17,7 @@ global.client = new Client({ intents: [INTENTS.GUILDS, INTENTS.GUILD_MEMBERS] })
 const { applyCommands } = require("./utilitaire/commands");
 // Pour le moment on a une seule interaction qui utilise des boutons, on verra comment gérer si on en ajoute d’autres un jour
 const { buttonProcedure } = require("./commandes/ufd");
+const { welcomeMessage } = require("./utilitaire/welcome");
 
 
 // appelé une fois quand le bot se connecte
@@ -40,10 +41,8 @@ client.on("interactionCreate", async interaction => {
 
 /* l’envoi de messages de bienvenue ne se fait logiquement que si on a défini un salon pour ça */
 if (config.WELCOME_CHANNEL_ID) {
-    client.on("guildMemberAdd", member => {
-        member.guild.channels.fetch(config.WELCOME_CHANNEL_ID)
-                .then(channel => channel.send(`Bienvenue ${member.user.username}`))
-                .catch(console.error);
+    client.on("guildMemberAdd", async member => {
+        welcomeMessage(member);
     });
 }
 
