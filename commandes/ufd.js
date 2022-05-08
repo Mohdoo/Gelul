@@ -130,7 +130,7 @@ exports.procedure = async (interaction) => {
  * Affiche la hitbox du move demandé
  */
 exports.buttonProcedure = async (interaction) => {
-    let m = interaction.message
+    let m = interaction.message;
     m.components[0].setComponents(new MessageButton().setLabel("Image envoyée\u202f!").setStyle("SECONDARY").setDisabled(true).setCustomId("0"));
     interaction.message.edit({ embeds: m.embeds, components: m.components });
     

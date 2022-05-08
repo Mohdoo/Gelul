@@ -297,8 +297,7 @@ const creerEmbedHocusPocus = (caster, target) => {
             break;
 
         case "mortsubite":
-            phrase = spells_data.reponses.hocuspocus.mortsubite.choice()
-                    
+            phrase = spells_data.reponses.hocuspocus.mortsubite.choice();      
             foot = `${caster.name} a lancé Hocus Pocus et ses % ont augmenté de 300\u202f!`;
             break;
 

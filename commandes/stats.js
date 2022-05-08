@@ -47,7 +47,7 @@ exports.procedure = async (interaction) => {
     
     if (hero.invisibility) embed.addField("Invisibilités restantes", String(hero.invisibility), true);
 
-    interaction.reply({ embeds: [embed] })
+    interaction.reply({ embeds: [embed] });
 };
 
 

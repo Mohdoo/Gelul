@@ -12,11 +12,6 @@
 
 // représente un joueur quand il est ajouté dans la base
 const { new_hero } = require("../data/spells.json");
-let create_new_hero_query;
-let get_stats_hero_query;
-let set_stats_hero_query;
-let get_leaderboard_query;
-let db;
 
 const createNewHero = (id) => {
     create_new_hero_query.run(id);
@@ -26,7 +21,7 @@ const createNewHero = (id) => {
 /**
  * Crée les tables de la base de données si elles n’existent pas.
  */
-db = require("better-sqlite3")(config.DATABASE_FILENAME);
+let db = require("better-sqlite3")(config.DATABASE_FILENAME);
 
 db.prepare(`
         CREATE TABLE IF NOT EXISTS heros (
@@ -47,12 +42,12 @@ db.prepare(`
 console.log("Base de données des joueurs initialisée.");
 
 // on prépare les queries qui vont être utilisées par les autres fonctions ici
-create_new_hero_query = db.prepare("INSERT INTO heros (id) VALUES (?)");
-get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts, invisibility FROM heros WHERE id = ?");
-set_stats_hero_query = db.prepare(`UPDATE heros SET
+let create_new_hero_query = db.prepare("INSERT INTO heros (id) VALUES (?)");
+let get_stats_hero_query = db.prepare("SELECT percentage, score, mana, heal, last_spell_ts, invisibility FROM heros WHERE id = ?");
+let set_stats_hero_query = db.prepare(`UPDATE heros SET
         percentage = $percentage, score = $score, mana = $mana, heal = $heal, last_spell_ts = $last_spell_ts, invisibility = $invisibility
         WHERE id = $id`);
-get_leaderboard_query = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
+let get_leaderboard_query = db.prepare("SELECT percentage, score, id FROM heros ORDER BY score DESC, percentage ASC LIMIT 3");
 
 console.log("Requêtes de la base de données prêtes.");
 
@@ -65,7 +60,7 @@ console.log("Requêtes de la base de données prêtes.");
  * @param {*} id le joueur dont on veut les stats
  * @returns les stats du joueur, ou des stats par défaut si le joueur a été créé
  */
-const getStatsHero = (id) => {
+exports.getStatsHero = (id) => {
     let res = get_stats_hero_query.get(id);
 
     if (res === undefined) {
@@ -82,16 +77,11 @@ const getStatsHero = (id) => {
  * @param {*} id joueur à modifier
  * @param {*} stats un objet contenant des valeurs correctes pour percentage, score, mana et last_spell_ts
  */
-const setStatsHero = (id, stats) => set_stats_hero_query.run({id, ...stats});
+exports.setStatsHero = (id, stats) => set_stats_hero_query.run({id, ...stats});
 
 /**
  * Renvoie un array contenant les 3 joueurs avec le plus grand score
  */
-const getLeaderBoard = () => get_leaderboard_query.all();
+exports.getLeaderBoard = () => get_leaderboard_query.all();
 
-const closeDatabase = () => db.close();
-
-exports.getStatsHero = getStatsHero;
-exports.setStatsHero = setStatsHero;
-exports.getLeaderBoard = getLeaderBoard;
-exports.closeDatabase = closeDatabase;
+exports.closeDatabase = () => db.close();
