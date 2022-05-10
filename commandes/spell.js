@@ -39,8 +39,8 @@ const creerEmbedSpell = (cas, caster, target, spell) => {
                 phrases_possibles = phrases_possibles.concat(spells_data.reponses.precision.shield);
             }
 
-            if (!spell.projectile) {
-                phrases_possibles = phrases_possibles.concat(spells_data.reponses.success.projectile);
+            if (spell.projectile) {
+                phrases_possibles = phrases_possibles.concat(spells_data.reponses.precision.projectile);
             }
 
             phrase = phrases_possibles.choice();
