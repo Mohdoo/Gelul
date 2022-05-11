@@ -183,18 +183,27 @@ const hocusPocus = (caster, target) => {
      * Bon courage…
      */
 
-    // cette variable contient les cas possibles, on peut facilement en retirer un pour le désactiver
-    ko = [
-        "trempette",    // nothing happens/lance Trempette/met un message ou une image débile sans effet
-        //"randomspell",// lancer un sort au hasard pour 4 PM (même cible)
-        "invisibility", // mettre une invisibilité qui donne 50 % de chances d’esquive sur les 3 prochains sorts qu’il reçoit
-        "fullmana",     // redonner toute la mana au lanceur
-        "nomana",       // faire perdre toute la mana au lanceur
-        "omnisoin",     // Soigner tous les PV du lanceur
-        "mortsubite",   // Ajouter 300% de dégâts au lanceur
-        "foe",          // invoquer un FOE (even in Gelul, F.O.E!) qui élimine au hasard le lanceur ou la cible (le point revient à celui qui n’a pas été éliminé)
-        "summon"        // fait une invocation de Final Fantasy ou Golden Sun, inflige des dégâts à la cible qui dépendent de qui est invoqué
-    ].choice();
+    // cette variable contient les cas possibles, avec probabilité d’apparition cumulée
+    const proba = {
+        "trempette" : 0.63,    // nothing happens/lance Trempette/met un message ou une image débile sans effet
+        //"randomspell": 0.0, // lancer un sort au hasard pour 4 PM (même cible)
+        "invisibility" : 0.68, // mettre une invisibilité qui donne 50 % de chances d’esquive sur les 3 prochains sorts qu’il reçoit
+        "fullmana": 0.75,     // redonner toute la mana au lanceur
+        "nomana": 0.82,       // faire perdre toute la mana au lanceur
+        "omnisoin": 0.89,     // Soigner tous les PV du lanceur
+        "mortsubite": 0.96,   // Ajouter 300% de dégâts au lanceur
+        "foe": 0.98,          // invoquer un FOE (even in Gelul, F.O.E!) qui élimine au hasard le lanceur ou la cible (le point revient à celui qui n’a pas été éliminé)
+        "summon": 1.0        // fait une invocation de Final Fantasy ou Golden Sun, inflige des dégâts à la cible qui dépendent de qui est invoqué
+    };
+
+    const roll = Math.random();
+
+    for (const key in proba) {
+        if (proba[key] > roll) {
+            ko = key;
+            break;
+        }
+    }
 
     switch (ko) {
         case "trempette":
@@ -268,7 +277,8 @@ const creerEmbedHocusPocus = (caster, target) => {
 
     switch (ko) {
         case "trempette":
-            phrase = spells_data.reponses.hocuspocus.trempette.choice();
+            phrase = spells_data.reponses.hocuspocus.trempette.choice()
+                    .replace("@M", spells_data.reponses.musiques.choice());
             foot = `${caster.name} a lancé Hocus Pocus, mais il ne s’est rien produit…`;
             break;
 
@@ -429,11 +439,18 @@ exports.procedure = async (interaction) => {
         caster.mana = old_mana;
     }
 
+    // la précision de MB est 0.3065 à 1 mana, 0.95 à 100 MP
+    if (spell.name === "Magic Burst") spell.precision = 0.3 + 0.0065 * caster.mana;
+
     let precision_check = Math.random();
 
     if (target.invisibility > 0) {
-        target.invisibility--;
         precision_check *= 2;
+        if (target.id === caster.id) {
+            caster.invisibility--;
+        } else {
+            target.invisibility--;
+        }
     }
 
     if (precision_check > spell.precision) {

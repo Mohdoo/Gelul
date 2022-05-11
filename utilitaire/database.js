@@ -28,7 +28,9 @@ db.prepare(`
             id TEXT PRIMARY KEY NOT NULL,
             percentage REAL DEFAULT ${new_hero.percentage},
             score INTEGER DEFAULT ${new_hero.score},
-            invisibility INTEGER DEFAULT ${new_hero.invisibility},
+            invisibility INTEGER DEFAULT ${new_hero.invisibility} CHECK (
+                invisibility >= 0 AND invisibility <= 3
+            ),
             mana INTEGER DEFAULT ${new_hero.mana} CHECK (
                 mana >= 0 AND mana <= ${new_hero.mana}
             ),

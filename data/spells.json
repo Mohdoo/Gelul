@@ -27,7 +27,7 @@
         "kaboom": {
             "name": "Kaboom",
             "damage": 28.0,
-            "precision": 0.8,
+            "precision": 0.95,
             "ko": 86.0,
             "cost": 37,
             "projectile": false
@@ -35,7 +35,7 @@
         "hatchetman": {
             "name": "Hatchet Man",
             "damage": 35,
-            "precision": 0.3,
+            "precision": 0.45,
             "ko": 44.0,
             "cost": 15,
             "projectile": false
@@ -43,7 +43,7 @@
         "sizzle": {
             "name": "Sizzle",
             "damage": 22.0,
-            "precision": 0.8,
+            "precision": 0.85,
             "ko": 137.0,
             "cost": 20,
             "projectile": true
@@ -59,14 +59,14 @@
         "magicburst": {
             "name": "Magic Burst",
             "damage": null,
-            "precision": 0.8,
+            "precision": null,
             "ko": null,
             "cost": 1,
             "projectile": false
         },
         "heal": {
             "name": "Heal",
-            "damage": -11.0,
+            "damage": -15.0,
             "precision": 1.0,
             "ko": null,
             "cost": 7,
@@ -75,7 +75,7 @@
         "hocuspocus": {
             "name": "Hocus Pocus",
             "damage": null,
-            "precision": 1.0,
+            "precision": 0.8,
             "ko": null,
             "cost": 4,
             "projectile": false
@@ -83,7 +83,7 @@
         "flameslash": {
             "name": "Flame Slash",
             "damage": 22,
-            "precision": 0.7,
+            "precision": 0.8,
             "ko": 89,
             "cost": 12,
             "projectile": false
@@ -114,7 +114,11 @@
                 "Le mot «\u202forge\u202f» en sumérien se prononce CHEH.",
                 "There are no plans for a worldwide release.",
                 "Naaan mais t’as raté le sort mais c’est sans doute la faute à la manette tu sais…",
-                "Ahhh on assiste aux premiers pas de @C, le premier héros aveugle de la compétition."
+                "Ahhh on assiste aux premiers pas de @C, le premier héros aveugle de la compétition.",
+                "Le sort de @C est parti avec la VF de DQX.",
+                "Désolé @C je peux pas le tuer pour l’instant j’ai mon cours d’aqua poney",
+                "Raté @C, mais le plus important c'est pas tuer, c’est d’envoyer un message",
+                "Julien Lepers dit\u202f«\u202fC’est non\u202f!\u202f»"
             ],
             "shield": [
                 "Bien tenté, mais @T a réussi à shield\u202f!",
@@ -151,14 +155,15 @@
             "whack": [
                 "@T meurt instantanément\u202f!",
                 "Wha, un @S",
-                "1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))",
+                "`1 + (200 * (cible - 20) / 280) + (20 * (lanceur / 300))`",
                 "@C maîtrise maintenant l’Avada Kedavra. What have you done?!",
-                "Comme quoi même un Héros peut utiliser de la magie noire."
+                "Comme quoi même un Héros peut utiliser de la magie noire.",
+                "Allez cheh , t’es mort\u202f! gg @C"
             ],
             "zero": [
                 "ET C’EST UN WHACK À 0\u202f% ON APPLAUDIT BIEN FORT\u202f!!",
                 "@C GAGNE AU LOTO ET RÉUSSIT UN WHACK À 0\u202f%\u202f!!",
-                "Franchement c’est trop un perso basé sur la chance… Ya plus aucun skill là…"
+                "@C est entré dans la [Légendre](https://www.youtube.com/watch?v=LcsnE9h0u4U)."
             ]
         },
         "success": {
@@ -167,6 +172,11 @@
                 "Et bim\u202f! Dans les dents\u202f!",
                 "Ouch, j’aurais pas aimé être à la place de @T là…",
                 "Ça a dû faire mal."
+            ],
+            "whack": [
+                "Ici la police des whack. Pas de mort aujourd’hui. Mais attention j’te tiens à l’oeil. Oui c’est une menace @C",
+                "Tout comme la localisation de DQX, aucun whack n’est prévu pour @C",
+                "Haha moquez vous de @C son whack a raté"
             ],
             "heal": [
                 "Bizarre de connaître Magic Burst et d’avoir juste Heal comme sort de soins… 🤨",
@@ -196,8 +206,43 @@
         "hocuspocus": {
             "trempette": [
                 "Rien ne se passe…",
-                "@C utilise Trempette\u202f!",
-                "Absolument rien ne se produit."
+                "@C utilise Trempette\u202f! Mais rien ne se passe…",
+                "Absolument rien ne se produit.",
+                "@T se met à danser. Ça lui remonte le moral.",
+                "À l’Ouest, rien de nouveau",
+                "Une [musique random](@M) se met à résonner aux alentours…",
+                "Magikarpe, attaque trempette\u202f!",
+                "Chrysacier, attaque armure\u202f!",
+                "<:slimeface:670410006297837570>",
+                "Félicitations, vous n’avez absolument rien fait.",
+                "Voilà 4 MP judicieusement dépensés.",
+                "J’ai plus trop d’idées pour les phrases à envoyer, mais sache que ton Hocus Pocus n’a eu aucun effet.",
+                "Un plat de spaghetti se matérialise devant @C.",
+                "Les études s’accordent à dire que le Hérocord est le meilleur Smashcord existant.",
+                "85\u202f% des statistiques sont fausses.",
+                "Une démone apparaît et fait un bisou à @C.",
+                "Des pièces d’or se mettent à tomber du ciel.",
+                "La Mort en personne apparaît, mais c’est son jour de congé donc elle repart.",
+                "@C expulse tous les autres Héros du serveur… puis se réveille et découvre que ce n’était qu’un rêve.",
+                "Un main Aegis s’incruste et dit que le Héros devrait être banni.",
+                "@C reçoit la bénédiction d’Akakikusu. Puisse la chance lui être favorable.",
+                "Une fygg apparaît. Vous la rangez dans votre inventaire.",
+                "Crédits du bot\u202f: Mots Doux (vous avez vu je suis doux), Anoter (coucou je suis là), Rem (main Aegis), Morgan (JS EST SINGLE-THREAD).",
+                "Chez les Villageois on appelle ça `/happyhomedesigner`.",
+                "Chez les Kazuya on appelle ça `/kazuyamishima`.",
+                "Chez les Link on appelle ça `/korok`.",
+                "Chez les Cloud on appelle ça `/materia`.",
+                "Chez les Peach on appelle ça `/vegetable`.",
+                "Chez les Wario on appelle ça `/warioware`.",
+                "Chez les Ness on appelle ça `/psyflash`.",
+                "Chez les main Random on appelle ça `/pickmymain`.",
+                "Chez les Olimar on appelle ça `/pikmin`.",
+                "Chez les G&W on appelle ça `/judge`. Je rigole, on fait juste un Up B OOS.",
+                "@C est devenu un Daft Punk.",
+                "@T gagne 2 points de charisme.",
+                "@C gagne 2 points d’intelligence.",
+                "Toujours rien, mais continue d’essayer.",
+                "Il vaut peut-être mieux rien du tout que de tomber sur un FOE."
             ],
             "fullmana": [
                 "Toute la mana de @C est instantanément restaurée\u202f!",
@@ -236,6 +281,24 @@
                 "hocuspocus/game_over.webp",
                 "hocuspocus/foe.gif"
             ]
-        }
+        },
+        "musiques": [
+            "https://youtu.be/BTOVgWjUoDo",
+            "https://youtu.be/zveNlB4hfhU",
+            "https://youtu.be/8noeFpdfWcQ",
+            "https://youtu.be/Ie52xH8V2L4",
+            "https://youtu.be/e52IMaE-3As",
+            "https://youtu.be/M00h75udCZc",
+            "https://youtu.be/dB_PVPyn6n8",
+            "https://youtu.be/jQpi9D1ZxUQ",
+            "https://www.youtube.com/watch?v=WcR7M5WMqCY",
+            "https://youtu.be/U_uWMfmuQLw",
+            "https://mittsies.bandcamp.com/track/titanium-2",
+            "https://www.newgrounds.com/audio/listen/85046",
+            "https://tricknostalgie.bandcamp.com/track/--25",
+            "https://soundcloud.com/leagueoflegends/rakan-and-xayah-the-charmer-and-the-rebel",
+            "https://radicaldreamland.bandcamp.com/track/reach-for-the-summit",
+            "https://0101.bandcamp.com/track/imaginary-express"
+        ]
     }
 }
